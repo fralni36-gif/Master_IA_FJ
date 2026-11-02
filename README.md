@@ -3,7 +3,7 @@
 
 Esta carpeta constituye el **proyecto centralizado y suite integral de estudio** para todas las asignaturas del Máster en Inteligencia Artificial de la UNIR. Reúne el temario completo, simuladores de exámenes, modelos de examen oficiales resueltos paso a paso, ejercicios de cálculo y el catálogo de 86 recursos audiovisuales (videos de clase y podcasts de audio).
 
----
+----
 
 ### 📂 Estructura del Proyecto
 
