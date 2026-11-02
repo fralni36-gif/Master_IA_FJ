@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla Maestra Curricular de PLN · Preparación Integral de Examen UNIR (Temas 1 al 10)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- KaTeX para renderizado matemático de alta precisión -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" 
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+    
+    code, pre {
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Reglas estrictas para exportación a PDF vía Imprimir / Headless Chrome */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm 8mm 10mm 8mm;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 8pt !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+      }
+      .page-break-inside-avoid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        page-break-after: auto;
+      }
+      thead {
+        display: table-header-group;
+      }
+      tfoot {
+        display: table-footer-group;
+      }
+      .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-sm, .shadow-xs {
+        box-shadow: none !important;
+      }
+      .border {
+        border-color: #cbd5e1 !important;
+      }
+    }
+
+    /* Estilos de tabla maestra */
+    .master-table th {
+      background: #1e293b;
+      color: #f8fafc;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.70rem;
+      letter-spacing: 0.05em;
+      padding: 6px 8px;
+      border: 1px solid #334155;
+    }
+    
+    .master-table td {
+      padding: 6px 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.74rem;
+      line-height: 1.4;
+      vertical-align: top;
+    }
+
+    .master-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    
+    .master-table tr:hover {
+      background-color: #f1f5f9;
+    }
+
+    .badge-bondad {
+      background-color: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 2px;
+      font-size: 0.68rem;
+    }
+
+    .badge-limitacion {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 2px;
+      font-size: 0.68rem;
+    }
+
+    .badge-evolucion {
+      background-color: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 2px;
+      font-size: 0.68rem;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-5 lg:p-6">
+
+  <!-- ENCABEZADO PRINCIPAL (HERO BANNER) -->
+  <div class="max-w-7xl mx-auto mb-5 bg-slate-900 text-white rounded-2xl p-5 shadow-lg border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-indigo-500 text-white text-[10px] font-extrabold uppercase tracking-wide">
+          UNIR · Máster en Inteligencia Artificial
+        </span>
+        <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px] font-medium border border-slate-700">
+          Técnicas de Aprendizaje Automático · Módulo PLN
+        </span>
+        <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold border border-emerald-500/30">
+          Formato 100% Vectorial y Matemático KaTeX (Cero Capturas Raster)
+        </span>
+      </div>
+      <h1 class="text-xl sm:text-2xl font-black text-white mt-1.5 tracking-tight">
+        Tabla Maestra Curricular: Temas 1 al 10 + Ejercicios de Examen UNIR
+      </h1>
+      <p class="text-xs text-slate-300 mt-1 max-w-4xl">
+        Organización estricta por Temas (Temas 1 al 10) con las 5 dimensiones obligatorias (Concepto, Definición Rigurosa, Bondades, Limitaciones y Evolución), subsección de Ejercicios Numéricos y Prácticos resueltos paso a paso (Viterbi, Lesk, N-Gramas BERP, CKY y BoW-TF-IDF), Casos de Examen y Guía spaCy v3+.
+      </p>
+    </div>
+    
+    <div class="flex items-center gap-2 no-print shrink-0">
+      <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow transition flex items-center gap-2 cursor-pointer text-xs">
+        <span>🖨️</span> <span>Imprimir / PDF</span>
+      </button>
+      <a href="masterclass_taa_repaso_interactivo.html" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs">
+        <span>⬅️</span> <span>Suite Interactiva</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN RÁPIDA (NO IMPRIMIBLE) -->
+  <div class="no-print max-w-7xl mx-auto mb-5 flex flex-wrap gap-1.5 p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs text-xs font-semibold">
+    <span class="text-slate-500 self-center mr-1">Ir al Tema:</span>
+    <a href="#tema1" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T1: Introducción & Ambigüedad</a>
+    <a href="#tema2" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T2: Preprocesamiento & BoW/TF-IDF</a>
+    <a href="#tema3" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T3: POS Tagging & Viterbi</a>
+    <a href="#tema4" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T4: Sintaxis, CFG & CKY</a>
+    <a href="#tema5" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T5: Semántica Léxica & WordNet</a>
+    <a href="#tema6" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T6: Desambiguación (WSD & Lesk)</a>
+    <a href="#tema7" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T7: N-Gramas & Perplejidad</a>
+    <a href="#tema8" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T8: Redes Neuronales & Transformers</a>
+    <a href="#tema9" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T9: Aplicaciones (NER & ABSA)</a>
+    <a href="#tema10" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg">T10: LLMs, RAG & Agentes</a>
+    <a href="#estructura_oficial_examen" class="px-2.5 py-1 bg-indigo-600 text-white font-bold hover:bg-indigo-700 rounded-lg">🎯 Blueprint Examen</a>
+    <a href="#casos_practicos" class="px-2 py-1 bg-amber-100 text-amber-900 font-bold hover:bg-amber-200 rounded-lg">📝 Casos Prácticos</a>
+    <a href="#spacy_cheat_sheet" class="px-2 py-1 bg-sky-100 text-sky-900 font-bold hover:bg-sky-200 rounded-lg">⚡ spaCy v3+</a>
+    <a href="#actividades_laboratorio" class="px-2 py-1 bg-emerald-100 text-emerald-900 font-bold hover:bg-emerald-200 rounded-lg">🔬 Labs UNIR</a>
+    <a href="#toma_decisiones_modelos" class="px-2 py-1 bg-purple-100 text-purple-900 font-bold hover:bg-purple-200 rounded-lg">⚖️ Matriz Decisión</a>
+  </div>
+
+  <div class="max-w-7xl mx-auto space-y-8">
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 1: INTRODUCCIÓN AL PLN Y NIVELES LINGÜÍSTICOS -->
+    <!-- ========================================================================= -->
+    <section id="tema1" class="page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T1</span>
+          Tema 1: Introducción al Procesamiento del Lenguaje Natural y Niveles Lingüísticos
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 1 · Fundamentos y Ambigüedad</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 1 (5 COLUMNAS MAESTRAS + TIPS) -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Niveles del Análisis Lingüístico
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Fonológico, Morfológico, Sintáctico, Semántico, Pragmático</div>
+              </td>
+              <td>Descomposición jerárquica modular del lenguaje natural: Fonético/Fonológico (sonidos físicos y fonemas) $\to$ Morfológico (estructura interna de palabras y lemas) $\to$ Sintáctico (reglas de combinación en sintagmas y oraciones) $\to$ Semántico (significado literal composicional) $\to$ Pragmático (intención del hablante y contexto extralingüístico).</td>
+              <td><span class="badge-bondad">Modularidad</span> Permite desacoplar y resolver cada subsistema lingüístico con algoritmos y modelos matemáticos específicos y testeables.</td>
+              <td><span class="badge-limitacion">Propagación de error</span> Un fallo en un nivel inicial (ej. mala segmentación de oraciones o tokenización errónea) contamina irreversiblemente todos los niveles superiores.</td>
+              <td><span class="badge-evolucion">Arquitecturas End-to-End</span> Modelos Transformer masivos (LLMs) que aprenden representaciones latentes conjuntas sin necesidad de módulos rígidos secuenciales.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta UNIR:</strong> ¿En qué nivel se interpreta la ironía o el sarcasmo? ➔ <strong>Nivel Pragmático</strong>.<br>
+                  <strong>spaCy:</strong> <code>nlp.pipe_names</code> lista los componentes del pipeline en cascada.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Tipos de Ambigüedad en PLN
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Léxica, Sintáctica, Semántica, Referencial</div>
+              </td>
+              <td>Propiedad intrínseca del lenguaje humano donde una expresión formal admite dos o más interpretaciones computacionales válidas según el nivel lingüístico evaluado.</td>
+              <td><span class="badge-bondad">Economía del Lenguaje</span> Permite expresar infinidad de ideas con un número finito de lexemas y reglas gramaticales.</td>
+              <td><span class="badge-limitacion">Explosión Combinatoria</span> Sin conocimiento del mundo (World Knowledge), un analizador formal genera decenas de árboles sintácticos válidos para una sola frase.</td>
+              <td><span class="badge-evolucion">Modelos Contextuales Densos</span> Embeddings dinámicos (BERT/RoBERTa) que ajustan el vector semántico según la ventana de contexto completa.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> "Vi a la mujer con el telescopio" ➔ <strong>Ambigüedad Sintáctica / Adjuncin de Sintagma Preposicional (PP-Attachment)</strong>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Pipeline de PLN y Error Cascading
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Arquitectura Secuencial Clásica</div>
+              </td>
+              <td>Cadena de procesamiento donde la salida de una fase alimenta la siguiente: Texto crudo $\to$ Tokenización $\to$ Normalización $\to$ POS Tagging $\to$ Parsing $\to$ Extracción de Información.</td>
+              <td><span class="badge-bondad">Interpretabilidad total</span> Cada fase produce anotaciones intermedias auditables (etiquetas Penn Treebank, árboles CKY, etc.).</td>
+              <td><span class="badge-limitacion">Efecto Cascada</span> Si cada una de 5 etapas tiene una precisión del 95%, la precisión global decae drásticamente a $0.95^5 \approx 77.38\%$.</td>
+              <td><span class="badge-evolucion">Fine-Tuning Conjunto</span> Modelos multiextremo (Multi-task Learning) y Transformers ajustados para resolver la tarea final directamente.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Criterio Tribunal:</strong> En sistemas industriales críticos, justificar si se asume error cascading o se opta por un transformer end-to-end.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 1 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 1
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Examen UNIR</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Ejercicio 1.1 -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 1.1: Clasificación Formal de Ambigüedades</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Teoría & Test</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Identificar el nivel exacto de ambigüedad en los siguientes casos tipo examen:</p>
+            <div class="space-y-1.5 text-[11px]">
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Caso A:</strong> «El cura curó al herido con devoción».<br>
+                ➔ <span class="font-bold text-indigo-900">Ambigüedad Léxica (Categoría gramatical/Polisemia):</span> "cura" como sustantivo eclesiástico o forma del verbo curar.
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Caso B:</strong> «Vimos al hombre con el telescopio».<br>
+                ➔ <span class="font-bold text-indigo-900">Ambigüedad Sintáctica / Estructural (PP-Attachment):</span> ¿El hombre tenía el telescopio o nosotros usamos el telescopio para verlo?
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Caso C:</strong> «Pedro le dio a Juan su cuaderno porque estaba roto».<br>
+                ➔ <span class="font-bold text-indigo-900">Ambigüedad Referencial (Anáfora / Esquema de Winograd):</span> ¿De quién era el cuaderno y qué estaba roto? Requiere World Knowledge.
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Caso D:</strong> «¡Qué puntual eres!» dicho a alguien con 40 minutos de retraso.<br>
+                ➔ <span class="font-bold text-indigo-900">Ambigüedad Pragmática (Sarcasmo / Acto de Habla):</span> El significado intencional contradice el significado literal composicional.
+              </div>
+            </div>
+          </div>
+
+          <!-- Ejercicio 1.2 -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 1.2: Cálculo de Propagación de Error en Cascada</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Cálculo Numérico</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Un sistema clásico consta de 4 etapas secuenciales independientes: Tokenización ($A_1$), POS Tagging ($A_2$), Lematización ($A_3$) y NER ($A_4$).</p>
+            <div class="p-2 bg-indigo-50/70 rounded border border-indigo-200 font-mono text-[11px] text-indigo-950 space-y-1">
+              <div>Precisiones individuales: $p_1 = 0.98$, $p_2 = 0.94$, $p_3 = 0.95$, $p_4 = 0.88$.</div>
+              <div>$$P(\text{Éxito Global}) = \prod_{i=1}^4 p_i = 0.98 \times 0.94 \times 0.95 \times 0.88 = \mathbf{0.7702} \; (77.02\\%)$$</div>
+              <div>$$E_{\text{cascada}} = 1 - P(\text{Éxito Global}) = 1 - 0.7702 = \mathbf{0.2298} \; (22.98\\%)$$</div>
+            </div>
+            <p class="text-[10px] text-slate-600">
+              <strong>Conclusión Técnica para Caso Práctico:</strong> Aunque cada componente individual rinda por encima del 88%, el pipeline completo pierde casi un 23% de fiabilidad neta por efecto multiplicativo de error acumulado.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 2: EL TEXTO COMO DATO: PREPROCESAMIENTO Y REPRESENTACIÓN VECTORIAL -->
+    <!-- ========================================================================= -->
+    <section id="tema2" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T2</span>
+          Tema 2: El Texto como Dato: Preprocesamiento y Representación Vectorial
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semanas 2 y 3 · BoW, TF-IDF y Similitud Coseno</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 2 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Pipeline Canónico de Preprocesamiento
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Limpieza, Tokenización, Normalización, Stopwords</div>
+              </td>
+              <td>Conjunto de transformaciones para convertir texto no estructurado en secuencias de unidades discretas estandarizadas: filtrado de ruido (HTML, emojis, puntuación) $\to$ segmentación léxica (tokenización) $\to$ normalización (case folding, diacríticos) $\to$ eliminación de palabras vacías (stopwords).</td>
+              <td><span class="badge-bondad">Reducción del Vocabulario</span> Reduce la dimensionalidad del espacio vectorial hasta en un 60-70% y homogeneiza entradas ruidosas.</td>
+              <td><span class="badge-limitacion">Pérdida Semántica Irreversible</span> Eliminar stopwords puede destruir el sentido en tareas como negación («no es bueno») o sentimiento.</td>
+              <td><span class="badge-evolucion">Tokenización por Subpalabras</span> Algoritmos BPE (Byte-Pair Encoding), WordPiece y SentencePiece que gestionan vocabulario abierto sin filtrar stopwords.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>spaCy:</strong> <code>token.is_stop</code>, <code>token.is_punct</code>, <code>token.like_num</code>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Lematización vs. Stemming
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Porter / Snowball vs WordNet / spaCy</div>
+              </td>
+              <td><strong>Stemming:</strong> Proceso heurístico basado en reglas de corte de sufijos morfológicos para obtener la raíz (stem), sin garantizar palabras reales (ej. "estudi" de "estudiando").<br><strong>Lematización:</strong> Reducción al lema canónico del diccionario mediante análisis morfológico y categoría gramatical (POS) (ej. "ir" de "fui").</td>
+              <td><span class="badge-bondad">Lematización = Precisión Lingüística</span> Conserva la validez léxica y semántica del término, evitando raíces truncadas sin sentido.</td>
+              <td><span class="badge-limitacion">Coste Computacional</span> La lematización requiere un modelo morfosintáctico completo y diccionarios, siendo 5x a 10x más lenta que el stemming heurístico.</td>
+              <td><span class="badge-evolucion">Subword Tokenization</span> Fragmentación subléxica estadística en Transformers que no requiere lemas externos.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> "mejor" ➔ Lema: "bueno" (adjetivo). Stemmer produciría "mejor".<br>
+                  <strong>spaCy:</strong> <code>token.lemma_</code>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Representación BoW y TF-IDF
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Term Frequency - Inverse Document Frequency</div>
+              </td>
+              <td>Esquema numérico donde cada documento se representa como un vector de dimensión $|V|$. TF mide la frecuencia local del término en el documento, mientras que IDF penaliza términos ubicuos en el corpus: $\text{TF-IDF}(t, d, D) = \text{TF}(t, d) \times \log_{10}\left(\frac{N}{\text{DF}_t}\right)$.</td>
+              <td><span class="badge-bondad">Relevancia Discriminante</span> Filtra automáticamente palabras comunes y resalta términos específicos y distintivos de cada documento.</td>
+              <td><span class="badge-limitacion">Independencia Léxica y Matriz Dispersa</span> Asume independencia total de términos (ignora orden y sintaxis) y genera matrices con &gt;99% de ceros.</td>
+              <td><span class="badge-evolucion">Dense Word Embeddings</span> Vectores continuos densos de baja dimensión (Word2Vec, GloVe, BERT) que capturan relaciones semánticas contextuales.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Fórmula de Examen:</strong> Si $\text{DF}_t = N$, $\text{IDF}_t = \log_{10}(1) = 0$. Un término presente en todos los documentos tiene peso TF-IDF = 0.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 2 -->
+      <div class="bg-amber-50/50 rounded-xl p-3 sm:p-4 border border-amber-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-amber-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-amber-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 2
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-amber-200 text-amber-900 font-bold text-[10px]">Cálculo Oficial Celia Cabello</span>
+        </div>
+
+        <!-- Ejercicio 2.1 Oficial -->
+        <div class="bg-white p-3.5 rounded-lg border border-amber-200 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-100 pb-2">
+            <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-amber-600 text-white flex items-center justify-center text-xs">2.1</span>
+              <span>EJERCICIO OFICIAL DE CLASE: TF-IDF Y SIMILITUD COSENO COMPLETO</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold">Mini-Corpus UNIR ($N=3$)</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs">
+            <!-- Columna izquierda: Enunciado y Fórmulas -->
+            <div class="lg:col-span-5 space-y-2">
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
+                <div class="font-bold text-slate-900 text-[11px]">Corpus de Documentos:</div>
+                <div class="font-mono text-[11px] space-y-0.5 text-slate-800">
+                  <div><strong>$D_1$:</strong> «el gato duerme»</div>
+                  <div><strong>$D_2$:</strong> «el perro duerme»</div>
+                  <div><strong>$D_3$:</strong> «el gato persigue perro»</div>
+                </div>
+                <div class="text-[10px] text-slate-500 pt-1">
+                  Stopword filtrada: "el". Vocabulario limpio $V = [\text{"gato"}, \text{"perro"}, \text{"duerme"}, \text{"persigue"}]$, $|V|=4$. $N=3$.
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-amber-50/70 rounded-lg border border-amber-200 font-mono text-[11px] text-amber-950 space-y-1">
+                <div class="font-bold text-amber-900">Fórmulas Canónicas:</div>
+                <div>$$\text{TF}(t, d) = \text{conteo}(t, d)$$</div>
+                <div>$$\text{IDF}(t) = \log_{10}\left(\frac{N}{\text{DF}_t}\right) = \log_{10}\left(\frac{3}{\text{DF}_t}\right)$$</div>
+                <div>$$\text{Similitud Coseno}(\vec{u}, \vec{v}) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}$$</div>
+              </div>
+            </div>
+
+            <!-- Columna derecha: Tablas de cálculo y resultado -->
+            <div class="lg:col-span-7 space-y-2">
+              <div class="overflow-x-auto">
+                <table class="w-full text-center border-collapse bg-white rounded border border-amber-200 text-[11px]">
+                  <thead>
+                    <tr class="bg-amber-100/90 font-bold text-amber-950">
+                      <th class="p-1 border border-amber-200">Término ($t$)</th>
+                      <th class="p-1 border border-amber-200">Doc Freq ($\text{DF}_t$)</th>
+                      <th class="p-1 border border-amber-200">Cálculo IDF ($\log_{10}(3/\text{DF})$)</th>
+                      <th class="p-1 border border-amber-200">Valor IDF</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="p-1 border border-slate-200 font-bold">gato</td><td class="p-1 border border-slate-200">2 ($D_1, D_3$)</td><td class="p-1 border border-slate-200">$\log_{10}(3/2) = \log_{10}(1.5)$</td><td class="p-1 border border-slate-200 font-mono font-bold">0.176</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold">perro</td><td class="p-1 border border-slate-200">2 ($D_2, D_3$)</td><td class="p-1 border border-slate-200">$\log_{10}(3/2) = \log_{10}(1.5)$</td><td class="p-1 border border-slate-200 font-mono font-bold">0.176</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold">duerme</td><td class="p-1 border border-slate-200">2 ($D_1, D_2$)</td><td class="p-1 border border-slate-200">$\log_{10}(3/2) = \log_{10}(1.5)$</td><td class="p-1 border border-slate-200 font-mono font-bold">0.176</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold">persigue</td><td class="p-1 border border-slate-200">1 ($D_3$)</td><td class="p-1 border border-slate-200">$\log_{10}(3/1) = \log_{10}(3.0)$</td><td class="p-1 border border-slate-200 font-mono font-bold text-amber-800">0.477</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Matriz TF-IDF y Similitud Coseno -->
+              <div class="p-2 bg-slate-50 rounded border border-slate-200 space-y-1 text-[11px]">
+                <div class="font-bold text-slate-900">Vectores TF-IDF y Cálculo del Ángulo Coseno entre $D_1$ y $D_2$:</div>
+                <div>• Vector $D_1$ («gato duerme»): $\vec{v}_1 = [0.176,\; 0,\; 0.176,\; 0]$</div>
+                <div>• Vector $D_2$ («perro duerme»): $\vec{v}_2 = [0,\; 0.176,\; 0.176,\; 0]$</div>
+                <div>• Producto Escalar: $\vec{v}_1 \cdot \vec{v}_2 = (0.176 \times 0) + (0 \times 0.176) + (0.176 \times 0.176) + (0 \times 0) = 0.176^2 = \mathbf{0.030976}$</div>
+                <div>• Normas Euclidianas ($L_2$): $\|\vec{v}_1\| = \sqrt{0.176^2 + 0.176^2} = 0.176\sqrt{2} \approx \mathbf{0.2489}$; $\|\vec{v}_2\| \approx \mathbf{0.2489}$</div>
+                <div class="p-1.5 bg-amber-100/70 rounded border border-amber-300 font-mono text-center font-bold text-amber-950">
+                  $$\text{Similitud Coseno}(D_1, D_2) = \frac{\vec{v}_1 \cdot \vec{v}_2}{\|\vec{v}_1\| \cdot \|\vec{v}_2\|} = \frac{0.176^2}{(0.176\sqrt{2})^2} = \frac{0.176^2}{2 \times 0.176^2} = \frac{1}{2} = \mathbf{0.500} \; (50\\%)$$
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejercicio 2.2 Adicional -->
+        <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-2xs space-y-2">
+          <div class="font-bold text-slate-900 flex items-center justify-between text-xs">
+            <span>Ejercicio 2.2: Programación Dinámica para Distancia de Edición (Levenshtein)</span>
+            <span class="text-[10px] text-amber-700 font-mono font-bold">Matriz Dinámica</span>
+          </div>
+          <p class="text-[11px] text-slate-600">Calcular la distancia de edición mínima entre las palabras $s_1 = \text{"gato"}$ y $s_2 = \text{"pato"}$, y entre $s_1 = \text{"casa"}$ y $s_2 = \text{"caso"}$ con costes unitarios ($I=1, D=1, S=1$ si $a \neq b$, $S=0$ si $a=b$).</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>Caso "gato" $\to$ "pato":</strong><br>
+              Alineamiento: $[g \to p]$ (Sustitución), $[a \to a]$ (Coincidencia), $[t \to t]$ (Coincidencia), $[o \to o]$ (Coincidencia).<br>
+              $\text{Coste Total} = 1 + 0 + 0 + 0 = \mathbf{1}$. Distancia de Levenshtein = 1.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>Caso "sol" $\to$ "suelo":</strong><br>
+              Alineamiento: $[s \to s]$, $[\varepsilon \to u]$ (Inserción), $[o \to e]$ (Sustitución), $[l \to l]$, $[\varepsilon \to o]$ (Inserción).<br>
+              $\text{Coste Total} = 0 + 1 + 1 + 0 + 1 = \mathbf{3}$. Distancia de Levenshtein = 3.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 3: ETIQUETADO MORFOSINTÁCTICO (POS TAGGING) Y VITERBI -->
+    <!-- ========================================================================= -->
+    <section id="tema3" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T3</span>
+          Tema 3: Etiquetado Morfosintáctico (POS Tagging), HMM y Algoritmo de Viterbi
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semanas 4 y 5 · HMM y Decodificación Óptima</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 3 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Modelo Oculto de Markov (HMM)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Estados Ocultos ($t_i$) vs Observaciones ($w_i$)</div>
+              </td>
+              <td>Modelo probabilístico generativo gráfico que asume que la secuencia de palabras observables $W = (w_1, \dots, w_T)$ es generada por una secuencia subyacente de etiquetas morfosintácticas ocultas $T = (t_1, \dots, t_T)$. Se parametriza mediante: probabilidades iniciales $\pi_i = P(t_i \mid \text{START})$, matriz de transición $A = [a_{ij}] = P(t_j \mid t_i)$ y matriz de emisión $B = [b_j(k)] = P(w_k \mid t_j)$.</td>
+              <td><span class="badge-bondad">Estimación Directa</span> Los parámetros se calculan trivialmente por conteo frecuencial (MLE) sobre un corpus anotado.</td>
+              <td><span class="badge-limitacion">Hipótesis de Markov Estricta</span> El estado actual sólo depende del estado inmediatamente anterior ($t_{i-1}$) y la palabra sólo de su propio estado ($t_i$), ignorando contexto lejano.</td>
+              <td><span class="badge-evolucion">Campos Aleatorios Condicionales (CRF)</span> Modelos discriminativos que calculan $P(T \mid W)$ directamente con funciones de características globales.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Penn Treebank:</strong> <code>DT</code> (det), <code>NN</code> (sustantivo), <code>NNP</code> (nombre propio), <code>VB/VBD</code> (verbo), <code>JJ</code> (adjetivo), <code>RB</code> (adverbio).
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Algoritmo de Viterbi
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Decodificación Óptima por Programación Dinámica</div>
+              </td>
+              <td>Algoritmo de programación dinámica que encuentra la secuencia de estados ocultos más probable $\hat{T} = \arg\max_T P(W, T)$ evaluando recursivamente enrejados (trellis): $v_t(j) = \max_{i=1}^N [v_{t-1}(i) \cdot a_{ij}] \cdot b_j(w_t)$, almacenando punteros hacia atrás (backpointers) para recuperar el camino global óptimo.</td>
+              <td><span class="badge-bondad">Complejidad Polinómica $\mathcal{O}(T \cdot N^2)$</span> Reduce la complejidad exponencial de fuerza bruta $\mathcal{O}(N^T)$ a tiempo lineal respecto a la longitud de la oración $T$.</td>
+              <td><span class="badge-limitacion">Underflow Aritmético</span> Multiplicar cientos de probabilidades menores que 1 produce ceros flotantes; obliga a operar estrictamente en escala logarítmica (Log-Viterbi).</td>
+              <td><span class="badge-evolucion">Decodificación Neuronal BiLSTM-CRF</span> Redes bidireccionales con capa CRF que capturan dependencias de larga distancia hacia adelante y hacia atrás.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Fija de Examen:</strong> Se pregunta por qué gana un estado frente a otro en una celda (ej. VBD sobre NN). Justificar por producto $\max[v_{t-1} \cdot a_{ij}] \cdot b_j$.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 3 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 3
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Cálculo Oficial Celia Cabello</span>
+        </div>
+
+        <!-- Ejercicio 3.1: Mini-Corpus Anotado -->
+        <div class="bg-white p-3.5 rounded-lg border border-indigo-200 shadow-2xs space-y-2">
+          <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center justify-between border-b border-indigo-100 pb-1.5">
+            <span class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-indigo-600 text-white flex items-center justify-center text-xs">3.1</span>
+              <span>EJERCICIO OFICIAL: MINI-CORPUS ANOTADO Y CONTEO DE PROBABILIDADES HMM</span>
+            </span>
+            <span class="text-[10px] text-indigo-700 font-mono font-bold">Semana 4 Diapositiva Pág. 7</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs">
+            <div class="lg:col-span-5 space-y-1.5">
+              <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-0.5">
+                <div class="font-bold text-slate-900 font-sans text-xs">Mini-Corpus Anotado:</div>
+                <div>1. El/DT gato/NN duerme/VB</div>
+                <div>2. La/DT gata/NN come/VB pescado/NN</div>
+                <div>3. Un/DT perro/NN corre/VB</div>
+              </div>
+              <div class="text-[11px] text-slate-700 space-y-0.5">
+                <div><strong>Secuencias con START y END:</strong></div>
+                <div class="font-mono text-[10px] text-indigo-950">
+                  1. START $\to$ DT $\to$ NN $\to$ VB $\to$ END<br>
+                  2. START $\to$ DT $\to$ NN $\to$ VB $\to$ NN $\to$ END<br>
+                  3. START $\to$ DT $\to$ NN $\to$ VB $\to$ END
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-1.5">
+              <div class="overflow-x-auto">
+                <table class="w-full text-center border-collapse bg-white rounded border border-indigo-200 text-[11px]">
+                  <thead>
+                    <tr class="bg-indigo-100/90 font-bold text-indigo-950">
+                      <th class="p-1 border border-indigo-200">Origen ($t_{i-1}$)</th>
+                      <th class="p-1 border border-indigo-200">Destino ($t_i$)</th>
+                      <th class="p-1 border border-indigo-200">Conteo Transición</th>
+                      <th class="p-1 border border-indigo-200">Total desde Origen</th>
+                      <th class="p-1 border border-indigo-200">Probabilidad $P(t_i \mid t_{i-1})$</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="p-1 border border-slate-200 font-bold">START</td><td class="p-1 border border-slate-200">DT</td><td class="p-1 border border-slate-200 font-mono">3</td><td class="p-1 border border-slate-200 font-mono">3</td><td class="p-1 border border-slate-200 font-mono font-bold text-emerald-800">3/3 = 1.00</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold">DT</td><td class="p-1 border border-slate-200">NN</td><td class="p-1 border border-slate-200 font-mono">3</td><td class="p-1 border border-slate-200 font-mono">3</td><td class="p-1 border border-slate-200 font-mono font-bold text-emerald-800">3/3 = 1.00</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold" rowspan="2">NN</td><td class="p-1 border border-slate-200">VB</td><td class="p-1 border border-slate-200 font-mono">3</td><td class="p-1 border border-slate-200 font-mono" rowspan="2">4</td><td class="p-1 border border-slate-200 font-mono font-bold">3/4 = 0.75</td></tr>
+                    <tr><td class="p-1 border border-slate-200">END</td><td class="p-1 border border-slate-200 font-mono">1</td><td class="p-1 border border-slate-200 font-mono font-bold">1/4 = 0.25</td></tr>
+                    <tr><td class="p-1 border border-slate-200 font-bold" rowspan="2">VB</td><td class="p-1 border border-slate-200">END</td><td class="p-1 border border-slate-200 font-mono">2</td><td class="p-1 border border-slate-200 font-mono" rowspan="2">3</td><td class="p-1 border border-slate-200 font-mono font-bold">2/3 = 0.67</td></tr>
+                    <tr><td class="p-1 border border-slate-200">NN</td><td class="p-1 border border-slate-200 font-mono">1</td><td class="p-1 border border-slate-200 font-mono font-bold">1/3 = 0.33</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejercicio 3.2: Trellis de Viterbi Oficial "El Señor Vino Tarde" -->
+        <div class="bg-white p-3.5 rounded-lg border border-indigo-200 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-100 pb-2">
+            <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-indigo-600 text-white flex items-center justify-center text-xs">3.2</span>
+              <span>EJERCICIO OFICIAL: TRELLIS DE VITERBI PARA "EL SEÑOR VINO TARDE"</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-[10px] font-bold">Diapositiva Pág. 28 Resuelta</span>
+          </div>
+
+          <!-- Matriz Nativa de Viterbi (Reemplazo Total de la Imagen Raster) -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-center border-collapse bg-white rounded border border-slate-300 text-[11px]">
+              <thead>
+                <tr class="bg-slate-900 text-white font-bold">
+                  <th class="p-1.5 border border-slate-700">Estado ($S$)</th>
+                  <th class="p-1.5 border border-slate-700">&lt;start&gt; ($t=0$)</th>
+                  <th class="p-1.5 border border-slate-700">El ($t=1$)</th>
+                  <th class="p-1.5 border border-slate-700">Señor ($t=2$)</th>
+                  <th class="p-1.5 border border-slate-700">Vino ($t=3$)</th>
+                  <th class="p-1.5 border border-slate-700">Tarde ($t=4$)</th>
+                  <th class="p-1.5 border border-slate-700">&lt;end&gt; ($t=5$)</th>
+                </tr>
+              </thead>
+              <tbody class="font-mono">
+                <tr>
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">&lt;end&gt;</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-indigo-900 bg-indigo-50">Backtrace</td>
+                </tr>
+                <tr class="bg-emerald-50/50">
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">DT</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-emerald-800 bg-emerald-100/70">0.1013</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr class="bg-emerald-50/50">
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">NN</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-emerald-800 bg-emerald-100/70">0.00961134</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-600">0.00011687</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-600">0.000000710</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr>
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">NNP</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-600">0.00174287</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr>
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">JJ</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-600">0.00218504</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr class="bg-emerald-50/50">
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">VBD</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-emerald-800 bg-emerald-100/70">0.00012072</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-600">0.000000733</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr class="bg-emerald-50/50">
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">RB</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-emerald-800 bg-emerald-100/70">0.000002482</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+                <tr>
+                  <td class="p-1.5 border border-slate-200 font-bold bg-slate-100">&lt;start&gt;</td>
+                  <td class="p-1.5 border border-slate-200 font-bold text-slate-900 bg-slate-200">1.0000</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1.5 border border-slate-200 text-slate-400">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Análisis y Backtrace paso a paso -->
+          <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-xs space-y-1.5">
+            <div class="font-bold text-slate-900">Razonamiento y Decisión de Viterbi en los Puntos Críticos:</div>
+            <ul class="list-disc pl-4 space-y-1 text-[11px] text-slate-700">
+              <li><strong>Paso $t=1$ ("El"):</strong> Solo DT recibe masa de probabilidad inicial: $v_1(\text{DT}) = 1.0 \times P(\text{DT}\mid\text{START}) \times P(\text{"El"}\mid\text{DT}) = \mathbf{0.1013}$. Las demás celdas son 0.</li>
+              <li><strong>Paso $t=2$ ("Señor"):</strong> Todas las ramas provienen de DT ($v_1=0.1013$). Se calculan: NN ($0.00961134$), NNP ($0.00174287$) y JJ ($0.00218504$). Gana <strong>NN</strong> como estado dominante.</li>
+              <li><strong>Paso $t=3$ ("Vino") [Punto Clave de Examen]:</strong> Ambigüedad entre verbo (VBD) y sustantivo bebida (NN).<br>
+                • Rama VBD: $v_2(\text{NN}) \times P(\text{VBD}\mid\text{NN}) \times P(\text{"vino"}\mid\text{VBD}) = \mathbf{0.00012072}$.<br>
+                • Rama NN: $v_2(\text{NN}) \times P(\text{NN}\mid\text{NN}) \times P(\text{"vino"}\mid\text{NN}) = \mathbf{0.00011687}$.<br>
+                <span class="font-bold text-emerald-800">Decisión:</span> Gana <code class="bg-emerald-100 text-emerald-900 px-1 py-0.5 rounded font-bold">VBD (0.00012072 &gt; 0.00011687)</code>. Viterbi desambigua correctamente "vino" como acción verbal tras el sustantivo.
+              </li>
+              <li><strong>Paso $t=4$ ("Tarde"):</strong> RB alcanza $\mathbf{0.000002482}$, superando a VBD ($0.000000733$) y NN ($0.000000710$). Gana <strong>RB (Adverbio)</strong>.</li>
+            </ul>
+            <div class="p-1.5 bg-emerald-50 rounded border border-emerald-300 font-bold text-emerald-950 text-center text-xs">
+              🎯 Secuencia Óptima Global (Backtrace): <code>&lt;start&gt; ➔ DT ("El") ➔ NN ("Señor") ➔ VBD ("Vino") ➔ RB ("Tarde") ➔ &lt;end&gt;</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 4: ANÁLISIS SINTÁCTICO (PARSING), CFG Y ALGORITMO CKY -->
+    <!-- ========================================================================= -->
+    <section id="tema4" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T4</span>
+          Tema 4: Análisis Sintáctico (Parsing), Gramáticas Libres de Contexto (CFG) y Algoritmo CKY
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 6 · Parsing Bottom-Up en Forma Normal de Chomsky</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 4 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Forma Normal de Chomsky (FNC / CNF)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">$A \to B \; C$ o $A \to a$</div>
+              </td>
+              <td>Restricción canónica de las Gramáticas Libres de Contexto (CFG) donde toda regla de producción debe adoptar exclusivamente dos formas: binaria no terminal ($A \to B \; C$) o unaria terminal ($A \to a$, con $a \in \Sigma$). Exige eliminar reglas $\varepsilon$ (épsilon), reglas unitarias ($A \to B$) y binarizar reglas con $\ge 3$ hijos.</td>
+              <td><span class="badge-bondad">Binarización Estricta</span> Transforma cualquier árbol de derivación en un árbol estrictamente binario, permitiendo algoritmos de programación dinámica de tiempo polinómico.</td>
+              <td><span class="badge-limitacion">Pérdida de Intuición Lingüística</span> Introduce símbolos no terminales auxiliares ficticios (ej. $X_1, X_2$) que complican la lectura directa del árbol de constituyentes.</td>
+              <td><span class="badge-evolucion">Gramáticas Probabilísticas (PCFG)</span> CFGs donde cada regla de producción lleva asociada una probabilidad condicional $P(A \to \alpha)$.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Requisito Innegociable CKY:</strong> Si una gramática no está en CNF, CKY <strong>no puede ejecutarse</strong>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Algoritmo CKY (Cocke-Kasami-Younger)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Parsing Ascendente (Bottom-Up)</div>
+              </td>
+              <td>Algoritmo de análisis sintáctico por programación dinámica que rellena una tabla triangular de dimensión $(n+1) \times (n+1)$ para una oración de longitud $n$. La diagonal almacena los terminales léxicos ($A \to w_i$) y las celdas superiores $(i, j)$ computan todas las particiones intermedias $k$ ($i < k < j$) combinando celdas $(i, k)$ y $(k, j)$ según reglas $A \to B \; C$.</td>
+              <td><span class="badge-bondad">Optimalidad Garantizada $\mathcal{O}(n^3 \cdot |R|)$</span> Encuentra todos los análisis válidos posibles sin recalcular subárboles compartidos (evita backtracking exponencial).</td>
+              <td><span class="badge-limitacion">Ambigüedad No Resuelta</span> Si la gramática es ambigua, CKY almacena múltiples símbolos o árboles sin criterio para ordenar cuál es más probable.</td>
+              <td><span class="badge-evolucion">Algoritmo Probabilístico CKY (p-CKY)</span> Extensión con probabilidades logarítmicas que decodifica el árbol sintáctico global más probable (análogo a Viterbi).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Examen:</strong> ¿En qué celda se verifica la validez de la oración completa? En la celda superior derecha $(0, n)$, donde debe aparecer el axioma inicial $O$ (o $S$).
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 4 -->
+      <div class="bg-purple-50/50 rounded-xl p-3 sm:p-4 border border-purple-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-purple-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-purple-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 4
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-purple-200 text-purple-900 font-bold text-[10px]">Cálculo Oficial Celia Cabello</span>
+        </div>
+
+        <!-- Ejercicio 4.1 Oficial CKY -->
+        <div class="bg-white p-3.5 rounded-lg border border-purple-200 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-100 pb-2">
+            <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-purple-600 text-white flex items-center justify-center text-xs">4.1</span>
+              <span>EJERCICIO OFICIAL: PARSING CKY Y RECONSTRUCCIÓN DEL ÁRBOL SINTÁCTICO</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-900 text-[10px] font-bold">"El gato come pescado" ($n=4$)</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs items-start">
+            <!-- Columna izquierda: Tabla Triangular CKY NATIVA -->
+            <div class="lg:col-span-6 space-y-2">
+              <div class="font-bold text-slate-900 text-[11px]">Matriz Triangular CKY (Reemplazo Nativo de Diapositiva Pág. 33):</div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-center border-collapse bg-white rounded border border-purple-300 text-[11px]">
+                  <thead>
+                    <tr class="bg-purple-900 text-white font-bold">
+                      <th class="p-1 border border-purple-800">Fila \ Col</th>
+                      <th class="p-1 border border-purple-800">1 ("El")</th>
+                      <th class="p-1 border border-purple-800">2 ("gato")</th>
+                      <th class="p-1 border border-purple-800">3 ("come")</th>
+                      <th class="p-1 border border-purple-800">4 ("pescado")</th>
+                    </tr>
+                  </thead>
+                  <tbody class="font-mono">
+                    <tr>
+                      <td class="p-1 border border-slate-200 font-bold bg-slate-100">0</td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-indigo-900 bg-indigo-50/70">
+                        (0, 1)<br><span class="text-xs font-black text-indigo-800">{Det}</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-purple-900 bg-purple-100/70">
+                        (0, 2)<br><span class="text-xs font-black text-purple-800">{SN}</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-200 text-slate-400 bg-slate-50">
+                        (0, 3)<br><span class="text-slate-400 font-normal">&empty;</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-300 font-bold text-emerald-900 bg-emerald-100/80">
+                        (0, 4)<br><span class="text-sm font-black text-emerald-800">{O} ★</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1 border border-slate-200 font-bold bg-slate-100">1</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-indigo-900 bg-indigo-50/70">
+                        (1, 2)<br><span class="text-xs font-black text-indigo-800">{N, SN}</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-200 text-slate-400 bg-slate-50">
+                        (1, 3)<br><span class="text-slate-400 font-normal">&empty;</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-200 text-slate-500 bg-slate-50">
+                        (1, 4)<br><span class="text-xs font-normal text-slate-500">{O}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1 border border-slate-200 font-bold bg-slate-100">2</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-indigo-900 bg-indigo-50/70">
+                        (2, 3)<br><span class="text-xs font-black text-indigo-800">{Vt}</span>
+                      </td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-purple-900 bg-purple-100/70">
+                        (2, 4)<br><span class="text-xs font-black text-purple-800">{SV}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1 border border-slate-200 font-bold bg-slate-100">3</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1 border border-slate-200 text-slate-300 bg-slate-100">-</td>
+                      <td class="p-1.5 border border-purple-200 font-bold text-indigo-900 bg-indigo-50/70">
+                        (3, 4)<br><span class="text-xs font-black text-indigo-800">{N, SN}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-[10px] text-slate-500">
+                Reglas gramaticales aplicadas: $O \to SN \; SV$, $SN \to Det \; N$, $SV \to Vt \; SN$, $SN \to N$.
+              </p>
+            </div>
+
+            <!-- Columna derecha: Árbol Sintáctico Vectorial / HTML estructurado -->
+            <div class="lg:col-span-6 space-y-2">
+              <div class="font-bold text-slate-900 text-[11px]">Árbol Sintáctico Constituyente Reconstruido (Backpointers):</div>
+              <div class="p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-[11px] leading-relaxed border border-slate-700 shadow-inner">
+                <div class="text-center font-bold text-emerald-400 text-xs pb-1 border-b border-slate-700 mb-2">
+                  [O] Axioma Oracional Válido (Celda 0, 4)
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                  <!-- Rama SN -->
+                  <div class="bg-slate-800/80 p-2 rounded border border-indigo-500/40">
+                    <div class="font-bold text-indigo-300 mb-1">SN (Celda 0, 2)</div>
+                    <div class="flex justify-around text-[10px] pt-1 border-t border-slate-700">
+                      <div>
+                        <span class="text-amber-400 font-bold">Det</span><br>
+                        <span class="text-slate-300">«El»</span>
+                      </div>
+                      <div>
+                        <span class="text-amber-400 font-bold">N</span><br>
+                        <span class="text-slate-300">«gato»</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Rama SV -->
+                  <div class="bg-slate-800/80 p-2 rounded border border-purple-500/40">
+                    <div class="font-bold text-purple-300 mb-1">SV (Celda 2, 4)</div>
+                    <div class="flex justify-around text-[10px] pt-1 border-t border-slate-700">
+                      <div>
+                        <span class="text-amber-400 font-bold">Vt</span><br>
+                        <span class="text-slate-300">«come»</span>
+                      </div>
+                      <div>
+                        <span class="text-indigo-300 font-bold">SN &rarr; N</span><br>
+                        <span class="text-slate-300">«pescado»</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2 text-center text-[10px] text-slate-400 pt-1 border-t border-slate-800">
+                  Fórmula de Derivación: $O \implies [SN \to Det(\text{"El"}) + N(\text{"gato"})] + [SV \to Vt(\text{"come"}) + SN(N(\text{"pescado"}))]$
+                </div>
+              </div>
+
+              <div class="p-2 bg-purple-50 rounded border border-purple-200 text-[10px] text-purple-950">
+                <strong>⚡ Complejidad de Examen:</strong> Tiempo $\mathcal{O}(n^3 \cdot |R|)$ y Espacio $\mathcal{O}(n^2 \cdot |N|)$. Para $n=4$, requiere únicamente $4(4+1)/2 = 10$ celdas evaluadas.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejercicio 4.2: Conversión a CNF -->
+        <div class="bg-white p-3 rounded-lg border border-purple-100 shadow-2xs space-y-1.5 text-xs">
+          <div class="font-bold text-slate-900 flex items-center justify-between">
+            <span>Ejercicio 4.2: Transformación Paso a Paso de CFG a Forma Normal de Chomsky</span>
+            <span class="text-[10px] text-purple-700 font-mono font-bold">Binarización</span>
+          </div>
+          <p class="text-[11px] text-slate-600">Dada la regla de sintagma verbal ternario $SV \to Vt \; SN \; SP$ (ej. "envió una carta a María"):</p>
+          <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-1">
+            <div>1. Regla no binaria: tiene 3 no terminales en su parte derecha ($Vt, SN, SP$).</div>
+            <div>2. Se introduce el símbolo auxiliar $X_1$:</div>
+            <div class="pl-4 text-purple-950 font-bold">• $SV \to Vt \; X_1$ (Regla estrictamente binaria)</div>
+            <div class="pl-4 text-purple-950 font-bold">• $X_1 \to SN \; SP$ (Regla estrictamente binaria)</div>
+            <div>Resultado: Gramática equivalente en CNF computable por CKY.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 5: SEMÁNTICA LÉXICA, RECURSOS LÉXICOS Y ONTOLOGÍAS (WORDNET) -->
+    <!-- ========================================================================= -->
+    <section id="tema5" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T5</span>
+          Tema 5: Semántica Léxica, Recursos Léxicos y Ontologías (WordNet)
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 7 · Relaciones Léxicas y Medidas Taxonómicas</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 5 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                WordNet y Synsets
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Base de Conocimiento Léxico-Semántica</div>
+              </td>
+              <td>Red léxica estructurada donde la unidad básica es el <strong>Synset</strong> (conjunto de palabras sinónimas intercambiables en un contexto dado). Organiza sustantivos, verbos, adjetivos y adverbios mediante relaciones léxico-semánticas explícitas: <em>hiperonimia</em> (tipo-de), <em>hiponimia</em> (subtipo), <em>meronimia</em> (parte-de) y <em>holonimia</em> (todo-de).</td>
+              <td><span class="badge-bondad">Semántica Estructurada Verificable</span> Permite razonar sobre distancias conceptuales, herencia de propiedades y relaciones ontológicas curadas por lingüistas humanos.</td>
+              <td><span class="badge-limitacion">Cobertura y Granularidad Excesiva</span> Distinciones de sentido hiperfinas que dificultan la desambiguación automática y desactualización ante neologismos o jerga técnica.</td>
+              <td><span class="badge-evolucion">Grafos de Conocimiento Multilingües</span> BabelNet (integración de WordNet + Wikipedia) y Wikidata, que conectan conceptos léxicos con entidades del mundo real.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>NLTK:</strong> <code>wordnet.synsets('bank')</code> devuelve <code>bank.n.01</code> (financiero), <code>bank.n.02</code> (orilla), etc.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Medidas de Similitud Taxonómica
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Path Sim, Leacock-Chodorow, Resnik</div>
+              </td>
+              <td>Funciones matemáticas que cuantifican la cercanía semántica entre dos conceptos en la jerarquía 'is-a' de WordNet: <strong>Path Similarity:</strong> $\frac{1}{\text{dist}(c_1, c_2)+1}$; <strong>Leacock-Chodorow:</strong> $-\log\left(\frac{\text{len}(c_1, c_2)}{2D}\right)$; <strong>Resnik:</strong> Basada en Contenido de Información (IC) del Ancestro Común más Específico: $\text{sim}(c_1, c_2) = \text{IC}(\text{LCS}(c_1, c_2))$.</td>
+              <td><span class="badge-bondad">Fundamentación Teórica Robusta</span> Las métricas basadas en IC (Resnik, Lin) no se ven afectadas por densidades desiguales en las ramas del árbol taxonómico.</td>
+              <td><span class="badge-limitacion">Sólo entre la Misma Categoría POS</span> No permite medir similitud entre un sustantivo y un verbo (ej. "destrucción" y "destruir") al pertenecer a taxonomías desconectadas.</td>
+              <td><span class="badge-evolucion">Similitud Vectorial por Coseno</span> Representaciones densas continuas (Embeddings) donde cualquier palabra o frase puede compararse directamente en $\mathbb{R}^d$.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> El <em>LCS (Lowest Common Subsumer)</em> es el ancestro común más profundo que comparten dos conceptos en la jerarquía.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 5 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 5
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Taxonomía WordNet</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Ejercicio 5.1: Path Similarity -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 5.1: Cálculo Analítico de Path Similarity en WordNet</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Métrica Taxonómica</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Dada la jerarquía is-a: <code>entidad &rarr; ser vivo &rarr; animal &rarr; carnívoro &rarr; cánido &rarr; perro</code> y <code>cánido &rarr; lobo</code>.</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-1">
+              <div>1. Distancia de aristas entre <code>perro</code> y <code>lobo</code>:</div>
+              <div class="pl-3 text-indigo-900 font-bold">LCS(perro, lobo) = cánido. dist(perro, cánido) = 1; dist(lobo, cánido) = 1.</div>
+              <div class="pl-3 font-bold">Longitud total camino: $\text{len} = 1 + 1 = 2$ aristas.</div>
+              <div class="mt-1">2. Fórmula de Path Similarity:</div>
+              <div class="p-1.5 bg-indigo-50 rounded border border-indigo-200 text-center font-bold text-indigo-950">
+                $$\text{PathSim}(\text{perro}, \text{lobo}) = \frac{1}{\text{dist} + 1} = \frac{1}{2 + 1} = \mathbf{0.333}$$
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-500">Si dos conceptos son idénticos ($	ext{dist}=0$), $	ext{PathSim}=1.0$. Si están infinitamente separados, tiende a 0.</p>
+          </div>
+
+          <!-- Ejercicio 5.2: Relaciones Léxicas para Test -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 5.2: Identificación Formal de Relaciones Semánticas</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Test UNIR</span>
+            </div>
+            <div class="space-y-1 text-[11px]">
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Hiperonimia / Hiponimia (Tipo-de / Relación 'is-a'):</strong><br>
+                «perro» es un hipónimo de «animal» (más específico). «animal» es hiperónimo de «perro» (más general).
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Meronimia / Holonimia (Parte-de / 'has-a'):</strong><br>
+                «volante» es merónimo de «automóvil» (es una parte de él). «automóvil» es holónimo de «volante» (el todo).
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>Troponimia (Manera de hacer un verbo):</strong><br>
+                «susurrar» es un tropónimo de «hablar» (manera específica de hablar).
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 6: DESAMBIGUACIÓN DEL SENTIDO DE LAS PALABRAS (WSD) -->
+    <!-- ========================================================================= -->
+    <section id="tema6" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T6</span>
+          Tema 6: Desambiguación del Sentido de las Palabras (WSD)
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 7 y 8 · Algoritmos de Lesk, Schütze y Yarowsky</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 6 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Algoritmo de Lesk
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Original (1986) vs Simplificado (Kilgarriff 2000)</div>
+              </td>
+              <td>Enfoque basado en conocimiento que resuelve la polisemia comparando el <strong>solapamiento léxico</strong> (intersección de palabras de contenido) entre el contexto de la oración y las glosas/ejemplos de cada sentido en un diccionario o WordNet: $\hat{S} = \arg\max_{S_k} |\text{Bolsa}(Contexto) \cap \text{Firma}(S_k)|$.</td>
+              <td><span class="badge-bondad">Cero Entrenamiento Anotado</span> No requiere corpora supervisados anotados con sentidos léxicos, apoyándose únicamente en un recurso léxico estándar.</td>
+              <td><span class="badge-limitacion">Extrema Fragilidad Léxica</span> Falla completamente si el texto usa sinónimos o paráfrasis que no coinciden literalmente con las palabras exactas de la glosa.</td>
+              <td><span class="badge-evolucion">Algoritmo de Schütze & Embeddings</span> Representación en espacios vectoriales densos donde la similitud no depende de la coincidencia ortográfica exacta.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Fija Examen:</strong> Desambiguar "banco" con Lesk Simplificado. La palabra "dinero" genera solapamiento = 1 con $S_1$ (financiero).
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Algoritmo de Schütze
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">WSD Vectorial No Supervisado</div>
+              </td>
+              <td>Método que prescinde de diccionarios externos: construye representaciones vectoriales de segundo orden basadas en coocurrencias léxicas en corpus y agrupa las apariciones de la palabra ambigua mediante clustering (K-Means). El sentido se asigna calculando la distancia del vector de contexto al centroide del clúster más cercano.</td>
+              <td><span class="badge-bondad">Descubrimiento Inductivo</span> Descubre automáticamente acepciones reales no catalogadas y jergas especializadas en el corpus.</td>
+              <td><span class="badge-limitacion">Sentidos Huérfanos</span> Produce clústeres matemáticos abstractos (Clúster 1, Clúster 2) que carecen de etiqueta lingüística humana legible sin intervención manual.</td>
+              <td><span class="badge-evolucion">Clustering de Embeddings Contextuales</span> Agrupamiento de vectores BERT de la misma palabra en distintos contextos para inducir sentidos (Word Sense Induction).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> Se basa en la distancia euclidiana o coseno al <em>centroide</em> del clúster más cercano.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Bootstrapping de Yarowsky
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Algoritmo Semi-Supervisado (1995)</div>
+              </td>
+              <td>Algoritmo iterativo basado en dos hipótesis lingüísticas fundamentales: <strong>One sense per discourse</strong> (una palabra mantiene el mismo sentido en todo el documento) y <strong>One sense per collocation</strong> (palabras contiguas condicionan el sentido). Inicia con pocas semillas (seeds), entrena un clasificador de reglas y etiqueta iterativamente el corpus no anotado.</td>
+              <td><span class="badge-bondad">Efecto Palanca Masivo</span> Con un puñado de ejemplos semilla iniciales alcanza precisiones competitivas (&gt;90%) en corpora gigantes sin supervisión costosa.</td>
+              <td><span class="badge-limitacion">Deriva Semántica (Semantic Drift)</span> Un falso positivo etiquetado en una iteración temprana contamina las reglas subsiguientes amplificando el error exponencialmente.</td>
+              <td><span class="badge-evolucion">Self-Training y Semi-Supervised Transformers</span> Aprendizaje semisupervisado con Pseudo-labeling y regularización de consistencia en redes profundas.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Test:</strong> Las dos hipótesis de Yarowsky son: «un sentido por discurso» y «un sentido por colocación».
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 6 -->
+      <div class="bg-emerald-50/50 rounded-xl p-3 sm:p-4 border border-emerald-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-emerald-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 6
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 font-bold text-[10px]">Cálculo Oficial Celia Cabello</span>
+        </div>
+
+        <!-- Ejercicio 6.1 Oficial: Lesk Simplificado para "banco" -->
+        <div class="bg-white p-3.5 rounded-lg border border-emerald-200 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-100 pb-2">
+            <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-emerald-600 text-white flex items-center justify-center text-xs">6.1</span>
+              <span>EJERCICIO OFICIAL: ALGORITMO DE LESK SIMPLIFICADO PARA "BANCO"</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-[10px] font-bold">Diapositiva Pág. 16 Resuelta</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs items-start">
+            <div class="lg:col-span-5 space-y-2">
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
+                <div class="font-bold text-slate-900 text-[11px]">Oración Problema:</div>
+                <div class="font-mono text-[11px] p-1.5 bg-white rounded border border-slate-300 text-indigo-950">
+                  «El <u>banco</u> le prestó dinero»
+                </div>
+                <div class="text-[10px] text-slate-600 pt-1">
+                  <strong>Palabras de contexto (sin stopwords):</strong><br>
+                  $C = [\text{"prestar"}, \text{"dinero"}]$
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200 font-mono text-[11px] text-emerald-950">
+                <div class="font-bold text-emerald-900 font-sans">Regla de Decisión Formal:</div>
+                $$\hat{S} = \arg\max_{S_k} |\text{Contexto} \cap \text{Firma}(S_k)|$$
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-2">
+              <!-- Comparativa de Firmas Nativa -->
+              <div class="space-y-1.5">
+                <div class="p-2 bg-emerald-50/80 rounded border border-emerald-200 space-y-1">
+                  <div class="font-bold text-emerald-950 flex items-center justify-between">
+                    <span>Sentido 1 ($S_1$, Entidad Financiera):</span>
+                    <span class="font-mono text-emerald-800 font-extrabold bg-emerald-200/80 px-1.5 py-0.5 rounded">Solapamiento = 1 ★</span>
+                  </div>
+                  <div class="text-[10px] text-slate-700 italic">
+                    «Empresa dedicada a realizar operaciones financieras con el dinero procedente de sus accionistas y de los depósitos de sus clientes»
+                  </div>
+                  <div class="text-[10px] font-mono text-slate-800">
+                    Firma: {empresa, dedicar, realizar, operación, financiera, <span class="bg-emerald-300 font-bold px-1 rounded">dinero</span>, accionista, depósito, cliente}
+                  </div>
+                  <div class="text-[10px] text-emerald-900 font-bold">
+                    Intersección $C \cap \text{Firma}(S_1) = \{\text{"dinero"}\} \implies \mathbf{|C \cap \text{Firma}(S_1)| = 1}$.
+                  </div>
+                </div>
+
+                <div class="p-2 bg-slate-50 rounded border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-900 flex items-center justify-between">
+                    <span>Sentido 2 ($S_2$, Asiento / Mueble):</span>
+                    <span class="font-mono text-slate-600 font-bold bg-slate-200 px-1.5 py-0.5 rounded">Solapamiento = 0</span>
+                  </div>
+                  <div class="text-[10px] text-slate-700 italic">
+                    «Asiento, con respaldo o sin él, en que pueden sentarse dos o más personas»
+                  </div>
+                  <div class="text-[10px] font-mono text-slate-800">
+                    Firma: {asiento, respaldo, poder, sentarse, persona}
+                  </div>
+                  <div class="text-[10px] text-slate-600">
+                    Intersección $C \cap \text{Firma}(S_2) = \emptyset \implies \mathbf{|C \cap \text{Firma}(S_2)| = 0}$.
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-2 bg-emerald-100 rounded border border-emerald-300 font-bold text-emerald-950 text-center text-xs">
+                🎯 Veredicto Oficial UNIR: Gana $S_1$ (Entidad Financiera) por mayor solapamiento ($1 > 0$).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejercicio 6.2: Schütze y Yarowsky -->
+        <div class="bg-white p-3 rounded-lg border border-emerald-100 shadow-2xs space-y-2 text-xs">
+          <div class="font-bold text-slate-900 flex items-center justify-between">
+            <span>Ejercicio 6.2: Trazado Algorítmico de Bootstrapping de Yarowsky</span>
+            <span class="text-[10px] text-emerald-700 font-mono font-bold">Iteración de Semillas</span>
+          </div>
+          <p class="text-[11px] text-slate-600">Para desambiguar la palabra "planta" (fábrica vs botánica) mediante semillas:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px]">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>Iteración 0 (Semillas):</strong><br>
+              Semilla $S_A$ (fábrica): «nuclear».<br>
+              Semilla $S_B$ (botánica): «hoja».<br>
+              Se etiquetan únicamente las instancias con esas colocaciones directas.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>Iteración 1 (Entrenamiento):</strong><br>
+              El clasificador aprende nuevas colocaciones altamente correlacionadas: «energía», «tratamiento» $\to S_A$; «regar», «maceta» $\to S_B$.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>Aplicación 'One Sense per Discourse':</strong><br>
+              Si en un documento una sola instancia de "planta" es etiquetada como fábrica, todas las demás apariciones de "planta" en dicho documento se fuerzan a $S_A$.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 7: MODELADO ESTADÍSTICO DEL LENGUAJE, N-GRAMAS Y PERPLEJIDAD -->
+    <!-- ========================================================================= -->
+    <section id="tema7" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T7</span>
+          Tema 7: Modelado Estadístico del Lenguaje, N-Gramas, Suavizado y Perplejidad
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 9 · Corpus BERP, Estimación MLE y Evaluación</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 7 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Modelos de N-Gramas (MLE)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Hipótesis de Markov de orden $(N-1)$</div>
+              </td>
+              <td>Modelos estadísticos que estiman la probabilidad conjunta de una secuencia $W = (w_1, \dots, w_m)$ aplicando la regla de la cadena y aproximando la historia por los últimos $N-1$ términos: $P(w_k \mid w_1, \dots, w_{k-1}) \approx P(w_k \mid w_{k-N+1}^{k-1})$. En bigramas ($N=2$): $P(w_n \mid w_{n-1}) = \frac{C(w_{n-1}, w_n)}{C(w_{n-1})}$.</td>
+              <td><span class="badge-bondad">Sencillez y Rapidez</span> El entrenamiento se reduce a contar frecuencias relativas en corpus (lookup tables ultrarrápidas).</td>
+              <td><span class="badge-limitacion">Problema del Cero (Sparsity)</span> Si un N-grama no apareció en el corpus de entrenamiento, su probabilidad es 0, anulando la probabilidad de toda la oración ($P=0$).</td>
+              <td><span class="badge-evolucion">Técnicas de Suavizado & LMs Neuronales</span> Suavizado Laplace/Add-k, Backoff y redes neuronales autoregresivas (RNNs, GPT).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> $P(\text{to} \mid \text{I want}) = \frac{C(\text{I want to})}{C(\text{I want})} = \frac{608}{827} \approx 0.7352$.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Técnicas de Suavizado (Smoothing)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Laplace (Add-1), Lidstone (Add-k), Katz</div>
+              </td>
+              <td>Mecanismos matemáticos que redistribuyen masa de probabilidad desde los N-gramas frecuentes hacia secuencias no observadas (conteo cero): $P_{\text{Add-}k}(w_n \mid w_{n-1}) = \frac{C(w_{n-1}, w_n) + k}{C(w_{n-1}) + k \cdot |V|}$.</td>
+              <td><span class="badge-bondad">Garantía de Probabilidad No Nula</span> Impide que la perplejidad tienda a infinito ($PPL \to \infty$) por ceros en secuencias de test.</td>
+              <td><span class="badge-limitacion">Distorsión Proporcional</span> Add-1 asigna demasiada masa de probabilidad a eventos raros cuando el vocabulario $|V|$ es grande.</td>
+              <td><span class="badge-evolucion">Suavizado Kneser-Ney Modificado</span> Suavizado interpolado basado en la fertilidad o versatilidad de continuación del unigrama.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Fórmula Examen:</strong> El denominador suma $k \cdot |V|$ para asegurar que $\sum_{w_n} P(w_n \mid w_{n-1}) = 1$.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Perplejidad (Perplexity - PPL)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Métrica Intrínseca de Evaluación de LMs</div>
+              </td>
+              <td>Exponente del promedio de la log-verosimilitud negativa de una secuencia de prueba no vista: $PPL(W) = P(w_1, \dots, w_N)^{-\frac{1}{N}} = \exp\left(-\frac{1}{N} \sum_{i=1}^N \ln P(w_i \mid w_1^{i-1})\right)$. Equivale intuitivamente al <em>factor de ramificación ponderado</em> (número de palabras equiprobables entre las que duda el modelo al predecir la siguiente).</td>
+              <td><span class="badge-bondad">Evaluación Intrínseca Estandarizada</span> Permite comparar modelos de lenguaje directamente sin entrenar un clasificador downstream.</td>
+              <td><span class="badge-limitacion">Dependencia del Vocabulario</span> Solo es comparable entre modelos evaluados exactamente sobre el mismo corpus de test y el mismo vocabulario cerrado $|V|$.</td>
+              <td><span class="badge-evolucion">Evaluación de LLMs en Benchmarks</span> Métricas MMLU, GSM8k y HumanEval para medir razonamiento en lugar de predicción estadística local.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Regla de Examen:</strong> A <strong>menor perplejidad</strong>, mayor calidad predictiva del modelo. Si $P=1$, $PPL=1$. Si es puro azar uniforme, $PPL=|V|$.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 7 -->
+      <div class="bg-sky-50/50 rounded-xl p-3 sm:p-4 border border-sky-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-sky-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 7
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-sky-200 text-sky-900 font-bold text-[10px]">Cálculo Oficial Celia Cabello</span>
+        </div>
+
+        <!-- Ejercicio 7.1 Oficial: Matriz BERP y Trigramas -->
+        <div class="bg-white p-3.5 rounded-lg border border-sky-200 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-2">
+            <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+              <span class="w-6 h-6 rounded bg-sky-600 text-white flex items-center justify-center text-xs">7.1</span>
+              <span>EJERCICIO OFICIAL: MATRIZ DE BIGRAMAS BERP Y ESTIMACIÓN DE TRIGRAMA</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-900 text-[10px] font-bold">Diapositiva Pág. 9 Resuelta</span>
+          </div>
+
+          <!-- Matriz de Conteo BERP Nativa -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-center border-collapse bg-white rounded border border-sky-300 text-[11px]">
+              <thead>
+                <tr class="bg-sky-900 text-white font-bold">
+                  <th class="p-1 border border-sky-800">Bigrama ($w_{n-1} \to w_n$)</th>
+                  <th class="p-1 border border-sky-800">i</th>
+                  <th class="p-1 border border-sky-800">want</th>
+                  <th class="p-1 border border-sky-800">to</th>
+                  <th class="p-1 border border-sky-800">eat</th>
+                  <th class="p-1 border border-sky-800">chinese</th>
+                  <th class="p-1 border border-sky-800">food</th>
+                  <th class="p-1 border border-sky-800">lunch</th>
+                  <th class="p-1 border border-sky-800">spend</th>
+                </tr>
+              </thead>
+              <tbody class="font-mono">
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">i</td>
+                  <td class="p-1 border border-slate-200">5</td>
+                  <td class="p-1 border border-slate-200 font-bold text-sky-900 bg-sky-100/70">827</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">9</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                </tr>
+                <tr class="bg-amber-50/40">
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">want</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 font-bold text-amber-900 bg-amber-100/80">608</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200">6</td>
+                  <td class="p-1 border border-slate-200">6</td>
+                  <td class="p-1 border border-slate-200">5</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">to</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">4</td>
+                  <td class="p-1 border border-slate-200">686</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">6</td>
+                  <td class="p-1 border border-slate-200">211</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">eat</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">16</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200">42</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">chinese</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">82</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">food</td>
+                  <td class="p-1 border border-slate-200">15</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">15</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200">4</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">lunch</td>
+                  <td class="p-1 border border-slate-200">2</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                </tr>
+                <tr>
+                  <td class="p-1 border border-slate-200 font-bold bg-slate-100">spend</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200">1</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                  <td class="p-1 border border-slate-200 text-slate-400">0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs pt-1">
+            <!-- Ejercicio A -->
+            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 space-y-1">
+              <div class="font-bold text-slate-900">A) Cálculo Trigrama $P(\text{to} \mid \text{I want})$:</div>
+              <p class="text-[11px] text-slate-600">
+                Apariciones de "I want to" = 608.<br>
+                Apariciones de "I want" = 827.
+              </p>
+              <div class="p-1 bg-white rounded border border-sky-300 font-mono text-center font-bold text-sky-950 text-xs">
+                $$P(\text{to} \mid \text{I want}) = \frac{608}{827} \approx \mathbf{0.7352} \; (73.52\\%)$$
+              </div>
+            </div>
+
+            <!-- Ejercicio B -->
+            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 space-y-1">
+              <div class="font-bold text-slate-900">B) Suavizado Add-5 ($k=5, |V|=1446$):</div>
+              <p class="text-[11px] text-slate-600">
+                $C(\text{i}) = 2533$, $C(\text{i, want}) = 827$.
+              </p>
+              <div class="p-1 bg-white rounded border border-sky-300 font-mono text-center font-bold text-sky-950 text-[11px]">
+                $$P_{\text{Add-5}} = \frac{827 + 5}{2533 + (5 \times 1446)} = \frac{832}{9763} \approx \mathbf{0.0852}$$
+              </div>
+            </div>
+
+            <!-- Ejercicio C -->
+            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 space-y-1">
+              <div class="font-bold text-slate-900">C) Bigrama No Visto ($C=0$):</div>
+              <p class="text-[11px] text-slate-600">
+                $C(\text{chinese, chinese}) = 0$, $C(\text{chinese}) = 158$.
+              </p>
+              <div class="p-1 bg-white rounded border border-sky-300 font-mono text-center font-bold text-sky-950 text-[11px]">
+                $$P_{\text{Add-5}} = \frac{0 + 5}{158 + 7230} = \frac{5}{7388} \approx \mathbf{0.000677}$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejercicio 7.2: Perplejidad -->
+        <div class="bg-white p-3 rounded-lg border border-sky-100 shadow-2xs space-y-1.5 text-xs">
+          <div class="font-bold text-slate-900 flex items-center justify-between">
+            <span>Ejercicio 7.2: Cálculo Analítico de Perplejidad de una Oración</span>
+            <span class="text-[10px] text-sky-700 font-mono font-bold">Evaluación Intrínseca</span>
+          </div>
+          <p class="text-[11px] text-slate-600">Dada una frase de $N=3$ palabras con probabilidades condicionales calculadas por el modelo: $P(w_1)=0.10$, $P(w_2 \mid w_1)=0.20$, $P(w_3 \mid w_2)=0.05$.</p>
+          <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-1 text-slate-800">
+            <div>1. Probabilidad conjunta: $P(W) = 0.10 \times 0.20 \times 0.05 = 0.0010 = 10^{-3}$.</div>
+            <div>2. Cálculo de Perplejidad:</div>
+            <div class="p-1.5 bg-sky-50 rounded border border-sky-200 text-center font-bold text-sky-950">
+              $$PPL(W) = P(W)^{-\frac{1}{N}} = (0.0010)^{-\frac{1}{3}} = (10^{-3})^{-\frac{1}{3}} = 10^1 = \mathbf{10.0}$$
+            </div>
+            <div class="text-[10px] text-slate-600 font-sans">
+              <strong>Interpretación:</strong> El modelo tiene la misma incertidumbre que si debiera elegir uniformemente al azar entre 10 palabras en cada paso.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 8: MODELADO NEURONAL, REDES RECURRENTES Y TRANSFORMERS -->
+    <!-- ========================================================================= -->
+    <section id="tema8" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T8</span>
+          Tema 8: Modelado Neuronal, Redes Recurrentes (LSTM/GRU) y Transformers (BERT/BETO)
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 10 y 11 · De Embeddings Estáticos a Atención Masiva</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 8 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Word2Vec: CBOW vs. Skip-Gram
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Embeddings Estáticos Distribuidos (Mikolov 2013)</div>
+              </td>
+              <td>Redes neuronales de dos capas sin función de activación intermedia que aprenden vectores densos $\vec{v} \in \mathbb{R}^d$ ($d \approx 300$). <strong>CBOW:</strong> Predice la palabra objetivo $w_t$ a partir del contexto circundante $w_{t-c}, \dots, w_{t+c}$. <strong>Skip-Gram:</strong> Predice las palabras de contexto a partir de la palabra central $w_t$ (optimizado con Negative Sampling).</td>
+              <td><span class="badge-bondad">Propiedades Aritméticas Semánticas</span> Permite operaciones de analogía vectorial famosas: $\vec{v}(\text{"Rey"}) - \vec{v}(\text{"Hombre"}) + \vec{v}(\text{"Mujer"}) \approx \vec{v}(\text{"Reina"})$.</td>
+              <td><span class="badge-limitacion">Polisemia No Resuelta (Vector Estático)</span> Cada palabra recibe un único vector fijo en el espacio, colapsando todos sus sentidos («banco» financiero y mueble comparten el mismo vector).</td>
+              <td><span class="badge-evolucion">Representaciones Contextuales Dinámicas</span> Transformers (ELMo, BERT) donde cada token recibe un embedding dinámico condicionado por toda la frase.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> CBOW es más rápido y funciona mejor en palabras frecuentes; Skip-Gram es superior en palabras raras o datasets pequeños.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Redes Recurrentes: LSTM vs. GRU
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Secuencias Temporales y Mitigación de Gradiente</div>
+              </td>
+              <td>Modelos neuronales diseñados para secuencias. <strong>LSTM:</strong> Resuelve el desvanecimiento de gradiente mediante un <em>Cell State</em> continuo ($C_t$) regulado por 3 compuertas: Olvido ($f_t$), Entrada ($i_t$) y Salida ($o_t$). <strong>GRU:</strong> Variante simplificada que fusiona estado oculto y celda, utilizando solo 2 compuertas: Actualización ($z_t$) y Reinicio ($r_t$).</td>
+              <td><span class="badge-bondad">Memoria de Largo Alcance</span> Capturan dependencias sintácticas y semánticas a través de decenas de pasos temporales. GRU es 25-30% más rápida de entrenar.</td>
+              <td><span class="badge-limitacion">Procesamiento Secuencial No Paralelizable</span> El paso $t$ depende estrictamente del paso $t-1$, impidiendo aprovechar la paralelización masiva de las GPUs modernas.</td>
+              <td><span class="badge-evolucion">Arquitectura Transformer</span> Prescinde totalmente de recurrencias mediante Self-Attention completamente paralelizable.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Test:</strong> GRU tiene menos parámetros que LSTM al no poseer compuerta de salida separada ni cell state desacoplado.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                La Revolución del Transformer
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Vaswani et al. (2017) · «Attention is All You Need»</div>
+              </td>
+              <td>Arquitectura basada íntegramente en mecanismos de autoatención (Self-Attention) y capas Feed-Forward con conexiones residuales y normalización. Computa relaciones directas entre cualquier par de tokens sin importar su distancia ($O(1)$ operaciones secuenciales): $\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$.</td>
+              <td><span class="badge-bondad">Paralelización Absoluta y Cero Pérdida de Gradiente</span> Entrena sobre miles de millones de tokens en tiempo récord y captura contexto bidireccional profundo simultáneo.</td>
+              <td><span class="badge-limitacion">Complejidad Cuadrática $\mathcal{O}(n^2)$</span> El coste computacional y de memoria de la atención escala con el cuadrado de la longitud de la secuencia $n$ (cuello de botella de contexto largo).</td>
+              <td><span class="badge-evolucion">Atención Dispersa y Arquitecturas Flash</span> FlashAttention, RoPE, State Space Models (Mamba) y MoE (Mixture of Experts).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> El factor $\sqrt{d_k}$ evita que el producto punto crezca excesivamente en dimensiones altas, empujando la función softmax hacia regiones con gradientes casi nulos.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                BERT y BETO (Spanish BERT)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Preentrenamiento Bidireccional de Encoder</div>
+              </td>
+              <td>Modelo basado en el Encoder del Transformer preentrenado con dos tareas autosupervisadas: <strong>Masked Language Model (MLM)</strong> (predecir el 15% de tokens enmascarados con <code>[MASK]</code>) y <strong>Next Sentence Prediction (NSP)</strong>. BETO es la versión entrenada nativamente en español sobre un corpus masivo (Wikipedia + OPUS).</td>
+              <td><span class="badge-bondad">Representaciones Bidireccionales Profundas</span> Estado del arte en tareas de comprensión lectora, clasificación de texto, NER y similitud semántica mediante Fine-Tuning de pocas épocas.</td>
+              <td><span class="badge-limitacion">No es Generativo Autoregresivo</span> Al estar compuesto sólo de capas Encoder, no está diseñado para generar texto fluido abierto como los modelos Decoder (GPT).</td>
+              <td><span class="badge-evolucion">Modelos Instructivos y Híbridos</span> Arquitecturas Decoder-only con alineación por instrucciones (Llama 3, Mistral, GPT-4).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Token Especial:</strong> El vector del token <code>[CLS]</code> al inicio de la secuencia condensa la representación semántica global para clasificación oracional.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 8 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 8
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Cálculo Matricial KaTeX</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Ejercicio 8.1: Scaled Dot-Product Attention -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 8.1: Cálculo Matricial Paso a Paso de Self-Attention</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Scaled Dot-Product</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Para una secuencia de 2 tokens con dimensión $d_k = 2$, dadas las matrices de proyección:</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-1">
+              <div>$Q = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$, $K = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix}$, $V = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$, $\sqrt{d_k} = \sqrt{2} \approx 1.414$.</div>
+              <div class="pt-1">1. Producto de Similitud: $S = Q K^T = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$.</div>
+              <div>2. Escalado por $\sqrt{2}$: $S_{\text{scaled}} = \begin{pmatrix} 0.707 & 0.707 \\ 0.000 & 0.707 \end{pmatrix}$.</div>
+              <div>3. Softmax por Filas:</div>
+              <div class="pl-2 font-bold text-indigo-900">• Fila 1: $\text{softmax}([0.707, 0.707]) = [0.500, 0.500]$.</div>
+              <div class="pl-2 font-bold text-indigo-900">• Fila 2: $\text{softmax}([0, 0.707]) = [0.330, 0.670]$.</div>
+              <div class="pt-1">4. Salida Final: $A \times V = \begin{pmatrix} 0.5 & 0.5 \\ 0.33 & 0.67 \end{pmatrix} \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix} = \mathbf{\begin{pmatrix} 1.00 & 2.00 \\ 0.66 & 2.34 \end{pmatrix}}$.</div>
+            </div>
+          </div>
+
+          <!-- Ejercicio 8.2: Comparativa de Compuertas LSTM vs GRU -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 8.2: Ecuaciones de Compuertas y Eficiencia de Parámetros</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Arquitectura</span>
+            </div>
+            <div class="space-y-1.5 text-[11px]">
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>LSTM (4 matrices de pesos):</strong><br>
+                • Olvido: $f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)$<br>
+                • Entrada: $i_t = \sigma(W_i [h_{t-1}, x_t] + b_i)$<br>
+                • Candidato: $\tilde{C}_t = \tanh(W_c [h_{t-1}, x_t] + b_c)$<br>
+                • Salida: $o_t = \sigma(W_o [h_{t-1}, x_t] + b_o)$<br>
+                Total Parámetros por celda: $4 \times (d_h(d_h + d_x) + d_h)$.
+              </div>
+              <div class="p-1.5 bg-slate-50 rounded border border-slate-200">
+                <strong>GRU (3 matrices de pesos):</strong><br>
+                • Reset: $r_t = \sigma(W_r [h_{t-1}, x_t] + b_r)$<br>
+                • Update: $z_t = \sigma(W_z [h_{t-1}, x_t] + b_z)$<br>
+                Total Parámetros por celda: $3 \times (d_h(d_h + d_x) + d_h)$.<br>
+                <span class="text-indigo-900 font-bold">Ahorro del 25% en memoria y cómputo frente a LSTM.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 9: APLICACIONES INDUSTRIALES (NER, RELACIONES Y ABSA) -->
+    <!-- ========================================================================= -->
+    <section id="tema9" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T9</span>
+          Tema 9: Aplicaciones Industriales del PLN: NER, Extracción de Relaciones y Análisis de Aspectos (ABSA)
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semana 12 · Extracción de Información y Minería de Opiniones</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 9 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Reconocimiento de Entidades Nombradas (NER)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">BIO / IOB vs BILOU Schemes</div>
+              </td>
+              <td>Tarea de Extracción de Información que localiza y clasifica menciones de entidades en categorías predefinidas (Persona, Lugar, Organización, Fecha, etc.). Formalmente se modela como etiquetado secuencial donde cada token recibe una etiqueta de posición: <strong>BIO:</strong> $B$ (Begin), $I$ (Inside), $O$ (Outside). <strong>BILOU:</strong> Añade $L$ (Last) y $U$ (Unit para entidades de una sola palabra).</td>
+              <td><span class="badge-bondad">Estructuración Automatizada</span> Convierte texto libre no estructurado en registros relacionales y bases de datos estructuradas. BILOU reduce ambigüedades en entidades largas.</td>
+              <td><span class="badge-limitacion">Entidades Anidadas y Discontinuas</span> El esquema BIO plano colapsa cuando una entidad está contenida dentro de otra (ej. "[Banco de [España]]").</td>
+              <td><span class="badge-evolucion">NER Basado en Span / LLM Few-Shot</span> Extracción mediante clasificación de pares de spans y prompts estructurados con salida JSON Schema.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>spaCy:</strong> <code>doc.ents</code>, <code>ent.label_</code>, <code>ent.text</code>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Análisis de Sentimientos Basado en Aspectos (ABSA)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">ATE (Aspect Term) + ASC (Sentiment)</div>
+              </td>
+              <td>Descomposición de la minería de opiniones en dos subtareas acopladas: 1) <strong>Aspect Term Extraction (ATE):</strong> Identificar los atributos específicos del producto/servicio mencionados (ej. "batería", "pantalla"). 2) <strong>Aspect Sentiment Classification (ASC):</strong> Determinar la polaridad (positivo, negativo, neutro) dirigida exclusivamente a cada aspecto individual.</td>
+              <td><span class="badge-bondad">Granularidad Accionable</span> Supera la clasificación global de sentimiento (ej. "3 estrellas") permitiendo saber exactamente qué componente falló y cuál gustó.</td>
+              <td><span class="badge-limitacion">Aspectos Implícitos</span> Dificultad para detectar opiniones donde el aspecto no se nombra textualmente (ej. «Cuesta un riñón» $	o$ Aspecto: Precio, Polaridad: Negativa).</td>
+              <td><span class="badge-evolucion">LLMs con Razonamiento Multi-Aspecto</span> Extracción conjunta mediante prompting instruccional y esquemas Pydantic estructurados.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Caso Examen:</strong> En «La comida genial pero el servicio pésimo»: Comida ➔ Positiva; Servicio ➔ Negativa.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 9 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 9
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Anotación & Evaluación</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Ejercicio 9.1: Anotación BIO vs BILOU -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 9.1: Anotación Comparativa BIO vs. BILOU</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Secuenciación</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Frase: «El presidente Gabriel Boric visitó la sede de Google en Madrid».</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-center border-collapse bg-white rounded border border-slate-300 text-[10px]">
+                <thead>
+                  <tr class="bg-slate-900 text-white font-bold">
+                    <th class="p-1 border border-slate-700">Token</th>
+                    <th class="p-1 border border-slate-700">BIO</th>
+                    <th class="p-1 border border-slate-700">BILOU</th>
+                    <th class="p-1 border border-slate-700">Explicación Lingüística</th>
+                  </tr>
+                </thead>
+                <tbody class="font-mono">
+                  <tr><td class="p-1 border border-slate-200">El</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200 font-sans text-left">Fuera de entidad</td></tr>
+                  <tr><td class="p-1 border border-slate-200">presidente</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200 font-sans text-left">Título profesional, no nombre propio</td></tr>
+                  <tr class="bg-indigo-50/70 font-bold"><td class="p-1 border border-slate-200">Gabriel</td><td class="p-1 border border-slate-200 text-indigo-800">B-PER</td><td class="p-1 border border-slate-200 text-indigo-800">B-PER</td><td class="p-1 border border-slate-200 font-sans text-left">Inicio de entidad multi-token</td></tr>
+                  <tr class="bg-indigo-50/70 font-bold"><td class="p-1 border border-slate-200">Boric</td><td class="p-1 border border-slate-200 text-indigo-800">I-PER</td><td class="p-1 border border-slate-200 text-indigo-800 font-extrabold text-indigo-950">L-PER</td><td class="p-1 border border-slate-200 font-sans text-left">Final de entidad en BILOU (L = Last)</td></tr>
+                  <tr><td class="p-1 border border-slate-200">visitó</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200 font-sans text-left">Verbo</td></tr>
+                  <tr><td class="p-1 border border-slate-200">la / sede / de</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200 font-sans text-left">Palabras no entidad</td></tr>
+                  <tr class="bg-amber-50/70 font-bold"><td class="p-1 border border-slate-200">Google</td><td class="p-1 border border-slate-200 text-amber-800">B-ORG</td><td class="p-1 border border-slate-200 text-amber-900 font-extrabold">U-ORG</td><td class="p-1 border border-slate-200 font-sans text-left">Entidad de 1 sola palabra (U = Unit)</td></tr>
+                  <tr><td class="p-1 border border-slate-200">en</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200">O</td><td class="p-1 border border-slate-200 font-sans text-left">Preposición</td></tr>
+                  <tr class="bg-emerald-50/70 font-bold"><td class="p-1 border border-slate-200">Madrid</td><td class="p-1 border border-slate-200 text-emerald-800">B-LOC</td><td class="p-1 border border-slate-200 text-emerald-900 font-extrabold">U-LOC</td><td class="p-1 border border-slate-200 font-sans text-left">Entidad de 1 sola palabra (U = Unit)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Ejercicio 9.2: Métricas F1 Estricto vs Token-level -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 9.2: Evaluación de NER: F1 Estricto vs. F1 Parcial</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Métricas UNIR</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Golden: [Banco Central Europeo] como ORG. Predicción del modelo: [Banco Central] como ORG.</p>
+            <div class="space-y-1.5 text-[11px]">
+              <div class="p-2 bg-slate-50 rounded border border-slate-200">
+                <strong>Criterio Estricto (Exact-Match / CoNLL Oficial):</strong><br>
+                Requiere coincidencia exacta de límites (span) y tipo.<br>
+                ➔ Resultado: <span class="font-bold text-rose-800">Falso Positivo (FP)</span> para [Banco Central] y <span class="font-bold text-rose-800">Falso Negativo (FN)</span> para [Banco Central Europeo]. Precisión = 0, Recall = 0.
+              </div>
+              <div class="p-2 bg-slate-50 rounded border border-slate-200">
+                <strong>Criterio Parcial / Token-level:</strong><br>
+                Evalúa token por token: "Banco" (Acierto TP), "Central" (Acierto TP), "Europeo" (Fallo FN).<br>
+                ➔ Precision = $2/2 = 1.0$, Recall = $2/3 = 0.67$, $F1 = \mathbf{0.80}$.
+              </div>
+            </div>
+            <div class="p-1.5 bg-amber-50 rounded border border-amber-200 text-[10px] text-amber-900 font-bold">
+              ⚠️ Alerta de Examen: El tribunal exige siempre especificar si la métrica reportada es a nivel de Span Estricto o Token-level permisivo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- TEMA 10: MODELOS MASIVOS DE LENGUAJE (LLMS), RAG Y AGENTES -->
+    <!-- ========================================================================= -->
+    <section id="tema10" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-3 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">T10</span>
+          Tema 10: Modelos Masivos de Lenguaje (LLMs), RAG, Prompt Engineering y Agentes Autónomos
+        </h2>
+        <span class="text-xs font-semibold text-slate-500">Semanas 13 y 14 · Paradigma Generativo y Sistemas RAG</span>
+      </div>
+
+      <!-- TABLA MAESTRA DEL TEMA 10 -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200 mb-4">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 14%;">1. Concepto / Técnica</th>
+              <th style="width: 22%;">2. Definición Rigurosa</th>
+              <th style="width: 16%;">3. Bondades (Ventajas)</th>
+              <th style="width: 16%;">4. Limitaciones</th>
+              <th style="width: 14%;">5. ¿A qué evoluciona?</th>
+              <th style="width: 18%;">Tips de Examen & spaCy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">
+                RAG (Retrieval-Augmented Generation)
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Arquitectura Híbrida No Paramétrica</div>
+              </td>
+              <td>Patrón arquitectónico que combina un sistema de recuperación de información (Dense Retriever con embeddings y bases de datos vectoriales como FAISS/Chroma) con un LLM generativo. Ante una consulta $q$, recupera los $k$ fragmentos más relevantes del corpus externo y los inyecta en el prompt contextual como evidencia verificable: $P(y \mid q) = \sum_{d \in \text{Top-}k} P(d \mid q) P(y \mid q, d)$.</td>
+              <td><span class="badge-bondad">Mitigación Radical de Alucinaciones</span> Ancla la generación a fuentes corporativas privadas sin necesidad de reentrenar ni afinar (fine-tuning) el modelo masivo.</td>
+              <td><span class="badge-limitacion">Sensibilidad al Retrieval y Chunking</span> Si la etapa de recuperación falla o divide un párrafo mutilando la información clave, el LLM generará respuestas incompletas o erróneas.</td>
+              <td><span class="badge-evolucion">RAG Agéntico & Correctivo (CRAG)</span> Agentes que evalúan reflexivamente la calidad de los documentos recuperados y deciden si reintentar la búsqueda en la web.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Componentes Clave:</strong> Chunking (256-512 tokens) con solapamiento (10%), Embeddings densos, Base Vectorial (HNSW index) y LLM generador.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Estrategias de Decodificación
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Greedy vs Beam Search vs Top-p / Top-k</div>
+              </td>
+              <td>Algoritmos para seleccionar el siguiente token $y_t$ a partir de la distribución de probabilidad generada por el LLM: <strong>Greedy Search:</strong> Selecciona siempre $\arg\max P(w)$. <strong>Beam Search:</strong> Mantiene los $B$ caminos más probables. <strong>Top-k:</strong> Trunca a las $k$ palabras más probables. <strong>Top-p (Nucleus Sampling):</strong> Selecciona el conjunto dinámico más pequeño de tokens cuya suma de probabilidad acumulada alcance el umbral $p$.</td>
+              <td><span class="badge-bondad">Control de Creatividad y Variabilidad</span> Permite calibrar la temperatura: respuestas deterministas formales ($T \approx 0$) o creativas fluidas ($T \approx 0.7 - 0.9$).</td>
+              <td><span class="badge-limitacion">Bucles Repetitivos en Greedy</span> La búsqueda codiciosa suele quedar atrapada en repeticiones cíclicas en textos largos.</td>
+              <td><span class="badge-evolucion">Muestreo Especulativo y Guided Decoding</span> Decodificación guiada por autómatas finitos que garantizan esquemas JSON o gramáticas formales 100% válidas.</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Pregunta Examen:</strong> Para extracción de datos precisos (ej. diagnóstico médico), usar Temperature = 0 y Greedy Search.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">
+                Patrones de Prompting y Agentes
+                <div class="text-[10px] text-slate-500 font-mono mt-0.5">Zero-shot, Few-shot, CoT, ReAct</div>
+              </td>
+              <td>Metodologías de acondicionamiento de LLMs: <strong>Chain-of-Thought (CoT):</strong> Obliga al modelo a generar pasos de razonamiento intermedios («Pensemos paso a paso») mejorando drásticamente el rendimiento lógico. <strong>ReAct (Reason + Act):</strong> Bucle autónomo donde el agente intercala pensamientos, llamadas a herramientas externas (APIs, calculadoras, SQL) y observaciones.</td>
+              <td><span class="badge-bondad">Capacidad de Acción en Entornos Reales</span> El modelo no solo responde preguntas, sino que ejecuta transacciones, consulta bases de datos y orquesta flujos de trabajo.</td>
+              <td><span class="badge-limitacion">Bucles Infinitos y Latencia Acumulada</span> Múltiples iteraciones de ReAct aumentan el tiempo de respuesta a varios segundos y multiplican el consumo de tokens.</td>
+              <td><span class="badge-evolucion">Arquitecturas Multi-Agente & Protocolos MCP</span> Sistemas donde agentes especializados cooperan bajo protocolos de intercambio de herramientas (Model Context Protocol).</td>
+              <td>
+                <div class="text-[10px] bg-slate-50 p-1.5 rounded border border-slate-200">
+                  <strong>Examen:</strong> El prompt de un agente seguro debe contener delimitadores estrictos (ej. <code>&lt;context&gt;</code>) para evitar Prompt Injection.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 10 -->
+      <div class="bg-indigo-50/50 rounded-xl p-3 sm:p-4 border border-indigo-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>📐</span> EJERCICIOS NUMÉRICOS Y PRÁCTICOS DEL TEMA 10
+          </h3>
+          <span class="px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold text-[10px]">Arquitectura RAG & Inferencia</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Ejercicio 10.1: Pipeline RAG Matemático -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 10.1: Similitud Vectorial y Selección Top-k en RAG</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Dense Retrieval</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Dada la consulta $q$ y 3 fragmentos indexados en la base vectorial con similitudes coseno ya normalizadas:</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] space-y-1">
+              <div>• $\text{sim}(q, D_1) = 0.88$ (Fragmento de política de cancelaciones)</div>
+              <div>• $\text{sim}(q, D_2) = 0.42$ (Fragmento de catálogo de productos)</div>
+              <div>• $\text{sim}(q, D_3) = 0.81$ (Fragmento de plazos de reembolso)</div>
+              <div class="pt-1 font-bold text-indigo-900">1. Selección con umbral $\tau = 0.75$ y $k=2$:</div>
+              <div class="pl-3">Se seleccionan $D_1$ y $D_3$. Se descarta $D_2$ ($0.42 < 0.75$).</div>
+              <div class="pt-1 font-bold text-indigo-900">2. Estructuración del Prompt Aumentado:</div>
+              <div class="p-1 bg-white rounded border border-indigo-200 text-[10px] text-slate-700 font-sans">
+                <code>&lt;instrucción&gt;</code> Responde únicamente en base a los fragmentos provistos.<br>
+                <code>&lt;contexto&gt;</code> [D1: ...] [D3: ...] <code>&lt;/contexto&gt;</code><br>
+                <code>&lt;pregunta&gt;</code> ¿Puedo cancelar y recibir mi dinero?
+              </div>
+            </div>
+          </div>
+
+          <!-- Ejercicio 10.2: Decodificación Top-p -->
+          <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-2xs space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>Ejercicio 10.2: Muestreo Nucleus (Top-p) con Umbral $p=0.90$</span>
+              <span class="text-[10px] text-indigo-700 font-mono font-bold">Decodificación</span>
+            </div>
+            <p class="text-[11px] text-slate-600">Para el siguiente token, el LLM calcula la distribución de probabilidad ordenada:</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-center border-collapse bg-white rounded border border-slate-300 text-[10px]">
+                <thead>
+                  <tr class="bg-slate-900 text-white font-bold">
+                    <th class="p-1 border border-slate-700">Palabra</th>
+                    <th class="p-1 border border-slate-700">Probabilidad $P(w)$</th>
+                    <th class="p-1 border border-slate-700">Suma Acumulada</th>
+                    <th class="p-1 border border-slate-700">¿Entra en Nucleus ($p \le 0.90$)?</th>
+                  </tr>
+                </thead>
+                <tbody class="font-mono">
+                  <tr class="bg-emerald-50 font-bold"><td class="p-1 border border-slate-200">«inteligente»</td><td class="p-1 border border-slate-200">0.50</td><td class="p-1 border border-slate-200">0.50</td><td class="p-1 border border-slate-200 text-emerald-800">SÍ (0.50 &le; 0.90)</td></tr>
+                  <tr class="bg-emerald-50 font-bold"><td class="p-1 border border-slate-200">«artificial»</td><td class="p-1 border border-slate-200">0.25</td><td class="p-1 border border-slate-200">0.75</td><td class="p-1 border border-slate-200 text-emerald-800">SÍ (0.75 &le; 0.90)</td></tr>
+                  <tr class="bg-emerald-50 font-bold"><td class="p-1 border border-slate-200">«avanzada»</td><td class="p-1 border border-slate-200">0.18</td><td class="p-1 border border-slate-200">0.93</td><td class="p-1 border border-slate-200 text-emerald-800">SÍ (primer token que supera)</td></tr>
+                  <tr class="text-slate-400 bg-slate-50"><td class="p-1 border border-slate-200">«rápida»</td><td class="p-1 border border-slate-200">0.05</td><td class="p-1 border border-slate-200">0.98</td><td class="p-1 border border-slate-200 text-rose-700">NO (descartada)</td></tr>
+                  <tr class="text-slate-400 bg-slate-50"><td class="p-1 border border-slate-200">«compleja»</td><td class="p-1 border border-slate-200">0.02</td><td class="p-1 border border-slate-200">1.00</td><td class="p-1 border border-slate-200 text-rose-700">NO (descartada)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-[10px] text-slate-600">
+              El muestreo se normaliza y sortea únicamente entre los 3 primeros tokens, eliminando la cola de baja probabilidad («rápida», «compleja») para evitar incoherencias.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- ESTRUCTURA OFICIAL DEL EXAMEN UNIR: BLUEPRINT DE LOS 2 MÓDULOS -->
+    <!-- ========================================================================= -->
+    <section id="estructura_oficial_examen" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-indigo-600 pb-2 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>
+          <h2 class="text-base sm:text-xl font-black text-slate-900 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm shadow-xs">🎯</span>
+            BLUEPRINT OFICIAL DEL EXAMEN UNIR: LOS 2 MÓDULOS (PROF.ª CELIA CABELLO)
+          </h2>
+          <p class="text-xs text-slate-600 mt-0.5">
+            Directriz oficial: Módulo 1 (Test de 10 preguntas teóricas y numéricas con los 5 algoritmos) + Módulo 2 (Caso de Diseño de Aplicación).
+          </p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-bold shrink-0">
+          Guía de Calificación Tribunal
+        </span>
+      </div>
+
+      <!-- Tarjetas Nativas de los 2 Módulos (Reemplazo Total de la Captura Raster) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <!-- MÓDULO 1 -->
+        <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-4 rounded-xl shadow border border-indigo-700 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-indigo-700/60 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-indigo-500 text-white font-extrabold text-xs">MÓDULO 1</span>
+              <span class="font-bold text-sm">Preguntas Tipo Test (10 Preguntas)</span>
+            </div>
+            <span class="text-indigo-300 text-xs font-mono">1 por cada Tema (1 al 10)</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-200">
+            <p><strong>Alcance Curricular:</strong> «¡Sale todo! Tanto preguntas puramente teóricas como pequeños ejercicios numéricos a resolver».</p>
+            <div class="p-2 bg-indigo-950/70 rounded border border-indigo-800 text-[11px] space-y-1">
+              <div class="font-bold text-amber-300">Los 5 Algoritmos Numéricos Fijos de Test:</div>
+              <ul class="list-disc pl-4 space-y-0.5 text-slate-200">
+                <li><strong>1. Viterbi (HMM):</strong> Decodificación enrejada para POS Tagging ("El Señor Vino Tarde").</li>
+                <li><strong>2. Lesk Simplificado (WSD):</strong> Desambiguación léxica de "banco" con glosas de WordNet.</li>
+                <li><strong>3. N-Gramas BERP:</strong> Cálculo condicional $P(\text{to}\mid\text{I want}) = 608/827$, Add-5 y PPL.</li>
+                <li><strong>4. CKY (Parsing):</strong> Matriz triangular 4x4 y derivación de árbol para "El gato come pescado".</li>
+                <li><strong>5. BoW & TF-IDF:</strong> Cálculo de DF, IDF y Similitud Coseno con vectores normalizados.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- MÓDULO 2 -->
+        <div class="bg-gradient-to-br from-amber-900 to-slate-900 text-white p-4 rounded-xl shadow border border-amber-700 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-amber-700/60 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-extrabold text-xs">MÓDULO 2</span>
+              <span class="font-bold text-sm">Caso Práctico: Diseño de Aplicación</span>
+            </div>
+            <span class="text-amber-300 text-xs font-mono">Pregunta Abierta / Redacción</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-200">
+            <p><strong>Enfoque de Evaluación del Tribunal:</strong> «Diseñar una aplicación completa a partir de un problema real. Decir qué harías y diseñar una solución coherente y bien explicada».</p>
+            <div class="p-2 bg-amber-950/70 rounded border border-amber-800 text-[11px] space-y-1">
+              <div class="font-bold text-amber-300">Criterio Fundamental de Corrección:</div>
+              <ul class="list-disc pl-4 space-y-0.5 text-slate-200">
+                <li><strong>Prioriza el Razonamiento:</strong> «No hay una sola solución única válida».</li>
+                <li><strong>Estructura Exigida:</strong> Pipeline de Preprocesamiento $	o$ Justificación de Representación/Modelos $	o$ Manejo de Desbalanceo/Casos Límite $	o$ Métricas de Negocio (F1-macro, Latencia).</li>
+                <li><strong>Penalización Clave:</strong> No justificar por qué se elige un modelo (ej. descartar LLM por latencia y privacidad local, o descartar BoW por negaciones y contexto).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- CASOS PRÁCTICOS DE EXAMEN: DISEÑO DE SISTEMAS PLN -->
+    <!-- ========================================================================= -->
+    <section id="casos_practicos" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-amber-500 pb-2 mb-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>📝</span> CASOS PRÁCTICOS DE EXAMEN: DISEÑO DE SISTEMAS PLN
+          </h2>
+          <p class="text-xs text-slate-600">Plantillas metodológicas y defensas técnicas para el Módulo 2 del examen</p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold text-xs">
+          Módulo 2 (Caso de Uso)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- CASO 1: MODERACIÓN Y MENSAJES PROBLEMÁTICOS -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2.5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Caso 1: Detección y Clasificación de Mensajes Problemáticos</h3>
+            <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 text-[10px] font-bold">Odio / Acoso</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-700">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>1. Pipeline de Preprocesamiento:</strong> Normalización de jerga de redes sociales, expansión de contracciones, conservación obligatoria de stopwords de negación ("no", "nunca") y signos enfáticos.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>2. Arquitectura Recomendada:</strong> Modelo Transformer ligero preentrenado (BETO / RoBERTa) con capa de clasificación de secuencia. Embeddings contextuales que capturan sarcasmo e ironía.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>3. Mitigación de Desbalanceo:</strong> En odio extremo (&lt;2% casos), utilizar <em>Focal Loss</em> o ponderación de clases inversa (Class Weights) y evaluar con <strong>F1-Macro</strong> (nunca Accuracy).
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 2: FAKE NEWS -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2.5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Caso 2: Detección Automática de Noticias Falsas (Fake News)</h3>
+            <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px] font-bold">Desinformación</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-700">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>1. Enfoque Híbrido Estilométrico + Semántico:</strong> Extraer características lingüísticas superficiales (porcentaje de signos de exclamación, mayúsculas, adjetivos superlativos) combinado con embeddings densos BERT.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>2. Verificación de Hechos (Fact-Checking con RAG):</strong> Conectar la noticia con una base de conocimiento o grafo de fuentes fiables para comprobar la concordancia fáctica entre la afirmación y los hechos.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>3. Métrica Clave:</strong> Minimizar Falsos Positivos (no censurar noticias legítimas con estilo sensacionalista). Alta Especificidad y Precision.
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 3: TEXTOS MÉDICOS -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2.5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Caso 3: Extracción de Diagnósticos y Negación en Textos Médicos</h3>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-bold">Salud / Privacidad</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-700">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>1. NER Clínico Especializado:</strong> Utilizar modelos biomédicos de dominio (ej. <code>es_core_news_md</code> adaptado o <em>PlanTL RoBERTa-BNE-Biomedical</em>) para entidades CIE-10 (Enfermedad, Síntoma, Medicamento).
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>2. Detección de Negación e Incertidumbre:</strong> Integrar algoritmos de reglas de contexto (tipo <em>NegEx</em> o <em>spaCy-Negex</em>) para distinguir «sin fiebre» de «con fiebre».
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>3. Requisito Innegociable:</strong> Privacidad y desidentificación local On-Premises (cumplimiento estricto de RGPD en salud, descartando APIs externas de LLMs cloud).
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 4: OPINIONES Y ASPECTOS -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2.5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Caso 4: Minería de Opiniones y Aspectos en E-Commerce</h3>
+            <span class="px-2 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px] font-bold">ABSA / Feedback</span>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-700">
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>1. Pipeline Modular de Aspectos:</strong> Parsing de dependencias (spaCy) para asociar adjetivos modificadores a sus sustantivos núcleo (ej. <code>amod(servicio, pésimo)</code>).
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>2. Agrupamiento Taxonómico de Aspectos:</strong> Mapear términos sinónimos ("batería", "autonomía", "duración de carga") a una categoría maestra de negocio ("Autonomía") vía embeddings.
+            </div>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200">
+              <strong>3. Dashboard Analítico:</strong> Generar métricas de satisfacción neta por componente para el equipo de desarrollo de producto.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- GUÍA DE REFERENCIA INDUSTRIAL DE SPACY (v3+) -->
+    <!-- ========================================================================= -->
+    <section id="spacy_cheat_sheet" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-sky-600 pb-2 mb-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>⚡</span> GUÍA DE REFERENCIA INDUSTRIAL DE SPACY (v3+)
+          </h2>
+          <p class="text-xs text-slate-600">Sintaxis oficial y mejores prácticas evaluadas en el laboratorio UNIR</p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 font-bold text-xs">
+          spaCy 3.x Official
+        </span>
+      </div>
+
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 20%;">Comando / Método</th>
+              <th style="width: 25%;">Función & Propósito</th>
+              <th style="width: 30%;">Fragmento de Código de Examen</th>
+              <th style="width: 25%;">Recomendación & Cuidado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold font-mono text-slate-900">spacy.load(model)</td>
+              <td>Carga el pipeline completo (tokenizador, tagger, parser, ner) en memoria.</td>
+              <td><pre class="text-[10px] bg-slate-900 text-slate-100 p-1.5 rounded">import spacy
+nlp = spacy.load("es_core_news_md")</pre></td>
+              <td>Para producción industrial masiva, cargar el modelo una sola vez como singleton global.</td>
+            </tr>
+            <tr>
+              <td class="font-bold font-mono text-slate-900">nlp.pipe(texts, batch_size=...)</td>
+              <td>Procesamiento por lotes (batching) con paralelismo multiproceso en streaming.</td>
+              <td><pre class="text-[10px] bg-slate-900 text-slate-100 p-1.5 rounded">for doc in nlp.pipe(corpus, batch_size=256, n_process=-1):
+    process(doc)</pre></td>
+              <td><span class="badge-bondad">Hasta 10x más rápido</span> que invocar <code>nlp(text)</code> en un bucle secuencial <code>for</code>.</td>
+            </tr>
+            <tr>
+              <td class="font-bold font-mono text-slate-900">nlp.disable_pipes(*names)</td>
+              <td>Desactiva temporalmente componentes pesados no requeridos en la tarea.</td>
+              <td><pre class="text-[10px] bg-slate-900 text-slate-100 p-1.5 rounded">with nlp.disable_pipes("ner", "parser"):
+    docs = [nlp(t) for t in texts]</pre></td>
+              <td>Si solo necesitas tokenización y lemas, ahorra más del 70% de tiempo de CPU y memoria RAM.</td>
+            </tr>
+            <tr>
+              <td class="font-bold font-mono text-slate-900">Atributos de Token</td>
+              <td>Acceso a información morfosintáctica y normalizada en tiempo constante $O(1)$.</td>
+              <td><pre class="text-[10px] bg-slate-900 text-slate-100 p-1.5 rounded">for token in doc:
+    print(token.text, token.lemma_, token.pos_, token.is_stop)</pre></td>
+              <td>El sufijo con guión bajo (<code>lemma_</code>, <code>pos_</code>) devuelve la cadena de texto legible; sin guión devuelve el ID entero.</td>
+            </tr>
+            <tr>
+              <td class="font-bold font-mono text-slate-900">doc.ents (NER)</td>
+              <td>Generador de entidades nombradas reconocidas en el documento.</td>
+              <td><pre class="text-[10px] bg-slate-900 text-slate-100 p-1.5 rounded">for ent in doc.ents:
+    print(ent.text, ent.label_, ent.start_char, ent.end_char)</pre></td>
+              <td>Devuelve objetos <code>Span</code> de spaCy, permitiendo evaluar límites de inicio y fin en caracteres.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- LABORATORIOS Y ACTIVIDADES PRÁCTICAS UNIR -->
+    <!-- ========================================================================= -->
+    <section id="actividades_laboratorio" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-emerald-600 pb-2 mb-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>🔬</span> LABORATORIOS Y ACTIVIDADES PRÁCTICAS UNIR: PASO A PASO
+          </h2>
+          <p class="text-xs text-slate-600">Resolución empírica, análisis de sesgos y duelo de modelos evaluados en la maestría</p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 font-bold text-xs">
+          Actividades Oficiales 1, 2 y 3
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <!-- LAB 1 -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2">
+          <div class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-1.5 flex items-center justify-between">
+            <span>Actividad 1: Extracción de Características y Análisis de Sesgos</span>
+            <span class="text-[10px] text-emerald-700 font-bold">Laboratorio 1</span>
+          </div>
+          <div class="space-y-1.5 text-slate-700">
+            <p><strong>Metodología:</strong> Análisis cuantitativo de textos periodísticos y redes sociales mediante pipelines de spaCy para extraer métricas léxicas (longitud media de palabra, diversidad léxica Type-Token Ratio TTR) y morfosintácticas (densidad de adjetivos y adverbios).</p>
+            <p><strong>Detección de Sesgos de Género y Profesión:</strong> Evaluación empírica de sesgos en embeddings estáticos calculando similitud coseno entre ocupaciones y términos de género ($	ext{doctor} 	o 	ext{hombre}$, $	ext{enfermera} 	o 	ext{mujer}$).</p>
+            <div class="p-2 bg-emerald-50 rounded border border-emerald-200 font-bold text-emerald-950 text-[11px]">
+              Conclusión Clave: La neutralización de sesgos (Debiasing) requiere proyectar los vectores en el hiperplano ortogonal al eje del sesgo identificado.
+            </div>
+          </div>
+        </div>
+
+        <!-- LAB 2 -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-xs space-y-2">
+          <div class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-1.5 flex items-center justify-between">
+            <span>Actividad 2: Duelo Empírico: Red Clásica (GloVe) vs. Transformer (RoBERTa)</span>
+            <span class="text-[10px] text-indigo-700 font-bold">Laboratorio 2</span>
+          </div>
+          <div class="space-y-1.5 text-slate-700">
+            <p><strong>Banco de Pruebas:</strong> Clasificación de mensajes problemáticos en dataset fuertemente desbalanceado (94% neutrales, 6% tóxicos).</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-center border-collapse bg-slate-50 rounded border border-slate-200 text-[10px]">
+                <thead>
+                  <tr class="bg-slate-200 font-bold">
+                    <th class="p-1 border border-slate-300">Modelo</th>
+                    <th class="p-1 border border-slate-300">F1-Macro</th>
+                    <th class="p-1 border border-slate-300">Latencia / Inferencia</th>
+                    <th class="p-1 border border-slate-300">Veredicto Tribunal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="p-1 border border-slate-300 font-bold">GloVe + BiLSTM</td><td class="p-1 border border-slate-300">0.742</td><td class="p-1 border border-slate-300 text-emerald-800 font-bold">2.4 ms / doc</td><td class="p-1 border border-slate-300">Rápido pero pierde matices contextuales</td></tr>
+                  <tr class="bg-indigo-50 font-bold"><td class="p-1 border border-slate-300 text-indigo-900">BETO / RoBERTa</td><td class="p-1 border border-slate-300 text-indigo-900 font-bold">0.865 (+12.3%)</td><td class="p-1 border border-slate-300">28.5 ms / doc</td><td class="p-1 border border-slate-300 text-indigo-900">Superior en contexto, ironía y jerga</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="p-1.5 bg-indigo-50 rounded border border-indigo-200 text-[10px] text-indigo-950 font-bold">
+              Criterio de Defensa: Demostrar que el aumento de +12.3% en F1-Macro justifica el incremento de latencia para moderación en tiempo cuasi-real.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- MATRIZ DE TOMA DE DECISIONES & COMPARATIVA DE MODELOS -->
+    <!-- ========================================================================= -->
+    <section id="toma_decisiones_modelos" class="page-break-before page-break-inside-avoid">
+      <div class="border-b-2 border-purple-600 pb-2 mb-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>⚖️</span> MATRIZ DE TOMA DE DECISIONES & COMPARATIVA DE MODELOS
+          </h2>
+          <p class="text-xs text-slate-600">Criterios de selección arquitectónica para la defensa oral y escrita del examen UNIR</p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 font-bold text-xs">
+          Criterio Tribunal UNIR
+        </span>
+      </div>
+
+      <div class="overflow-x-auto bg-white rounded-xl shadow-xs border border-slate-200">
+        <table class="master-table w-full">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Familia de Modelos</th>
+              <th style="width: 20%;">Arquitectura Representativa</th>
+              <th style="width: 22%;">Cuándo Elegirlo (Ventajas Clave)</th>
+              <th style="width: 22%;">Cuándo Descartarlo (Puntos Críticos)</th>
+              <th style="width: 18%;">Métrica Decisiva</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-slate-900">1. Clasificador Clásico Supervisado</td>
+              <td>TF-IDF + Support Vector Machine (SVM) lineal / Naïve Bayes</td>
+              <td><span class="badge-bondad">Ultra-rápido y Ligero</span> Datasets tabulares limpios, recursos de cómputo mínimos (CPU estándar), interpretabilidad total por peso de coeficientes.</td>
+              <td><span class="badge-limitacion">Ignora Sintaxis y Orden</span> Fracasa ante negaciones distantes, sarcasmo o variaciones léxicas sinónimas sin solapamiento léxico directo.</td>
+              <td>Latencia (&lt;1 ms), Cero consumo GPU, Memoria RAM ínfima.</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">2. Redes con Embeddings Estáticos</td>
+              <td>GloVe / FastText + BiLSTM / CNN 1D</td>
+              <td><span class="badge-bondad">Equilibrio Latencia-Semántica</span> Vocabulario cerrado o subpalabras rápidas con FastText, latencia acotada para dispositivos móviles o edge computing.</td>
+              <td><span class="badge-limitacion">Polisemia Rígida</span> No resuelve el sentido dinámico según la oración y el entrenamiento secuencial no aprovecha GPUs masivas.</td>
+              <td>F1 intermedio, rendimiento en palabras fuera de vocabulario (OOV).</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">3. Transformers Encoder (Preentrenados)</td>
+              <td>BERT / BETO / RoBERTa Fine-Tuned</td>
+              <td><span class="badge-bondad">Estado del Arte en Comprensión</span> Máxima precisión en clasificación, NER y similitud semántica. Captura contexto bidireccional rico y jerga compleja.</td>
+              <td><span class="badge-limitacion">Coste GPU y Límite de Tokens</span> Requiere aceleración GPU y sufre el coste cuadrático en secuencias de más de 512 tokens.</td>
+              <td><strong>F1-Macro</strong> y exactitud semántica en tareas de discriminación.</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-slate-900">4. LLMs Decoder Masivos + RAG</td>
+              <td>Llama 3 / Mistral / GPT-4 + Vector DB (RAG)</td>
+              <td><span class="badge-bondad">Flexibilidad y Cero Reentrenamiento</span> Generación de texto estructurado, preguntas y respuestas corporativas y agentes autónomos multi-herramienta.</td>
+              <td><span class="badge-limitacion">Alucinaciones y Alta Latencia</span> Inferencia lenta (cientos de milisegundos), coste económico por llamada y riesgo de alucinación sin RAG estricto.</td>
+              <td>RAGAS (Fidelidad, Relevancia), CoT Reasoning y cumplimiento de JSON Schema.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+  </div>
+
+  <!-- PIE DE PÁGINA FORMAL -->
+  <footer class="max-w-7xl mx-auto mt-12 pt-6 pb-8 border-t border-slate-300 text-center text-xs text-slate-500 space-y-1">
+    <p class="font-semibold text-slate-700">
+      Suite Curricular de Preparación para Examen · Máster Universitario en Inteligencia Artificial · UNIR
+    </p>
+    <p>
+      Diseñada según el temario oficial (Temas 1 al 10), resolución analítica de los 5 algoritmos de clase de la Prof.ª Celia Cabello y directrices de evaluación del Tribunal.
+    </p>
+    <p class="text-[10px] text-slate-400 font-mono pt-1">
+      Renderizado Nativo KaTeX + Tailwind · Documento Optimizado para A4 Landscape · Cero Imágenes Rasterizadas
+    </p>
+  </footer>
+
+</body>
+</html>
