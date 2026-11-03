@@ -2463,44 +2463,124 @@
   {
     "id": 1,
     "title": "Tema 1: Introducción a los Sistemas de Percepción",
-    "problem": "¿Cómo capturar, transformar e interpretar las señales electromagnéticas del mundo físico para dotar a una máquina de capacidad perceptiva?",
-    "objective": "Comprender la arquitectura completa de un sistema de visión artificial, desde la radiación luminosa y la formación de imagen estenopeica hasta la toma de decisiones automatizada.",
+    "problem": "¿Cómo podemos optimizar la integración de los mecanismos de captación de señales auditivas y visuales humanas en el diseño de sistemas de percepción computacional?",
+    "objective": "Comprender la neurobiología del sistema auditivo y visual humano, la psicoacústica, los fotorreceptores retinianos, los fenómenos psicovisuales de inhibición lateral y la síntesis aditiva/sustractiva del color para su emulación en visión artificial.",
+    "summarySpeech": "El Tema 1 aborda la fundamentación biológica de los sistemas de percepción. Analizamos el oído humano como analizador de frecuencias con la cóclea y las curvas isofónicas de Fletcher-Munson, y la retina ocular con sus bastones y conos. Estudiamos fenómenos clave como las bandas de Mach por inhibición lateral y la síntesis de espacios cromáticos RGB, HSV y CIELAB para visión computacional.",
+    "feynmanAnalogy": "Imagina que intentas diseñar una cámara y un micrófono perfectos para un robot explorador. En lugar de inventar la rueda desde cero, estudias la máquina biológica más perfeccionada tras millones de años de evolución: el ojo y el oído humanos. Descubres que el ojo no es un sensor plano y frío, sino que 'engaña' al cerebro acentuando los bordes con células que inhiben a sus vecinas (bandas de Mach), y que el oído analiza frecuencias logarítmicamente. Diseñar visión artificial es aprender qué atajos toma la biología para resolver problemas de percepción con mínima energía.",
+    "feynmanKeywords": [
+      "sistema auditivo",
+      "cóclea",
+      "curvas isofónicas",
+      "bastones y conos",
+      "retina",
+      "inhibición lateral",
+      "bandas de Mach",
+      "espacios de color",
+      "RGB",
+      "HSV"
+    ],
     "concepts": [
       {
-        "title": "1. Pipeline Clásico de Percepción Artificial",
-        "desc": "Flujo secuencial que transforma fotones en decisiones semánticas: Captura (sensores CCD/CMOS) -> Preprocesamiento (filtrado y corrección de contraste) -> Segmentación (aislamiento de regiones de interés) -> Extracción de características (forma, textura, color) -> Clasificación/Decisión (SVM, Redes Neuronales, Lógica Difusa).",
-        "formula": "f: \\\\mathbb{R}^3 \\\\xrightarrow{\\\\text{Proyección}} \\\\mathbb{R}^2 \\\\xrightarrow{\\\\text{Muestreo/Cuantización}} \\\\mathbb{Z}^{M \\\\times N} \\\\xrightarrow{\\\\text{Inferencia}} \\\\mathcal{Y}",
-        "example": "Detección de defectos en líneas de ensamblaje industrial con cámaras telecéntricas y clasificación en tiempo real.",
-        "codeSnippet": "import cv2\\n\\n# Pipeline elemental de captura y preprocesamiento\\ncap = cv2.VideoCapture(0)\\nret, frame = cap.read()\\ngray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)\\nblurred = cv2.GaussianBlur(gray, (5, 5), 1.4)\\ncap.release()"
+        "id": "va_t1_c1",
+        "name": "Mecanismos del Sistema Auditivo y Psicoacústica",
+        "recallQuestion": "¿Cómo descompone el oído interno las frecuencias sonoras y qué relación describe la escala Mel frente a la percepción auditiva humana?",
+        "def": "El sistema auditivo capta ondas de presión mecánica en el rango de 20 Hz a 20 kHz. El oído interno contiene la <strong>cóclea</strong>, cuya membrana basilar actúa como un banco de filtros paso-banda continuo (analizador de Fourier biológico), donde la base responde a frecuencias agudas y el ápice a graves. Las <strong>curvas isofónicas (Fletcher-Munson)</strong> demuestran que la sensibilidad humana no es plana, alcanzando su máxima sensibilidad entre 2 kHz y 5 kHz (rango de la voz humana). La <strong>escala Mel</strong> mapea la frecuencia física en Hertz a una escala perceptual no lineal logarítmica.",
+        "comparison": "<strong>Frecuencia física (Hz) vs Tono perceptual (Mel):</strong> La escala lineal en Hertz no refleja cómo el cerebro percibe los intervalos tonales; un cambio de 100 Hz en agudos es casi imperceptible, mientras que en graves representa una octava completa.",
+        "use": "<strong>Extracción de Coeficientes MFCC (Mel-Frequency Cepstral Coefficients):</strong> Estándar de la industria para reconocimiento de voz, clasificación de audio y detección acústica de anomalías industriales.",
+        "examNote": "La cóclea realiza un análisis espectro-temporal descomponiendo la onda sonora en componentes de frecuencia mediante resonancia mecánica en la membrana basilar.",
+        "codeSnippet": "import librosa\nimport numpy as np\n\n# Extracción de espectrograma Mel en audio industrial\ny, sr = librosa.load(librosa.ex('trumpet'))\nspectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000)\nlog_mel = librosa.power_to_db(spectrogram, ref=np.max)\nprint('Dimensiones del espectrograma Mel:', log_mel.shape)"
       },
       {
-        "title": "2. Modelo de Cámara Estenopeica (Pinhole Camera)",
-        "desc": "Aproximación geométrica ideal de la formación de imagen mediante proyección central en un punto estenopeico focal f. Transforma coordenadas 3D del mundo [X, Y, Z] en coordenadas 2D en el plano imagen [x, y].",
-        "formula": "x = -f \\\\frac{X}{Z}, \\\\quad y = -f \\\\frac{Y}{Z}",
-        "example": "Efecto de perspectiva donde objetos lejanos (mayor Z) reducen su tamaño aparente en el sensor inversamente proporcional a la distancia.",
-        "codeSnippet": "import numpy as np\\n\\ndef proyectar_punto_pinhole(P_mundo, f):\\n    # P_mundo = [X, Y, Z]\\n    X, Y, Z = P_mundo\\n    if Z == 0: raise ValueError('Z no puede ser 0')\\n    x = -f * (X / Z)\\n    y = -f * (Y / Z)\\n    return np.array([x, y])"
+        "id": "va_t1_c2",
+        "name": "Arquitectura Retiniana: Bastones vs. Conos",
+        "recallQuestion": "¿Cuáles son las diferencias neuroanatómicas y funcionales entre bastones y conos en la fóvea y la periferia de la retina humana?",
+        "def": "La retina humana posee dos clases fundamentales de fotorreceptores: 1) <strong>Bastones (~120 millones):</strong> Gran sensibilidad lumínica, responsables de la visión <em>escotópica</em> (nocturna/baja luz), monocromáticos (pigmento rodopsina), ausentes en la fóvea central y distribuidos en la periferia con baja agudeza espacial. 2) <strong>Conos (~6 millones):</strong> Menor sensibilidad a fotones, responsables de la visión <em>fotópica</em> (diurna y color), concentrados densamente en la <strong>fóvea central</strong>, divididos en tres subgrupos con opsinas específicas para longitudes de onda larga (L · ~560 nm rojo), media (M · ~530 nm verde) y corta (S · ~420 nm azul).",
+        "comparison": "<strong>Fóvea (Conos) vs Periferia (Bastones):</strong> La fóvea maximiza la resolución espacial y cromática (visión central 2°); la periferia maximiza la sensibilidad a fotones y la detección de movimiento rápido.",
+        "use": "<strong>Diseño del Filtro de Bayer en Sensores CMOS/CCD:</strong> Como el ojo humano concentra el doble de conos M (verdes), los sensores usan el patrón RGGB (50% verde, 25% rojo, 25% azul) para optimizar la luminancia percibida.",
+        "examNote": "La fóvea humana carece casi totalmente de bastones y está compuesta exclusivamente por conos con empaquetamiento hexagonal de máxima densidad óptica.",
+        "codeSnippet": "import numpy as np\nimport cv2\n\n# Simulación de patrón de mosaico Bayer RGGB\ndef aplicar_mosaico_bayer(img_rgb):\n    H, W, _ = img_rgb.shape\n    bayer = np.zeros((H, W), dtype=np.uint8)\n    bayer[0::2, 0::2] = img_rgb[0::2, 0::2, 0] # Rojo\n    bayer[0::2, 1::2] = img_rgb[0::2, 1::2, 1] # Verde 1\n    bayer[1::2, 0::2] = img_rgb[1::2, 0::2, 1] # Verde 2\n    bayer[1::2, 1::2] = img_rgb[1::2, 1::2, 2] # Azul\n    return bayer"
+      },
+      {
+        "id": "va_t1_c3",
+        "name": "Fenómenos Psicovisuales: Inhibición Lateral y Bandas de Mach",
+        "recallQuestion": "¿Cómo genera el mecanismo neuronal de inhibición lateral el efecto óptico de las Bandas de Mach en fronteras de luminancia?",
+        "def": "La <strong>inhibición lateral</strong> es el proceso neurofisiológico por el cual una neurona o fotorreceptor activado en la retina inhibe la actividad de las neuronas inmediatamente vecinas a través de las células horizontales. Cuando la retina observa una transición escalonada de brillo, los receptores en el borde brillante reciben poca inhibición del lado oscuro (percibiéndose artificialmente más brillantes), mientras que los receptores en el borde oscuro reciben fuerte inhibición del lado claro (percibiéndose más oscuros). Esto genera las <strong>Bandas de Mach</strong>, bandas ilusorias que aumentan el contraste aparente en las fronteras.",
+        "comparison": "<strong>Perfil Físico de Luminancia vs Perfil Psicológico Percibido:</strong> El fotómetro mide un escalón recto de intensidad; el ojo percibe un pico brillante y un valle oscuro justo en el borde para detectar contornos con rapidez.",
+        "use": "<strong>Operadores Laplacianos y Realce de Bordes (Unsharp Masking):</strong> Emulan matemáticamente la inhibición lateral restando la derivada segunda $\\nabla^2 I$ para resaltar transiciones en radiografías y microfotografías.",
+        "examNote": "Las bandas de Mach no existen físicamente en la radiación electromagnética de la escena; son un artefacto perceptivo generado por la inhibición lateral entre células retinianas para acentuar bordes.",
+        "codeSnippet": "import cv2\nimport numpy as np\n\n# Realce de bordes emulando inhibición lateral (Filtro Unsharp Mask)\ndef unsharp_mask(img, sigma=1.0, strength=1.5):\n    blurred = cv2.GaussianBlur(img, (0, 0), sigma)\n    sharpened = cv2.addWeighted(img, 1.0 + strength, blurred, -strength, 0)\n    return np.clip(sharpened, 0, 255).astype(np.uint8)"
+      },
+      {
+        "id": "va_t1_c4",
+        "name": "Espacios de Color y Síntesis Cromática",
+        "recallQuestion": "¿Por qué el espacio de color HSV es preferible a RGB en visión artificial para tareas de segmentación por color bajo variaciones de iluminación?",
+        "def": "Existen dos modelos de síntesis cromática: 1) <strong>Síntesis Aditiva (RGB):</strong> Suma de haces de luz (Rojo + Verde + Azul = Blanco), propia de monitores y sensores activos. 2) <strong>Síntesis Sustractiva (CMYK):</strong> Absorción selectiva de luz en pigmentos impresos (Cian + Magenta + Amarillo = Negro). En visión artificial, el espacio RGB mezcla fuertemente la información de crominancia con la iluminación; el espacio <strong>HSV (Hue / Saturación / Valor)</strong> desacopla el tono intrínseco (H $\\in [0, 180°]$) de la intensidad y sombras (V $\\in [0, 255]$), permitiendo segmentar objetos de un color independientemente de las sombras que proyecten.",
+        "comparison": "<strong>RGB vs HSV para segmentación:</strong> En RGB, cambiar la luz mueve los tres canales $[R, G, B]$; en HSV, el canal $H$ permanece constante y solo varía $V$, facilitando el umbralizado robusto.",
+        "use": "<strong>Seguimiento de objetos por color:</strong> Seguimiento de pelotas de tenis amarillas, señales de tráfico rojas o detección de carriles en conducción autónoma mediante umbrales en HSV.",
+        "examNote": "El canal H (Hue / Tono) en el espacio HSV representa la longitud de onda dominante del color como un ángulo circular, siendo invariante a variaciones de sombra y brillo.",
+        "codeSnippet": "import cv2\nimport numpy as np\n\n# Segmentación robusta de color en HSV inmune a sombras\ndef segmentar_color_hsv(img_bgr, lower_hsv, upper_hsv):\n    hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)\n    # Umbralizado en canal H independiente del brillo V\n    mask = cv2.inRange(hsv, np.array(lower_hsv), np.array(upper_hsv))\n    res = cv2.bitwise_and(img_bgr, img_bgr, mask=mask)\n    return mask, res"
       }
     ]
   },
   {
     "id": 2,
     "title": "Tema 2: Elementos de un Sistema de Percepción",
-    "problem": "¿Cuáles son los componentes de hardware y óptica necesarios para adquirir imágenes con la calidad y fidelidad espectral requeridas?",
-    "objective": "Identificar los componentes físicos: iluminadores (coaxial, campo oscuro, difuso), lentes ópticas (distorsión radial/tangencial) y sensores electrónicos (CCD vs CMOS).",
+    "problem": "¿Cuáles son los componentes de hardware, óptica y conversión analógico-digital necesarios para adquirir y digitalizar imágenes con fidelidad espectral y métrica?",
+    "objective": "Dominar la selección de sensores ópticos (CCD vs CMOS), técnicas de iluminación industrial (campo claro, campo oscuro, coaxial, domo), la conversión analógico-digital con el Teorema de Nyquist-Shannon y la arquitectura del pipeline de visión por computador.",
+    "summarySpeech": "El Tema 2 cubre la cadena física completa de adquisición de imágenes: iluminación controlada, selección del sensor electrónico (obturador global en CCD vs rolling shutter en CMOS), conversión A/D con muestreo espacial y cuantización de Nyquist, finalizando en el pipeline de procesamiento y toma de decisiones con bucles de retroalimentación.",
+    "feynmanAnalogy": "Imagina una fábrica de botellas que pasan a 30 por segundo. Si usas la cámara de tu móvil con iluminación normal de techo, la foto saldrá completamente borrosa por el movimiento y con reflejos cegadores en el vidrio. El Tema 2 te enseña la física detrás del éxito industrial: usar un sensor con obturador global para congelar el tiempo en microsegundos, y colocar una luz de campo oscuro o contraluz para que el vidrio no brille y las grietas se iluminen como estrellas brillantes en la oscuridad.",
+    "feynmanKeywords": [
+      "sensor CCD",
+      "sensor CMOS",
+      "obturador global",
+      "rolling shutter",
+      "iluminación industrial",
+      "campo oscuro",
+      "luz coaxial",
+      "ADC",
+      "Nyquist-Shannon",
+      "cuantización"
+    ],
     "concepts": [
       {
-        "title": "1. Sensores de Imagen: CCD vs CMOS",
-        "desc": "CCD (Charge-Coupled Device) transfiere cargas analógicas secuencialmente con muy bajo ruido y alto rango dinámico (obturador global). CMOS (Complementary Metal-Oxide Semiconductor) digitaliza píxel a píxel con convertidores A/D individuales en cada fotosito, menor consumo y alta tasa de cuadros (típicamente rolling shutter).",
-        "formula": "\\\\text{SNR} = 10 \\\\log_{10}\\\\left(\\\\frac{P_{\\\\text{señal}}}{P_{\\\\text{ruido}}}\\\\right) \\\\text{ dB}",
-        "example": "Uso de cámaras CMOS con global shutter en inspección a alta velocidad (embotelladoras) para evitar la deformación por barrido en movimiento.",
-        "codeSnippet": "import cv2\\n# Configurar parámetros del sensor en OpenCV\\ncap = cv2.VideoCapture(0)\\ncap.set(cv2.CAP_PROP_EXPOSURE, -6) # Control manual de tiempo de exposición\\ncap.set(cv2.CAP_PROP_GAIN, 10)     # Ganancia analógica para reducir ruido"
+        "id": "va_t2_c1",
+        "name": "Sensores de Imagen Electrónicos: CCD vs. CMOS",
+        "recallQuestion": "¿Qué diferencias existen en la lectura de carga y en el tipo de obturador entre los sensores CCD y CMOS en aplicaciones de visión industrial de alta velocidad?",
+        "def": "1) <strong>Sensores CCD (Charge-Coupled Device):</strong> Transfieren paquetes de carga analógica fila a fila hacia un único amplificador de salida común. Producen un ruido extraordinariamente bajo y alta uniformidad fotométrica. Operan típicamente con <strong>Global Shutter (obturador global)</strong>, exponiendo todos los píxeles en el mismo instante exacto. 2) <strong>Sensores CMOS (Complementary Metal-Oxide Semiconductor):</strong> Cada fotodiodo integra su propio amplificador y conversor analógico-digital (Active Pixel Sensor). Tienen menor consumo energético y velocidad de fotogramas masiva, pero comúnmente utilizan <strong>Rolling Shutter</strong> (exposición secuencial por líneas), generando artefactos de distorsión geométrica en objetos con movimiento rápido.",
+        "comparison": "<strong>Global Shutter vs Rolling Shutter:</strong> El obturador global congela objetos veloces sin deformación; el rolling shutter inclina o distorsiona hélices, ruedas y piezas en movimiento.",
+        "use": "<strong>Líneas de envasado farmacéutico:</strong> Inspección de viales en cinta transportadora a 1.000 unidades/minuto utilizando cámaras CMOS industriales con obturador global por hardware.",
+        "examNote": "El artefacto de deformación ('rolling shutter effect') ocurre cuando las líneas del sensor se exponen en instantes temporales distintos mientras el objeto se desplaza a gran velocidad.",
+        "codeSnippet": "import cv2\n\n# Inicialización de cámara industrial fijando tiempo de exposición manual\ncap = cv2.VideoCapture(0)\n# Desactivar exposición automática (indispensable para repetibilidad métrica)\ncap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)\ncap.set(cv2.CAP_PROP_EXPOSURE, -7) # Exposición ultra-corta para congelar movimiento\ncap.set(cv2.CAP_PROP_GAIN, 0)\nret, frame = cap.read()\ncap.release()"
       },
       {
-        "title": "2. Técnicas de Iluminación Industrial",
-        "desc": "La iluminación condiciona el 80% del éxito en visión industrial. Se clasifica en: Backlight (contraluz para siluetas de alta precisión), Darkfield (campo oscuro para destacar rayaduras superficiales), Coaxial (para superficies altamente reflectantes/especulares) y Domo difuso (elimina brillos indeseados en piezas convexas).",
-        "formula": "I(x,y) = R(x,y) \\\\cdot L(x,y) \\\\quad \\\\text{donde } R=\\\\text{Reflectancia}, L=\\\\text{Luminancia}",
-        "example": "Inspección de arañazos en pantallas de cristal de smartphones mediante iluminación de campo oscuro con ángulo rasante.",
-        "codeSnippet": "import cv2\\nimport numpy as np\\n# Detección de grietas en campo oscuro mediante umbral de alto contraste\\nimagen_darkfield = cv2.imread('superficie.png', cv2.IMREAD_GRAYSCALE)\\n_, grietas = cv2.threshold(imagen_darkfield, 180, 255, cv2.THRESH_BINARY)"
+        "id": "va_t2_c2",
+        "name": "Técnicas de Iluminación Industrial",
+        "recallQuestion": "¿Cuándo debe seleccionarse una iluminación de campo oscuro (Darkfield) frente a una iluminación de contraluz (Backlight) en inspección de calidad?",
+        "def": "La iluminación determina más del 80% del éxito en visión artificial al maximizar el contraste óptico antes de procesar el píxel: 1) <strong>Contraluz (Backlight):</strong> Se coloca el emisor difuso detrás del objeto y la cámara en frente; produce siluetas de máximo contraste negro sobre blanco, ideal para metrología dimensional. 2) <strong>Campo Oscuro (Darkfield):</strong> La luz incide con un ángulo extremadamente rasante; sobre una superficie lisa la luz se refleja fuera de la lente (fondo negro), pero cualquier arañazo, grieta o relieve dispersa luz hacia la cámara, brillando intensamente. 3) <strong>Coaxial:</strong> Un divisor de haz alinea la luz paralela al eje óptico para inspeccionar piezas especulares (silicio, espejos). 4) <strong>Domo Difuso:</strong> Elimina reflejos puntuales en superficies curvas brillantes.",
+        "comparison": "<strong>Backlight vs Darkfield:</strong> Backlight mide el perfil exterior de siluetas opacas; Darkfield resalta imperfecciones y relieves microscópicos en superficies pulidas.",
+        "use": "<strong>Control de calidad en telefonía:</strong> Detección de fisuras microscópicas en pantallas OLED de teléfonos móviles utilizando anillos LED de campo oscuro rasante a 15°.",
+        "examNote": "En iluminación de campo oscuro (darkfield), la luz especular no entra en el objetivo; la cámara únicamente capta la radiación dispersada por las irregularidades del relieve.",
+        "codeSnippet": "import cv2\nimport numpy as np\n\n# Procesamiento de imagen en campo oscuro: Detección de fisuras brillantes\ndef detectar_fisuras_darkfield(img_gray, umbral_brillo=210):\n    # En darkfield el fondo es negro (~10-30) y los defectos son brillantes (>200)\n    _, mask_defectos = cv2.threshold(img_gray, umbral_brillo, 255, cv2.THRESH_BINARY)\n    contours, _ = cv2.findContours(mask_defectos, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    print(f'Fisuras detectadas en superficie: {len(contours)}')\n    return mask_defectos"
+      },
+      {
+        "id": "va_t2_c3",
+        "name": "Conversión Analógico-Digital (ADC): Muestreo y Cuantización",
+        "recallQuestion": "¿Cómo determina el Teorema de Nyquist-Shannon la frecuencia de muestreo espacial mínima para evitar el efecto de solapamiento (aliasing) en una imagen digital?",
+        "def": "La digitalización de una imagen continua $f_c(x,y)$ se realiza en dos fases ortogonales: 1) <strong>Muestreo Espacial:</strong> Discretización de las coordenadas continuas $(x,y) \\to (m,n)$. Por el <strong>Teorema de Nyquist-Shannon</strong>, la tasa de muestreo espacial $f_s$ debe ser al menos el doble de la frecuencia espacial máxima de la escena ($f_s \\ge 2 f_{\\max}$); si no se cumple, las frecuencias altas se repliegan como frecuencias bajas espurias (patrón de Moiré / aliasing). 2) <strong>Cuantización:</strong> Discretización del rango continuo de radiancia en $L = 2^b$ niveles de gris discretos. La relación señal a ruido de cuantización teórica es: $\\text{SQNR} \\approx 6.02 \\cdot b + 1.76 \\text{ dB}$.",
+        "comparison": "<strong>Muestreo (Espacio) vs Cuantización (Amplitud):</strong> El muestreo define la resolución espacial de píxeles ($M \\times N$); la cuantización define la profundidad de tono (8 bits = 256 niveles, 12 bits = 4096 niveles).",
+        "use": "<strong>Filtro Óptico Paso-Bajo (Anti-Aliasing Filter):</strong> Lámina birrefringente colocada delante del sensor para difuminar frecuencias espaciales superiores al límite de Nyquist antes del muestreo.",
+        "examNote": "El aliasing o solapamiento espectral ocurre cuando el paso de muestreo espacial es superior a la mitad del periodo de la frecuencia espacial más fina presente en la escena continua.",
+        "codeSnippet": "import numpy as np\nimport cv2\n\n# Demostración de submuestreo sin filtro anti-aliasing vs con filtro paso-bajo\ndef submuestrear_con_antialiasing(img, factor=4):\n    # 1. Sin filtro: Aliasing severo (efecto Moiré)\n    sin_filtro = img[::factor, ::factor]\n    # 2. Con filtro Nyquist paso-bajo (Gaussiano)\n    con_filtro = cv2.GaussianBlur(img, (2*factor+1, 2*factor+1), sigmaX=factor/2)[::factor, ::factor]\n    return sin_filtro, con_filtro"
+      },
+      {
+        "id": "va_t2_c4",
+        "name": "Pipeline Completo de Percepción y Bucle de Toma de Decisión",
+        "recallQuestion": "¿Cuáles son las 5 etapas secuenciales del pipeline de percepción en visión artificial y cómo se retroalimenta el bucle de decisión en el entrenamiento?",
+        "def": "Un sistema de percepción por computador opera en 5 etapas secuenciales formales: 1) <strong>Captura de Información:</strong> Sensor óptico y conversión ADC bajo iluminación controlada. 2) <strong>Preprocesamiento y Cancelación de Anomalías:</strong> Filtrado espacial de ruido (Gauss, mediana), normalización radiométrica y corrección de contraste. 3) <strong>Segmentación:</strong> Separación entre regiones de interés (foreground) y fondo mediante umbralizado o cuencas hidrográficas. 4) <strong>Extracción de Características:</strong> Vectores descriptores matemáticos de morfología (área, compacidad), textura (Haralick, LBP) o puntos invariantes (SIFT, ORB). 5) <strong>Toma de Decisión:</strong> Modelo clasificador (SVM, Red Neuronal, Árbol) que asigna una clase semántica o genera una acción de control (ej. descarte de pieza por actuador neumático), incorporando un <strong>bucle de retroalimentación</strong> en la fase de entrenamiento.",
+        "comparison": "<strong>Visión Clásica vs Deep Learning End-to-End:</strong> La visión clásica desacopla la extracción manual de características de la clasificación; las redes convolucionales modernas (CNN) aprenden conjuntamente los filtros de características y la decisión semántica.",
+        "use": "<strong>Clasificación robótica Pick-and-Place:</strong> Sistema de guiado de brazo robótico que localiza tornillos, calcula su orientación angular en milisegundos y comanda la pinza neumática.",
+        "examNote": "El pipeline de percepción es una reducción drástica de dimensionalidad: transforma una matriz de entrada de millones de números de intensidad en una etiqueta de decisión categórica o un vector de coordenadas.",
+        "codeSnippet": "import cv2\nimport numpy as np\n\n# Pipeline secuencial de percepción en visión industrial\ndef pipeline_percepcion_completo(frame_bgr):\n    # 1. Preprocesamiento: Escala de grises y filtrado\n    gray = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2GRAY)\n    blurred = cv2.GaussianBlur(gray, (5, 5), 1.2)\n    # 2. Segmentación: Umbralización automática de Otsu\n    _, thresh = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)\n    # 3. Extracción de características: Contornos y momentos\n    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    decisiones = []\n    for c in contours:\n        area = cv2.contourArea(c)\n        if area > 100: # Filtrar ruido residual\n            M = cv2.moments(c)\n            cx = int(M['m10'] / M['m00'])\n            cy = int(M['m01'] / M['m00'])\n            decisiones.append({'tipo': 'Pieza_Aceptada', 'centro': (cx, cy), 'area': area})\n    return decisiones"
       }
     ]
   },
@@ -2509,19 +2589,33 @@
     "title": "Tema 3: Captura y Digitalización de Señales",
     "problem": "¿Cómo se discretiza una señal luminosa espacial continua f(x,y) sin perder información crítica ni generar artefactos visuales?",
     "objective": "Dominar el teorema de muestreo espacial de Nyquist-Shannon, el fenómeno de aliasing (muaré) y la cuantización radiométrica en bits.",
+    "summarySpeech": "Lección magistral del Tema 3 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 3.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Muestreo Espacial y Criterio de Nyquist",
-        "desc": "El muestreo espacial convierte el dominio continuo (x,y) en una matriz discreta de dimensiones M x N espaciadas por periodos Ts. Para evitar el aliasing (superposición de réplicas espectrales), la frecuencia de muestreo espacial debe ser al menos el doble de la máxima frecuencia espacial presente en la imagen original.",
-        "formula": "f_s \\\\ge 2 f_{\\\\max} \\\\iff T_s \\\\le \\\\frac{1}{2 f_{\\\\max}}",
-        "example": "Patrón de Moiré que aparece al fotografiar una pantalla o una camisa a rayas finas cuando el mallado del sensor submuestrea la frecuencia de la textura.",
+        "id": "va_t3_c1",
+        "name": "Muestreo Espacial y Criterio de Nyquist",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Muestreo Espacial y Criterio de Nyquist?",
+        "def": "El muestreo espacial convierte el dominio continuo (x,y) en una matriz discreta de dimensiones M x N espaciadas por periodos Ts. Para evitar el aliasing (superposición de réplicas espectrales), la frecuencia de muestreo espacial debe ser al menos el doble de la máxima frecuencia espacial presente en la imagen original. <strong>Formulación matemática:</strong> $f_s \\\\ge 2 f_{\\\\max} \\\\iff T_s \\\\le \\\\frac{1}{2 f_{\\\\max}}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Muestreo Espacial y Criterio de Nyquist frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Patrón de Moiré que aparece al fotografiar una pantalla o una camisa a rayas finas cuando el mallado del sensor submuestrea la frecuencia de la textura.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Muestreo Espacial y Criterio de Nyquist sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Demostración de aliasing por submuestreo sin filtro previo\\nimg = cv2.imread('patron_fino.png', 0)\\n# Submuestreo directo (genera aliasing)\\naliased = img[::4, ::4]\\n# Submuestreo correcto con filtro anti-aliasing previo\\nfiltrada = cv2.GaussianBlur(img, (7, 7), 2.0)\\ncorrecta = filtrada[::4, ::4]"
       },
       {
-        "title": "2. Cuantización Radiométrica y Profundidad de Color",
-        "desc": "La cuantización discretiza el rango continuo de luminancia en L niveles digitales discretos (típicamente 256 niveles para imágenes de 8 bits por canal). El paso de cuantización es Delta = (Vmax - Vmin) / (2^b - 1).",
-        "formula": "\\\\Delta = \\\\frac{V_{\\\\max} - V_{\\\\min}}{2^b - 1}, \\\\quad \\\\text{SNR}_{\\\\text{cuant}} \\\\approx 6.02 \\\\cdot b + 1.76 \\\\text{ dB}",
-        "example": "Reducción de una imagen médica de resonancia magnética de 16 bits (65.536 tonos de gris) a 8 bits (256 tonos), requiriendo ventanas de contraste dinámicas.",
+        "id": "va_t3_c2",
+        "name": "Cuantización Radiométrica y Profundidad de Color",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Cuantización Radiométrica y Profundidad de Color?",
+        "def": "La cuantización discretiza el rango continuo de luminancia en L niveles digitales discretos (típicamente 256 niveles para imágenes de 8 bits por canal). El paso de cuantización es Delta = (Vmax - Vmin) / (2^b - 1). <strong>Formulación matemática:</strong> $\\\\Delta = \\\\frac{V_{\\\\max} - V_{\\\\min}}{2^b - 1}, \\\\quad \\\\text{SNR}_{\\\\text{cuant}} \\\\approx 6.02 \\\\cdot b + 1.76 \\\\text{ dB}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Cuantización Radiométrica y Profundidad de Color frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Reducción de una imagen médica de resonancia magnética de 16 bits (65.536 tonos de gris) a 8 bits (256 tonos), requiriendo ventanas de contraste dinámicas.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Cuantización Radiométrica y Profundidad de Color sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import numpy as np\\n# Cuantización uniforme a n niveles de gris\\ndef cuantizar_imagen(img, niveles=8):\\n    paso = 256 // niveles\\n    return (img // paso) * paso"
       }
     ]
@@ -2531,19 +2625,33 @@
     "title": "Tema 4: Fuentes y Tipos de Ruido",
     "problem": "¿Cuáles son los modelos estocásticos de ruido que degradan las imágenes durante la adquisición y cómo cuantificar su severidad?",
     "objective": "Modelar matemáticamente los diferentes tipos de ruido: Gaussiano (térmico), Impulsivo Sal y Pimienta (errores de transmisión/sensores dañados), Poisson (ruido de fotones) y Speckle (coherencia en radar/ecografía).",
+    "summarySpeech": "Lección magistral del Tema 4 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 4.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Ruido Gaussiano (Térmico y de Lectura)",
-        "desc": "Ruido aditivo modelado por una distribución normal de media cero y varianza sigma^2. Afecta de manera uniforme e independiente a todos los píxeles del sensor debido a la agitación térmica de electrones en el semiconductor.",
-        "formula": "g(x,y) = f(x,y) + \\\\eta(x,y), \\\\quad p(\\\\eta) = \\\\frac{1}{\\\\sqrt{2\\\\pi\\\\sigma^2}} \\\\exp\\\\left(-\\\\frac{\\\\eta^2}{2\\\\sigma^2}\\\\right)",
-        "example": "Grano fino visible en fotografías nocturnas o en entornos de baja luminosidad al forzar un ISO alto.",
+        "id": "va_t4_c1",
+        "name": "Ruido Gaussiano (Térmico y de Lectura)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Ruido Gaussiano (Térmico y de Lectura)?",
+        "def": "Ruido aditivo modelado por una distribución normal de media cero y varianza sigma^2. Afecta de manera uniforme e independiente a todos los píxeles del sensor debido a la agitación térmica de electrones en el semiconductor. <strong>Formulación matemática:</strong> $g(x,y) = f(x,y) + \\\\eta(x,y), \\\\quad p(\\\\eta) = \\\\frac{1}{\\\\sqrt{2\\\\pi\\\\sigma^2}} \\\\exp\\\\left(-\\\\frac{\\\\eta^2}{2\\\\sigma^2}\\\\right)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Ruido Gaussiano (Térmico y de Lectura) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Grano fino visible en fotografías nocturnas o en entornos de baja luminosidad al forzar un ISO alto.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Ruido Gaussiano (Térmico y de Lectura) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import numpy as np\\n# Generación de ruido gaussiano aditivo\\ndef agregar_ruido_gaussiano(img, media=0, sigma=25):\\n    ruido = np.random.normal(media, sigma, img.shape)\\n    ruidosa = np.clip(img.astype(np.float32) + ruido, 0, 255).astype(np.uint8)\\n    return ruidosa"
       },
       {
-        "title": "2. Ruido Impulsivo: Sal y Pimienta",
-        "desc": "Aparición de píxeles aleatorios con valores extremos (255 = Sal, blanco; 0 = Pimienta, negro). Ocurre por fallo en celdas de memoria, píxeles quemados en el sensor o interferencias impulsivas en la transmisión digital.",
-        "formula": "p(g) = \\\\begin{cases} P_a & \\\\text{para } g = 0 \\\\text{ (Pimienta)} \\\\\\\\ P_b & \\\\text{para } g = 255 \\\\text{ (Sal)} \\\\\\\\ 1 - (P_a + P_b) & \\\\text{para } g = f(x,y) \\\\end{cases}",
-        "example": "Puntos negros y blancos dispersos en una imagen satelital transmitida a través de un canal con interferencias radioeléctricas.",
+        "id": "va_t4_c2",
+        "name": "Ruido Impulsivo: Sal y Pimienta",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Ruido Impulsivo: Sal y Pimienta?",
+        "def": "Aparición de píxeles aleatorios con valores extremos (255 = Sal, blanco; 0 = Pimienta, negro). Ocurre por fallo en celdas de memoria, píxeles quemados en el sensor o interferencias impulsivas en la transmisión digital. <strong>Formulación matemática:</strong> $p(g) = \\\\begin{cases} P_a & \\\\text{para } g = 0 \\\\text{ (Pimienta)} \\\\\\\\ P_b & \\\\text{para } g = 255 \\\\text{ (Sal)} \\\\\\\\ 1 - (P_a + P_b) & \\\\text{para } g = f(x,y) \\\\end{cases}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Ruido Impulsivo: Sal y Pimienta frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Puntos negros y blancos dispersos en una imagen satelital transmitida a través de un canal con interferencias radioeléctricas.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Ruido Impulsivo: Sal y Pimienta sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import numpy as np\\n# Generación de ruido sal y pimienta\\ndef agregar_sal_pimienta(img, prob=0.05):\\n    salida = img.copy()\\n    rnd = np.random.rand(*img.shape)\\n    salida[rnd < (prob / 2)] = 0       # Pimienta\\n    salida[rnd > 1 - (prob / 2)] = 255 # Sal\\n    return salida"
       }
     ]
@@ -2553,19 +2661,33 @@
     "title": "Tema 5: Detección y Cancelación de Anomalías",
     "problem": "¿Cómo eliminar el ruido preservando los bordes y las texturas finas esenciales de la imagen?",
     "objective": "Aplicar y justificar el uso de filtros lineales (media) vs no lineales (mediana, filtros adaptativos, medias alfa-recortadas) en función del modelo de ruido detectado.",
+    "summarySpeech": "Lección magistral del Tema 5 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 5.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Filtro de Mediana (No Lineal)",
-        "desc": "Sustituye el valor del píxel central por la mediana estadística de los píxeles dentro de la ventana espacial W. Es el filtro óptimo para eliminar ruido sal y pimienta porque los valores extremos (0 y 255) nunca ocupan la posición central de la serie ordenada, preservando los bordes afilados sin emborronarlos.",
-        "formula": "\\\\hat{f}(x,y) = \\\\text{mediana}\\\\left(\\\\{g(s,t) \\\\mid (s,t) \\\\in S_{xy}\\\\}\\\\right)",
-        "example": "Eliminación completa de píxeles defectuosos en cámaras infrarrojas sin desenfocar las siluetas térmicas.",
+        "id": "va_t5_c1",
+        "name": "Filtro de Mediana (No Lineal)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Filtro de Mediana (No Lineal)?",
+        "def": "Sustituye el valor del píxel central por la mediana estadística de los píxeles dentro de la ventana espacial W. Es el filtro óptimo para eliminar ruido sal y pimienta porque los valores extremos (0 y 255) nunca ocupan la posición central de la serie ordenada, preservando los bordes afilados sin emborronarlos. <strong>Formulación matemática:</strong> $\\\\hat{f}(x,y) = \\\\text{mediana}\\\\left(\\\\{g(s,t) \\\\mid (s,t) \\\\in S_{xy}\\\\}\\\\right)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Filtro de Mediana (No Lineal) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Eliminación completa de píxeles defectuosos en cámaras infrarrojas sin desenfocar las siluetas térmicas.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Filtro de Mediana (No Lineal) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Cancelación óptima de sal y pimienta con filtro de mediana\\nimagen_ruidosa = cv2.imread('sal_pimienta.png', 0)\\nimagen_restaurada = cv2.medianBlur(imagen_ruidosa, 5) # Ventana 5x5"
       },
       {
-        "title": "2. Filtro Bilateral y Adaptativo (Preservación de Bordes)",
-        "desc": "Combina una ponderación espacial gaussiana (cercanía física) con una ponderación radiométrica gaussiana (similitud de intensidad). Solo promedia píxeles cercanos que tengan intensidades similares, deteniendo el suavizado en los bordes.",
-        "formula": "I^{\\\\text{filtrada}}(p) = \\\\frac{1}{W_p} \\\\sum_{q \\\\in S} I(q) \\\\cdot \\\\exp\\\\left(-\\\\frac{\\\\|p-q\\\\|^2}{2\\\\sigma_s^2}\\\\right) \\\\cdot \\\\exp\\\\left(-\\\\frac{(I(p)-I(q))^2}{2\\\\sigma_r^2}\\\\right)",
-        "example": "Retoque de retratos fotográficos para suavizar la piel (reduciendo ruido de textura) sin perder nitidez en ojos y cejas.",
+        "id": "va_t5_c2",
+        "name": "Filtro Bilateral y Adaptativo (Preservación de Bordes)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Filtro Bilateral y Adaptativo (Preservación de Bordes)?",
+        "def": "Combina una ponderación espacial gaussiana (cercanía física) con una ponderación radiométrica gaussiana (similitud de intensidad). Solo promedia píxeles cercanos que tengan intensidades similares, deteniendo el suavizado en los bordes. <strong>Formulación matemática:</strong> $I^{\\\\text{filtrada}}(p) = \\\\frac{1}{W_p} \\\\sum_{q \\\\in S} I(q) \\\\cdot \\\\exp\\\\left(-\\\\frac{\\\\|p-q\\\\|^2}{2\\\\sigma_s^2}\\\\right) \\\\cdot \\\\exp\\\\left(-\\\\frac{(I(p)-I(q))^2}{2\\\\sigma_r^2}\\\\right)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Filtro Bilateral y Adaptativo (Preservación de Bordes) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Retoque de retratos fotográficos para suavizar la piel (reduciendo ruido de textura) sin perder nitidez en ojos y cejas.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Filtro Bilateral y Adaptativo (Preservación de Bordes) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Filtro bilateral: preservación estricta de bordes\\nfiltrada_bilateral = cv2.bilateralFilter(imagen_ruidosa, d=9, sigmaColor=75, sigmaSpace=75)"
       }
     ]
@@ -2575,19 +2697,33 @@
     "title": "Tema 6: Procesamiento de Imagen: Operaciones Elementales",
     "problem": "¿Cómo mejorar el contraste, corregir la iluminación defectuosa y transformar el rango dinámico de una imagen mediante operaciones punto a punto?",
     "objective": "Dominar las transformaciones de intensidad B(x,y) = T(A(x,y)): transformaciones lineales (negativo, estiramiento), logarítmicas (expansión de zonas oscuras), potencial/gamma (corrección del sensor) y ecualización de histograma.",
+    "summarySpeech": "Lección magistral del Tema 6 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 6.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Transformaciones de Intensidad B(x,y) = T(A(x,y))",
-        "desc": "Operaciones puntuales donde el nuevo nivel de gris en (x,y) depende exclusivamente del valor original en esa posición: Negativo: s = L - 1 - r (invierte luminancia). Logarítmica: s = c * log(1 + r) (expande sombras y comprime altas luces). Ley de Potencia / Gamma: s = c * r^gamma (gamma < 1 aclara imagen; gamma > 1 oscurece).",
-        "formula": "T_{\\\\text{neg}}(r) = (L-1) - r, \\\\quad T_{\\\\log}(r) = c \\\\log(1 + r), \\\\quad T_{\\\\gamma}(r) = c \\\\cdot r^{\\\\gamma}",
-        "example": "Visualización del espectro de Fourier de 2D, donde el término continuo DC es órdenes de magnitud mayor que las altas frecuencias, requiriendo escala logarítmica.",
+        "id": "va_t6_c1",
+        "name": "Transformaciones de Intensidad B(x,y) = T(A(x,y))",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Transformaciones de Intensidad B(x,y) = T(A(x,y))?",
+        "def": "Operaciones puntuales donde el nuevo nivel de gris en (x,y) depende exclusivamente del valor original en esa posición: Negativo: s = L - 1 - r (invierte luminancia). Logarítmica: s = c * log(1 + r) (expande sombras y comprime altas luces). Ley de Potencia / Gamma: s = c * r^gamma (gamma < 1 aclara imagen; gamma > 1 oscurece). <strong>Formulación matemática:</strong> $T_{\\\\text{neg}}(r) = (L-1) - r, \\\\quad T_{\\\\log}(r) = c \\\\log(1 + r), \\\\quad T_{\\\\gamma}(r) = c \\\\cdot r^{\\\\gamma}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Transformaciones de Intensidad B(x,y) = T(A(x,y)) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Visualización del espectro de Fourier de 2D, donde el término continuo DC es órdenes de magnitud mayor que las altas frecuencias, requiriendo escala logarítmica.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Transformaciones de Intensidad B(x,y) = T(A(x,y)) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\nimport numpy as np\\n# Transformación Gamma y Negativo con tabla de búsqueda (LUT)\\ndef correccion_gamma(img, gamma=0.5):\\n    inv_gamma = 1.0 / gamma\\n    lut = np.array([((i / 255.0) ** inv_gamma) * 255 for i in range(256)]).astype('uint8')\\n    return cv2.LUT(img, lut)\\n\\n# Negativo\\nnegativo = 255 - img"
       },
       {
-        "title": "2. Ecualización de Histograma (HE y CLAHE)",
-        "desc": "Transforma la distribución de intensidades para que la función de densidad de probabilidad resultante sea uniforme, maximizando la entropía y el contraste global. La transformación acumulada es s_k = T(r_k) = (L-1) * sum(p_r(r_j)). CLAHE (Contrast Limited Adaptive Histogram Equalization) divide la imagen en teselas y limita la amplificación de ruido.",
-        "formula": "s_k = (L - 1) \\\\sum_{j=0}^k \\\\frac{n_j}{M \\\\times N} = (L - 1) \\\\cdot \\\\text{CDF}(r_k)",
-        "example": "Aclarado de radiografías de tórax subexpuestas para revelar nódulos pulmonares ocultos en zonas oscuras.",
+        "id": "va_t6_c2",
+        "name": "Ecualización de Histograma (HE y CLAHE)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Ecualización de Histograma (HE y CLAHE)?",
+        "def": "Transforma la distribución de intensidades para que la función de densidad de probabilidad resultante sea uniforme, maximizando la entropía y el contraste global. La transformación acumulada es s_k = T(r_k) = (L-1) * sum(p_r(r_j)). CLAHE (Contrast Limited Adaptive Histogram Equalization) divide la imagen en teselas y limita la amplificación de ruido. <strong>Formulación matemática:</strong> $s_k = (L - 1) \\\\sum_{j=0}^k \\\\frac{n_j}{M \\\\times N} = (L - 1) \\\\cdot \\\\text{CDF}(r_k)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Ecualización de Histograma (HE y CLAHE) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Aclarado de radiografías de tórax subexpuestas para revelar nódulos pulmonares ocultos en zonas oscuras.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Ecualización de Histograma (HE y CLAHE) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# CLAHE adaptativo para ecualizar contraste sin amplificar ruido\\nimg_gray = cv2.imread('radiografia.png', 0)\\nclahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))\\nimg_clahe = clahe.apply(img_gray)"
       }
     ]
@@ -2597,19 +2733,33 @@
     "title": "Tema 7: Procesamiento de Imagen: Operaciones Espaciales",
     "problem": "¿Cómo aplicar operadores matriciales de vecindad para suavizar, derivar y detectar discontinuidades espaciales (bordes)?",
     "objective": "Comprender la convolución bidimensional discreta, kernels separables, máscaras de suavizado gaussiano y operadores diferenciales de gradiente (Sobel, Prewitt, Laplaciana de Gaussiana LoG).",
+    "summarySpeech": "Lección magistral del Tema 7 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 7.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Convolución Bidimensional Discreta y Separabilidad",
-        "desc": "Operación matemática que calcula la suma ponderada de la vecindad de cada píxel multiplicada por una máscara o kernel K de tamaño (2k+1)x(2k+1). Un kernel es separable si K = u * v^T, reduciendo la complejidad computacional de O(K^2 * M * N) a O(2K * M * N).",
-        "formula": "G(x,y) = I * K = \\\\sum_{u=-k}^k \\\\sum_{v=-k}^k I(x-u, y-v) \\\\cdot K(u,v)",
-        "example": "Filtro Gaussiano 2D descompuesto en dos pasadas 1D unidimensionales (horizontal y vertical), acelerando el procesamiento en un 66% para una ventana 5x5.",
+        "id": "va_t7_c1",
+        "name": "Convolución Bidimensional Discreta y Separabilidad",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Convolución Bidimensional Discreta y Separabilidad?",
+        "def": "Operación matemática que calcula la suma ponderada de la vecindad de cada píxel multiplicada por una máscara o kernel K de tamaño (2k+1)x(2k+1). Un kernel es separable si K = u * v^T, reduciendo la complejidad computacional de O(K^2 * M * N) a O(2K * M * N). <strong>Formulación matemática:</strong> $G(x,y) = I * K = \\\\sum_{u=-k}^k \\\\sum_{v=-k}^k I(x-u, y-v) \\\\cdot K(u,v)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Convolución Bidimensional Discreta y Separabilidad frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Filtro Gaussiano 2D descompuesto en dos pasadas 1D unidimensionales (horizontal y vertical), acelerando el procesamiento en un 66% para una ventana 5x5.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Convolución Bidimensional Discreta y Separabilidad sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\nimport numpy as np\\n# Convolución 2D con kernel de Sobel horizontal\\nimg = cv2.imread('foto.png', 0)\\nsobel_x = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)\\nsobel_y = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)\\nmagnitud_gradiente = np.sqrt(sobel_x**2 + sobel_y**2)"
       },
       {
-        "title": "2. Detector de Bordes de Canny (Multi-Etapa)",
-        "desc": "Algoritmo óptimo de detección de bordes que cumple 3 criterios de Canny: baja tasa de error, localización precisa y respuesta única. Fases: 1. Suavizado gaussiano. 2. Gradiente Sobel. 3. Supresión de no-máximos en la dirección del gradiente. 4. Histéresis con doble umbral (Thigh y Tlow).",
-        "formula": "\\\\theta = \\\\arctan\\\\left(\\\\frac{G_y}{G_x}\\\\right), \\\\quad \\\\text{Borde Fuerte } \\\\iff |G| \\\\ge T_{\\\\text{high}}, \\\\quad \\\\text{Candidato } \\\\iff T_{\\\\text{low}} \\\\le |G| < T_{\\\\text{high}}",
-        "example": "Trazado del contorno exterior de componentes electrónicos en PCB para medición de tolerancias dimensionales.",
+        "id": "va_t7_c2",
+        "name": "Detector de Bordes de Canny (Multi-Etapa)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Detector de Bordes de Canny (Multi-Etapa)?",
+        "def": "Algoritmo óptimo de detección de bordes que cumple 3 criterios de Canny: baja tasa de error, localización precisa y respuesta única. Fases: 1. Suavizado gaussiano. 2. Gradiente Sobel. 3. Supresión de no-máximos en la dirección del gradiente. 4. Histéresis con doble umbral (Thigh y Tlow). <strong>Formulación matemática:</strong> $\\\\theta = \\\\arctan\\\\left(\\\\frac{G_y}{G_x}\\\\right), \\\\quad \\\\text{Borde Fuerte } \\\\iff |G| \\\\ge T_{\\\\text{high}}, \\\\quad \\\\text{Candidato } \\\\iff T_{\\\\text{low}} \\\\le |G| < T_{\\\\text{high}}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Detector de Bordes de Canny (Multi-Etapa) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Trazado del contorno exterior de componentes electrónicos en PCB para medición de tolerancias dimensionales.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Detector de Bordes de Canny (Multi-Etapa) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Detector Canny con histéresis\\nbordes_canny = cv2.Canny(img, threshold1=50, threshold2=150)"
       }
     ]
@@ -2619,19 +2769,33 @@
     "title": "Tema 8: Filtrado y Análisis en Frecuencia",
     "problem": "¿Cómo analizar y filtrar imágenes desde el dominio transformado de Fourier para eliminar patrones periódicos y diseñar filtros complejos?",
     "objective": "Dominar la Transformada Discreta de Fourier 2D (DFT), la interpretación física del espectro de magnitud y fase, y el diseño de filtros paso bajo, paso alto y notch en frecuencia.",
+    "summarySpeech": "Lección magistral del Tema 8 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 8.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Transformada de Fourier 2D (DFT y FFT)",
-        "desc": "Descompone cualquier imagen en una suma de ondas sinusoidales 2D con frecuencias espaciales (u, v). Las bajas frecuencias representan las variaciones suaves de iluminación (energía concentrada en el centro); las altas frecuencias representan bordes, texturas finas y ruido.",
-        "formula": "F(u,v) = \\\\sum_{x=0}^{M-1} \\\\sum_{y=0}^{N-1} f(x,y) \\\\exp\\\\left[-j 2\\\\pi \\\\left(\\\\frac{ux}{M} + \\\\frac{vy}{N}\\\\right)\\\\right]",
-        "example": "El teorema de convolución establece que la convolución en el espacio espacial equivale a la multiplicación punto a punto en el dominio frecuencial: f(x,y) * h(x,y) <=> F(u,v) . H(u,v).",
+        "id": "va_t8_c1",
+        "name": "Transformada de Fourier 2D (DFT y FFT)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Transformada de Fourier 2D (DFT y FFT)?",
+        "def": "Descompone cualquier imagen en una suma de ondas sinusoidales 2D con frecuencias espaciales (u, v). Las bajas frecuencias representan las variaciones suaves de iluminación (energía concentrada en el centro); las altas frecuencias representan bordes, texturas finas y ruido. <strong>Formulación matemática:</strong> $F(u,v) = \\\\sum_{x=0}^{M-1} \\\\sum_{y=0}^{N-1} f(x,y) \\\\exp\\\\left[-j 2\\\\pi \\\\left(\\\\frac{ux}{M} + \\\\frac{vy}{N}\\\\right)\\\\right]$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Transformada de Fourier 2D (DFT y FFT) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "El teorema de convolución establece que la convolución en el espacio espacial equivale a la multiplicación punto a punto en el dominio frecuencial: f(x,y) * h(x,y) <=> F(u,v) . H(u,v).",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Transformada de Fourier 2D (DFT y FFT) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import numpy as np\\nimport cv2\\n# Cálculo del espectro de magnitud en frecuencia con FFT\\ndft = np.fft.fft2(img)\\ndft_shift = np.fft.fftshift(dft) # Centrar bajas frecuencias\\nespectro_magnitud = 20 * np.log(np.abs(dft_shift) + 1)"
       },
       {
-        "title": "2. Filtros en Frecuencia: Butterworth y Filtros Notch",
-        "desc": "Los filtros Butterworth proporcionan una transición suave entre banda de paso y banda de atenuación, evitando el efecto de ringing (ondas de Gibbs) de los filtros ideales. Los filtros Notch (de muesca) eliminan interferencias sinusoidales periódicas específicas (ej. zumbido eléctrico en cámaras).",
-        "formula": "H_{\\\\text{Butterworth}}(u,v) = \\\\frac{1}{1 + \\\\left(\\\\frac{D(u,v)}{D_0}\\\\right)^{2n}}",
-        "example": "Eliminación de la trama de líneas de barrido entrelazado de vídeo analógico sin degradar la nitidez de la escena.",
+        "id": "va_t8_c2",
+        "name": "Filtros en Frecuencia: Butterworth y Filtros Notch",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Filtros en Frecuencia: Butterworth y Filtros Notch?",
+        "def": "Los filtros Butterworth proporcionan una transición suave entre banda de paso y banda de atenuación, evitando el efecto de ringing (ondas de Gibbs) de los filtros ideales. Los filtros Notch (de muesca) eliminan interferencias sinusoidales periódicas específicas (ej. zumbido eléctrico en cámaras). <strong>Formulación matemática:</strong> $H_{\\\\text{Butterworth}}(u,v) = \\\\frac{1}{1 + \\\\left(\\\\frac{D(u,v)}{D_0}\\\\right)^{2n}}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Filtros en Frecuencia: Butterworth y Filtros Notch frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Eliminación de la trama de líneas de barrido entrelazado de vídeo analógico sin degradar la nitidez de la escena.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Filtros en Frecuencia: Butterworth y Filtros Notch sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import numpy as np\\n# Filtro paso bajo Butterworth en frecuencia\\ndef butterworth_lowpass(forma, d0=50, n=2):\\n    P, Q = forma\\n    u = np.arange(P) - P / 2\\n    v = np.arange(Q) - Q / 2\\n    U, V = np.meshgrid(v, u)\\n    D = np.sqrt(U**2 + V**2)\\n    H = 1.0 / (1.0 + (D / d0)**(2 * n))\\n    return H"
       }
     ]
@@ -2641,19 +2805,33 @@
     "title": "Tema 9: Procesamiento de Imagen: Morfología Matemática",
     "problem": "¿Cómo procesar y filtrar imágenes basándose en la forma geométrica de los objetos mediante teoría de conjuntos?",
     "objective": "Aplicar elementos estructurantes para operaciones de dilatación, erosión, apertura, cierre, gradiente morfológico y transformadas Top-Hat.",
+    "summarySpeech": "Lección magistral del Tema 9 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 9.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Dilatación y Erosión con Elementos Estructurantes",
-        "desc": "Erosión A (-) B: reduce el tamaño del objeto eliminando píxeles perimetrales donde el elemento estructurante B no encaja completamente en A. Dilatación A (+) B: expande el objeto rellenando huecos interiores y conectando componentes cercanos.",
-        "formula": "A \\\\ominus B = \\\\{z \\\\in E \\\\mid B_z \\\\subseteq A\\\\}, \\\\quad A \\\\oplus B = \\\\{z \\\\in E \\\\mid (B^s)_z \\\\cap A \\\\neq \\\\emptyset\\\\}",
-        "example": "Erosión para separar dos granos de arroz que se tocan en una imagen binaria; dilatación para rellenar orificios de soldadura.",
+        "id": "va_t9_c1",
+        "name": "Dilatación y Erosión con Elementos Estructurantes",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Dilatación y Erosión con Elementos Estructurantes?",
+        "def": "Erosión A (-) B: reduce el tamaño del objeto eliminando píxeles perimetrales donde el elemento estructurante B no encaja completamente en A. Dilatación A (+) B: expande el objeto rellenando huecos interiores y conectando componentes cercanos. <strong>Formulación matemática:</strong> $A \\\\ominus B = \\\\{z \\\\in E \\\\mid B_z \\\\subseteq A\\\\}, \\\\quad A \\\\oplus B = \\\\{z \\\\in E \\\\mid (B^s)_z \\\\cap A \\\\neq \\\\emptyset\\\\}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Dilatación y Erosión con Elementos Estructurantes frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Erosión para separar dos granos de arroz que se tocan en una imagen binaria; dilatación para rellenar orificios de soldadura.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Dilatación y Erosión con Elementos Estructurantes sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\nimport numpy as np\\n# Erosión y dilatación con elemento estructurante elíptico\\nkernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))\\nimagen_erosionada = cv2.erode(img_binaria, kernel, iterations=1)\\nimagen_dilatada = cv2.dilate(img_binaria, kernel, iterations=1)"
       },
       {
-        "title": "2. Apertura, Cierre y Transformada Top-Hat",
-        "desc": "Apertura (Erosión seguida de Dilatación): elimina pequeños objetos brillantes y protuberancias del contorno sin alterar el tamaño global. Cierre (Dilatación seguida de Erosión): rellena pequeños agujeros negros y une grietas. Top-Hat (Blanca): resta la apertura a la imagen original (I - Apertura(I)), aislando elementos más brillantes que su entorno bajo iluminación no uniforme.",
-        "formula": "A \\\\circ B = (A \\\\ominus B) \\\\oplus B, \\\\quad A \\\\bullet B = (A \\\\oplus B) \\\\ominus B, \\\\quad \\\\text{TopHat}(A) = A - (A \\\\circ B)",
-        "example": "Corrección de fondo en documentos escaneados con sombra para extraer el texto con iluminación perfectamente homogénea.",
+        "id": "va_t9_c2",
+        "name": "Apertura, Cierre y Transformada Top-Hat",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Apertura, Cierre y Transformada Top-Hat?",
+        "def": "Apertura (Erosión seguida de Dilatación): elimina pequeños objetos brillantes y protuberancias del contorno sin alterar el tamaño global. Cierre (Dilatación seguida de Erosión): rellena pequeños agujeros negros y une grietas. Top-Hat (Blanca): resta la apertura a la imagen original (I - Apertura(I)), aislando elementos más brillantes que su entorno bajo iluminación no uniforme. <strong>Formulación matemática:</strong> $A \\\\circ B = (A \\\\ominus B) \\\\oplus B, \\\\quad A \\\\bullet B = (A \\\\oplus B) \\\\ominus B, \\\\quad \\\\text{TopHat}(A) = A - (A \\\\circ B)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Apertura, Cierre y Transformada Top-Hat frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Corrección de fondo en documentos escaneados con sombra para extraer el texto con iluminación perfectamente homogénea.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Apertura, Cierre y Transformada Top-Hat sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Top-Hat para extracción de texto con iluminación irregular\\nkernel_grande = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))\\ntop_hat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, kernel_grande)"
       }
     ]
@@ -2663,19 +2841,33 @@
     "title": "Tema 10: Procesamiento de Imagen: Crecimiento de Regiones y Segmentación",
     "problem": "¿Cómo particionar una imagen en regiones conexas disjuntas y homogéneas según criterios de intensidad, color o textura?",
     "objective": "Dominar los paradigmas de segmentación: umbralización óptima (Otsu), crecimiento de regiones (Region Growing), división y fusión (Split & Merge) y Watershed (Cuencas Hidrográficas).",
+    "summarySpeech": "Lección magistral del Tema 10 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 10.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Umbralización de Otsu (Varianza Inter-Clases)",
-        "desc": "Encuentra de forma completamente automática el umbral t* que maximiza la varianza inter-clases sigma_B^2(t), equivalente a minimizar la varianza intra-clases ponderada, asumiendo un histograma bimodal.",
-        "formula": "\\\\sigma_B^2(t) = \\\\omega_0(t)\\\\omega_1(t)\\\\left[\\\\mu_0(t) - \\\\mu_1(t)\\\\right]^2, \\\\quad t^* = \\\\arg\\\\max_t \\\\sigma_B^2(t)",
-        "example": "Binarización instantánea de texto de cheques bancarios sin calibración manual previa.",
+        "id": "va_t10_c1",
+        "name": "Umbralización de Otsu (Varianza Inter-Clases)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Umbralización de Otsu (Varianza Inter-Clases)?",
+        "def": "Encuentra de forma completamente automática el umbral t* que maximiza la varianza inter-clases sigma_B^2(t), equivalente a minimizar la varianza intra-clases ponderada, asumiendo un histograma bimodal. <strong>Formulación matemática:</strong> $\\\\sigma_B^2(t) = \\\\omega_0(t)\\\\omega_1(t)\\\\left[\\\\mu_0(t) - \\\\mu_1(t)\\\\right]^2, \\\\quad t^* = \\\\arg\\\\max_t \\\\sigma_B^2(t)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Umbralización de Otsu (Varianza Inter-Clases) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Binarización instantánea de texto de cheques bancarios sin calibración manual previa.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Umbralización de Otsu (Varianza Inter-Clases) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Umbralización global automática de Otsu\\nret, thresh_otsu = cv2.threshold(img_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)\\nprint(f'Umbral óptimo calculado por Otsu: {ret}')"
       },
       {
-        "title": "2. Crecimiento de Regiones y Watershed con Marcadores",
-        "desc": "Crecimiento de regiones: agrupa iterativamente píxeles vecinos a una semilla si la diferencia de intensidad no supera un umbral delta. Watershed (Cuencas Hidrográficas): trata la imagen de gradiente como un relieve topográfico donde el agua inunda cuencas desde marcadores semilla predefinidos, creando diques divisorios que separan objetos en contacto sin sobresegmentar.",
-        "formula": "R = \\\\bigcup_{i=1}^n R_i, \\\\quad R_i \\\\cap R_j = \\\\emptyset \\\\quad \\\\forall i \\\\neq j, \\\\quad P(R_i) = \\\\text{True}, \\\\quad P(R_i \\\\cup R_j) = \\\\text{False}",
-        "example": "Conteo automático de células individuales en microscopía cuando las células forman conglomerados apretados.",
+        "id": "va_t10_c2",
+        "name": "Crecimiento de Regiones y Watershed con Marcadores",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Crecimiento de Regiones y Watershed con Marcadores?",
+        "def": "Crecimiento de regiones: agrupa iterativamente píxeles vecinos a una semilla si la diferencia de intensidad no supera un umbral delta. Watershed (Cuencas Hidrográficas): trata la imagen de gradiente como un relieve topográfico donde el agua inunda cuencas desde marcadores semilla predefinidos, creando diques divisorios que separan objetos en contacto sin sobresegmentar. <strong>Formulación matemática:</strong> $R = \\\\bigcup_{i=1}^n R_i, \\\\quad R_i \\\\cap R_j = \\\\emptyset \\\\quad \\\\forall i \\\\neq j, \\\\quad P(R_i) = \\\\text{True}, \\\\quad P(R_i \\\\cup R_j) = \\\\text{False}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Crecimiento de Regiones y Watershed con Marcadores frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Conteo automático de células individuales en microscopía cuando las células forman conglomerados apretados.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Crecimiento de Regiones y Watershed con Marcadores sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\nimport numpy as np\\n# Segmentación Watershed guiada por marcadores de distancia\\ndist_transform = cv2.distanceTransform(img_binaria, cv2.DIST_L2, 5)\\n_, sure_fg = cv2.threshold(dist_transform, 0.7 * dist_transform.max(), 255, 0)\\nsure_fg = np.uint8(sure_fg)\\n_, markers = cv2.connectedComponents(sure_fg)\\nmarkers = markers + 1\\nmarkers[sure_fg == 0] = 0\\nmarkers = cv2.watershed(cv2.cvtColor(img_gray, cv2.COLOR_GRAY2BGR), markers)"
       }
     ]
@@ -2685,19 +2877,33 @@
     "title": "Tema 11: Extracción de Características: Propiedades Estadísticas y Frecuenciales",
     "problem": "¿Cómo describir cuantitativamente una región segmentada de forma compacta e invariante a traslación, escala y rotación?",
     "objective": "Extraer descriptores de forma: momentos geométricos y centrales, momentos invariantes de Hu, excentricidad, compacidad y descriptores de Fourier del contorno.",
+    "summarySpeech": "Lección magistral del Tema 11 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 11.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Momentos Centrales e Invariantes de Hu",
-        "desc": "Los momentos geométricos m_pq miden la distribución espacial del objeto. Los momentos centrales mu_pq sitúan el origen en el centro de masas (invarianza a traslación). Los momentos normalizados eta_pq proporcionan invarianza a escala. A partir de ellos, Hu formuló 7 momentos no lineales que son simultáneamente invariantes a traslación, escala, rotación y reflexión.",
-        "formula": "\\\\mu_{pq} = \\\\sum_x \\\\sum_y (x - \\\\bar{x})^p (y - \\\\bar{y})^q f(x,y), \\\\quad \\\\eta_{pq} = \\\\frac{\\\\mu_{pq}}{\\\\mu_{00}^{(p+q)/2 + 1}}",
-        "example": "Reconocimiento automático de piezas aeronáuticas (tornillos, tuercas, arandelas) que caen sobre una cinta transportadora con cualquier orientación y ángulo.",
+        "id": "va_t11_c1",
+        "name": "Momentos Centrales e Invariantes de Hu",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Momentos Centrales e Invariantes de Hu?",
+        "def": "Los momentos geométricos m_pq miden la distribución espacial del objeto. Los momentos centrales mu_pq sitúan el origen en el centro de masas (invarianza a traslación). Los momentos normalizados eta_pq proporcionan invarianza a escala. A partir de ellos, Hu formuló 7 momentos no lineales que son simultáneamente invariantes a traslación, escala, rotación y reflexión. <strong>Formulación matemática:</strong> $\\\\mu_{pq} = \\\\sum_x \\\\sum_y (x - \\\\bar{x})^p (y - \\\\bar{y})^q f(x,y), \\\\quad \\\\eta_{pq} = \\\\frac{\\\\mu_{pq}}{\\\\mu_{00}^{(p+q)/2 + 1}}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Momentos Centrales e Invariantes de Hu frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Reconocimiento automático de piezas aeronáuticas (tornillos, tuercas, arandelas) que caen sobre una cinta transportadora con cualquier orientación y ángulo.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Momentos Centrales e Invariantes de Hu sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Cálculo de los 7 Momentos de Hu para clasificación invariante\\nmoments = cv2.moments(contorno_objeto)\\nhu_moments = cv2.HuMoments(moments)\\n# Escala logarítmica para comparar magnitudes\\nhu_log = -np.sign(hu_moments) * np.log10(np.abs(hu_moments))"
       },
       {
-        "title": "2. Descriptores de Contorno: Compacidad y Descriptores de Fourier",
-        "desc": "La compacidad (o circularidad) se define como 4*pi*Area / Perimetro^2 (máximo 1 para un círculo perfecto). Los descriptores de Fourier representan el contorno como una señal compleja periódica s(k) = x(k) + j*y(k) y aplican DFT; las componentes de baja frecuencia capturan la silueta global y las altas frecuencias el detalle rugoso.",
-        "formula": "\\\\text{Compacidad} = \\\\frac{4\\\\pi \\\\cdot \\\\text{Área}}{\\\\text{Perímetro}^2}, \\\\quad s(k) = x(k) + j\\\\,y(k)",
-        "example": "Clasificación de granos de polen o frutos según su redondez y suavidad de contorno.",
+        "id": "va_t11_c2",
+        "name": "Descriptores de Contorno: Compacidad y Descriptores de Fourier",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Descriptores de Contorno: Compacidad y Descriptores de Fourier?",
+        "def": "La compacidad (o circularidad) se define como 4*pi*Area / Perimetro^2 (máximo 1 para un círculo perfecto). Los descriptores de Fourier representan el contorno como una señal compleja periódica s(k) = x(k) + j*y(k) y aplican DFT; las componentes de baja frecuencia capturan la silueta global y las altas frecuencias el detalle rugoso. <strong>Formulación matemática:</strong> $\\\\text{Compacidad} = \\\\frac{4\\\\pi \\\\cdot \\\\text{Área}}{\\\\text{Perímetro}^2}, \\\\quad s(k) = x(k) + j\\\\,y(k)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Descriptores de Contorno: Compacidad y Descriptores de Fourier frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Clasificación de granos de polen o frutos según su redondez y suavidad de contorno.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Descriptores de Contorno: Compacidad y Descriptores de Fourier sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\narea = cv2.contourArea(cnt)\\nperimetro = cv2.arcLength(cnt, True)\\ncircularidad = 4 * np.pi * (area / (perimetro ** 2 + 1e-6))"
       }
     ]
@@ -2707,19 +2913,33 @@
     "title": "Tema 12: Extracción de Características: Caracterización de Textura",
     "problem": "¿Cómo cuantificar los patrones visuales espaciales repetitivos de rugosidad, granularidad y direccionalidad en superficies?",
     "objective": "Construir e interpretar la Matriz de Coocurrencia de Niveles de Gris (GLCM), los descriptores de Haralick y los Patrones Binarios Locales (LBP).",
+    "summarySpeech": "Lección magistral del Tema 12 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 12.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Matriz de Coocurrencia de Niveles de Gris (GLCM - Haralick)",
-        "desc": "P_d,theta(i, j) cuenta la frecuencia conjunta con la que un píxel de intensidad i se encuentra a distancia d y ángulo theta (0°, 45°, 90°, 135°) de otro píxel de intensidad j. A partir de ella se extraen las estadísticas de Haralick: Contraste (variabilidad local), Homogeneidad (cercanía a la diagonal), Energía / ASM (uniformidad) y Correlación.",
-        "formula": "\\\\text{Contraste} = \\\\sum_{i,j} |i-j|^2 P(i,j), \\\\quad \\\\text{Homogeneidad} = \\\\sum_{i,j} \\\\frac{P(i,j)}{1 + (i-j)^2}",
-        "example": "Inspección de calidad en tejidos textiles: un defecto o deshilachado dispara el Contraste y desploma la Homogeneidad respecto al patrón estándar.",
+        "id": "va_t12_c1",
+        "name": "Matriz de Coocurrencia de Niveles de Gris (GLCM - Haralick)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Matriz de Coocurrencia de Niveles de Gris (GLCM - Haralick)?",
+        "def": "P_d,theta(i, j) cuenta la frecuencia conjunta con la que un píxel de intensidad i se encuentra a distancia d y ángulo theta (0°, 45°, 90°, 135°) de otro píxel de intensidad j. A partir de ella se extraen las estadísticas de Haralick: Contraste (variabilidad local), Homogeneidad (cercanía a la diagonal), Energía / ASM (uniformidad) y Correlación. <strong>Formulación matemática:</strong> $\\\\text{Contraste} = \\\\sum_{i,j} |i-j|^2 P(i,j), \\\\quad \\\\text{Homogeneidad} = \\\\sum_{i,j} \\\\frac{P(i,j)}{1 + (i-j)^2}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Matriz de Coocurrencia de Niveles de Gris (GLCM - Haralick) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Inspección de calidad en tejidos textiles: un defecto o deshilachado dispara el Contraste y desploma la Homogeneidad respecto al patrón estándar.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Matriz de Coocurrencia de Niveles de Gris (GLCM - Haralick) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "from skimage.feature import graycomatrix, graycoprops\\n# Cálculo de GLCM y métricas de Haralick\\nglcm = graycomatrix(img_recortada, distances=[1], angles=[0, np.pi/4, np.pi/2], levels=256, symmetric=True, normed=True)\\ncontraste = graycoprops(glcm, 'contrast')\\nhomogeneidad = graycoprops(glcm, 'homogeneity')"
       },
       {
-        "title": "2. Patrones Binarios Locales (LBP - Local Binary Patterns)",
-        "desc": "Operador invariante a cambios monótonos de iluminación que compara cada píxel con sus P vecinos en un radio R. Si el vecino es mayor o igual que el central recibe un bit 1, sino un 0, formando un número binario representativo del micro-patrón (bordes, esquinas, puntos planos).",
-        "formula": "\\\\text{LBP}_{P,R}(x_c, y_c) = \\\\sum_{p=0}^{P-1} s(g_p - g_c) \\\\cdot 2^p, \\\\quad s(x) = \\\\begin{cases} 1 & \\\\text{si } x \\\\ge 0 \\\\\\\\ 0 & \\\\text{si } x < 0 \\\\end{cases}",
-        "example": "Reconocimiento biométrico facial y detección de fotos falsas (spoofing) mediante análisis de micro-textura de piel.",
+        "id": "va_t12_c2",
+        "name": "Patrones Binarios Locales (LBP - Local Binary Patterns)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Patrones Binarios Locales (LBP - Local Binary Patterns)?",
+        "def": "Operador invariante a cambios monótonos de iluminación que compara cada píxel con sus P vecinos en un radio R. Si el vecino es mayor o igual que el central recibe un bit 1, sino un 0, formando un número binario representativo del micro-patrón (bordes, esquinas, puntos planos). <strong>Formulación matemática:</strong> $\\\\text{LBP}_{P,R}(x_c, y_c) = \\\\sum_{p=0}^{P-1} s(g_p - g_c) \\\\cdot 2^p, \\\\quad s(x) = \\\\begin{cases} 1 & \\\\text{si } x \\\\ge 0 \\\\\\\\ 0 & \\\\text{si } x < 0 \\\\end{cases}$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Patrones Binarios Locales (LBP - Local Binary Patterns) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Reconocimiento biométrico facial y detección de fotos falsas (spoofing) mediante análisis de micro-textura de piel.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Patrones Binarios Locales (LBP - Local Binary Patterns) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "from skimage.feature import local_binary_pattern\\n# Extracción de LBP para análisis de microtextura\\nlbp = local_binary_pattern(img_gray, P=8, R=1, method='uniform')\\n(hist, _) = np.histogram(lbp.ravel(), bins=np.arange(0, 11), density=True)"
       }
     ]
@@ -2729,25 +2949,39 @@
     "title": "Tema 13: Extracción de Características: Procesamientos Multiescala y Métodos Avanzados",
     "problem": "¿Cómo detectar y describir puntos clave de una imagen de forma totalmente invariante a cambios de escala, rotación, perspectiva y luminosidad?",
     "objective": "Dominar las representaciones multiescala (Pirámides Gaussianas y Laplacianas), el espacio de escala DoG (Difference of Gaussians), y los descriptores clave SIFT, SURF, ORB y detectores profundos modernos tipo YOLO.",
+    "summarySpeech": "Lección magistral del Tema 13 de Visión Artificial.",
+    "feynmanAnalogy": "Analogía intuitiva del Tema 13.",
+    "feynmanKeywords": [
+      "visión artificial",
+      "OpenCV",
+      "UNIR",
+      "Alexandre"
+    ],
     "concepts": [
       {
-        "title": "1. Espacio de Escala y Descriptor SIFT (Scale-Invariant Feature Transform)",
-        "desc": "SIFT modela el espacio de escala convolucionando con núcleos gaussianos a diferentes escalas sigma y restando octavas sucesivas para obtener DoG (Diferencia de Gaussianas). Los extremos espaciotemporales de DoG proporcionan candidatos a puntos clave robustos. Luego calcula un gradiente local y asigna una orientación dominante (invarianza a rotación) y genera un descriptor de 128 dimensiones (rejilla 4x4 con histogramas de 8 direcciones).",
-        "formula": "L(x,y,\\\\sigma) = G(x,y,\\\\sigma) * I(x,y), \\\\quad D(x,y,\\\\sigma) = L(x,y,k\\\\sigma) - L(x,y,\\\\sigma)",
-        "example": "Alineación de imágenes satelitales multitemporales y creación de panoramas (stitching de fotos) con cambios drásticos de zoom y ángulo.",
+        "id": "va_t13_c1",
+        "name": "Espacio de Escala y Descriptor SIFT (Scale-Invariant Feature Transform)",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Espacio de Escala y Descriptor SIFT (Scale-Invariant Feature Transform)?",
+        "def": "SIFT modela el espacio de escala convolucionando con núcleos gaussianos a diferentes escalas sigma y restando octavas sucesivas para obtener DoG (Diferencia de Gaussianas). Los extremos espaciotemporales de DoG proporcionan candidatos a puntos clave robustos. Luego calcula un gradiente local y asigna una orientación dominante (invarianza a rotación) y genera un descriptor de 128 dimensiones (rejilla 4x4 con histogramas de 8 direcciones). <strong>Formulación matemática:</strong> $L(x,y,\\\\sigma) = G(x,y,\\\\sigma) * I(x,y), \\\\quad D(x,y,\\\\sigma) = L(x,y,k\\\\sigma) - L(x,y,\\\\sigma)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Espacio de Escala y Descriptor SIFT (Scale-Invariant Feature Transform) frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Alineación de imágenes satelitales multitemporales y creación de panoramas (stitching de fotos) con cambios drásticos de zoom y ángulo.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Espacio de Escala y Descriptor SIFT (Scale-Invariant Feature Transform) sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Detección y descripción de puntos clave con SIFT\\nsift = cv2.SIFT_create()\\nkp, des = sift.detectAndCompute(img_gray, None)\\nprint(f'Puntos clave detectados: {len(kp)}, Dimensión descriptor: {des.shape[1]}')"
       },
       {
-        "title": "2. Descriptores Rápidos: ORB (Oriented FAST and Rotated BRIEF) y YOLO",
-        "desc": "ORB combina el detector de esquinas FAST con orientación guiada por momentos de intensidad y el descriptor binario BRIEF orientado. Al ser binario, la distancia entre descriptores se calcula con la distancia Hamming (operación XOR por hardware en microsegundos). En detección moderna de objetos, arquitecturas de una sola etapa como YOLO (You Only Look Once) predicen cajas delimitadoras (bounding boxes) y probabilidades de clase simultáneamente en una sola pasada de red.",
-        "formula": "\\\\text{Distancia Hamming}(D_1, D_2) = \\\\text{popcount}(D_1 \\\\oplus D_2)",
-        "example": "Seguimiento visual de objetos a 60 FPS en drones autónomos o robots móviles utilizando ORB o YOLOv8-Nano en procesadores embebidos.",
+        "id": "va_t13_c2",
+        "name": "Descriptores Rápidos: ORB (Oriented FAST and Rotated BRIEF) y YOLO",
+        "recallQuestion": "¿Cuál es el fundamento físico-matemático, formulación y caso de aplicación de Descriptores Rápidos: ORB (Oriented FAST and Rotated BRIEF) y YOLO?",
+        "def": "ORB combina el detector de esquinas FAST con orientación guiada por momentos de intensidad y el descriptor binario BRIEF orientado. Al ser binario, la distancia entre descriptores se calcula con la distancia Hamming (operación XOR por hardware en microsegundos). En detección moderna de objetos, arquitecturas de una sola etapa como YOLO (You Only Look Once) predicen cajas delimitadoras (bounding boxes) y probabilidades de clase simultáneamente en una sola pasada de red. <strong>Formulación matemática:</strong> $\\\\text{Distancia Hamming}(D_1, D_2) = \\\\text{popcount}(D_1 \\\\oplus D_2)$",
+        "comparison": "<strong>Diferenciación conceptual:</strong> Descriptores Rápidos: ORB (Oriented FAST and Rotated BRIEF) y YOLO frente a operadores alternativos en el dominio espacial/frecuencial.",
+        "use": "Seguimiento visual de objetos a 60 FPS en drones autónomos o robots móviles utilizando ORB o YOLOv8-Nano en procesadores embebidos.",
+        "examNote": "En las preguntas de examen UNIR, el Prof. Alexandre evalúa la capacidad de interpretar el comportamiento de Descriptores Rápidos: ORB (Oriented FAST and Rotated BRIEF) y YOLO sobre matrices de píxeles y casos prácticos.",
         "codeSnippet": "import cv2\\n# Extracción ultrarrápida con ORB y emparejamiento con BFMatcher Hamming\\norb = cv2.ORB_create(nfeatures=1000)\\nkp1, des1 = orb.detectAndCompute(img1, None)\\nkp2, des2 = orb.detectAndCompute(img2, None)\\nbf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)\\nmatches = bf.match(des1, des2)"
       }
     ]
   }
 ];
-    const VIDEOS_CATALOG_VA = [{"id": 1, "topic": 1, "title": "YOLO video", "filename": "YOLO video.mp4", "relative_path": "../../Vision Artificial/Documentación Alexandre-20261031/TEMA 10/YOLO video.mp4", "full_path": "/Users/franciscoj/Documents/Documentos - MacBook Pro de FJAN/Master IA/Vision Artificial/Documentación Alexandre-20261031/TEMA 10/YOLO video.mp4", "size_mb": 3.8, "type": "video"}];
+ const VIDEOS_CATALOG_VA = [{"id": 1, "topic": 1, "title": "YOLO video", "filename": "YOLO video.mp4", "relative_path": "../../Vision Artificial/Documentación Alexandre-20261031/TEMA 10/YOLO video.mp4", "full_path": "/Users/franciscoj/Documents/Documentos - MacBook Pro de FJAN/Master IA/Vision Artificial/Documentación Alexandre-20261031/TEMA 10/YOLO video.mp4", "size_mb": 3.8, "type": "video"}];
     const VIDEOS_CATALOG_PLN = [];
 
     const TEST_QUESTIONS_IGP = [{"q": "¿Qué acontecimiento de 1956 se considera el momento formal en que se adoptó el término «Inteligencia Artificial»?", "options": [{"text": "La publicación del artículo 'Computing Machinery and Intelligence' del test de Turing."}, {"text": "El Dartmouth Summer Research Project on Artificial Intelligence organizado por John McCarthy."}, {"text": "La victoria de Deep Blue sobre Garry Kaspárov en Filadelfia."}, {"text": "El lanzamiento del sistema de diagnóstico médico MYCIN en Stanford."}], "correct": 1, "expl": "En la Conferencia de Dartmouth (1956) organizada por John McCarthy, Marvin Minsky, Nathaniel Rochester y Claude Shannon se acuñó y adoptó oficialmente el término 'Inteligencia Artificial'. El test de Turing es de 1950 y Deep Blue de 1997."}, {"q": "En un experimento para contrastar tres modelos de clasificación sobre el mismo dataset midiendo su F1-Score, ¿cuál es la variable independiente?", "options": [{"text": "El valor cuantitativo de F1-Score alcanzado en test."}, {"text": "El algoritmo o arquitectura de clasificación utilizado (factor manipulado)."}, {"text": "El conjunto de datos y sus particiones de entrenamiento y prueba."}, {"text": "La semilla aleatoria y el entorno de hardware."}], "correct": 1, "expl": "La Variable Independiente es el factor que el investigador manipula deliberadamente (el algoritmo). El F1-Score es la Variable Dependiente (lo que se mide), mientras que el dataset y las semillas son Variables de Control que deben mantenerse constantes."}, {"q": "¿Qué es Horizonte Europa y cómo se estructura su marco de financiación de I+D+i (2021–2027)?", "options": [{"text": "Un fondo privado de capital de riesgo para startups de inteligencia artificial."}, {"text": "El programa marco de investigación e innovación de la Unión Europea estructurado en 3 pilares con más de 95.000 M€."}, {"text": "Una norma internacional de certificación de sistemas éticos de IA (ISO/IEC 42001)."}, {"text": "Una plataforma pública de preprints en acceso abierto similar a arXiv."}], "correct": 1, "expl": "Horizonte Europa (2021-2027) es el mayor esquema de I+D+i de la UE, dotado con ~95.500 M€ y articulado en 3 pilares: Pilar 1 (Ciencia Excelente - ERC), Pilar 2 (Desafíos Mundiales y Competitividad Industrial) y Pilar 3 (Europa Innovadora - EIC)."}, {"q": "¿Para qué sirve un gestor bibliográfico como Zotero o Mendeley en investigación científica de IA?", "options": [{"text": "Para detectar plagio y similitud textual automáticamente en los artículos."}, {"text": "Para catalogar, organizar y generar citas y referencias bibliográficas en formatos estándar (IEEE, APA)."}, {"text": "Para gestionar la revisión por pares doble ciego en conferencias como NeurIPS."}, {"text": "Para calcular el factor de impacto JCR y el índice h de los investigadores."}], "correct": 1, "expl": "Los gestores bibliográficos facilitan la recopilación, catalogación y formateo automatizado de citas y listas de referencias bibliográficas, evitando omisiones y errores de citación académica."}, {"q": "En la metodología ágil Scrum adaptada a proyectos de IA, ¿qué es el Product Backlog?", "options": [{"text": "El registro de bugs y fallos de código detectados durante el último sprint de inferencia."}, {"text": "El inventario priorizado de funcionalidades e hipótesis de negocio ordenadas por valor por el Product Owner."}, {"text": "El cronograma rígido de entregables con dependencias en diagrama de Gantt."}, {"text": "El repositorio de artefactos y pesos de modelos registrados en MLflow."}], "correct": 1, "expl": "El Product Backlog (pila de producto) es el listado dinámico y priorizado de todos los requisitos, funcionalidades e hipótesis de valor de negocio, gestionado exclusivamente por el Product Owner."}, {"q": "Al particionar un dataset en tres subconjuntos (Train, Validation, Test), ¿cuál es la función exclusiva del conjunto de Validación?", "options": [{"text": "Estimar los parámetros internos del modelo (pesos sinápticos y coeficientes)."}, {"text": "Ajustar y seleccionar hiperparámetros y comparar arquitecturas para mitigar overfitting."}, {"text": "Calcular la métrica final de generalización insesgada antes del despliegue."}, {"text": "Aumentar artificialmente el volumen de datos mediante técnicas de Data Augmentation."}], "correct": 1, "expl": "El conjunto de Entrenamiento ajusta los parámetros (pesos); el de Validación guía la selección de hiperparámetros (learning rate, profundidad del árbol, C) y arquitecturas; y el de Test se reserva virgen para la evaluación final no sesgada."}, {"q": "En un sistema experto basado en reglas, ¿qué distingue al encadenamiento hacia adelante (forward chaining)?", "options": [{"text": "Parte de una hipótesis meta y busca hacia atrás en la base de reglas qué hechos la sustentan."}, {"text": "Parte de los hechos conocidos y aplica reglas sucesivamente (modus ponens) para deducir nuevo conocimiento (data-driven)."}, {"text": "Recupera el caso más similar de una base de datos mediante distancias de vecinos más cercanos."}, {"text": "Optimiza los pesos sinápticos mediante descenso de gradiente estocástico."}], "correct": 1, "expl": "El encadenamiento hacia adelante es guiado por los datos (data-driven): arranca con los hechos observados y dispara reglas cuyas premisas se cumplen, derivando nuevos hechos hasta que no se puedan hacer más inferencias o se alcance una meta."}, {"q": "Si un modelo debe predecir el valor de tasación en euros de un inmueble a partir de su superficie y ubicación, ¿qué tipo de problema de aprendizaje es?", "options": [{"text": "Aprendizaje supervisado de clasificación multiclase."}, {"text": "Aprendizaje supervisado de regresión (variable objetivo numérica continua)."}, {"text": "Aprendizaje no supervisado de clustering (agrupamiento geométrico)."}, {"text": "Aprendizaje por refuerzo con recompensas continuas."}], "correct": 1, "expl": "Al existir una verdad terreno (supervisado) y ser la variable objetivo un número real continuo (euros), se trata formalmente de un problema de Aprendizaje Supervisado de Regresión."}, {"q": "En los modelos de computación de enjambre (Swarm Intelligence) como Particle Swarm Optimization (PSO), ¿cómo actúa cada individuo?", "options": [{"text": "Obedece las órdenes centralizadas de un nodo maestro que dicta la trayectoria de toda la colonia."}, {"text": "Sigue reglas locales sencillas basadas en su propia experiencia y la de sus vecinos más próximos, emergiendo la inteligencia colectiva."}, {"text": "Ejecuta demostración de teoremas por refutación en lógica de primer orden."}, {"text": "Calcula el gradiente analítico global de toda la función no diferenciable."}], "correct": 1, "expl": "Los sistemas de enjambre se fundamentan en la autoorganización y la estigmergia: cada partícula sigue reglas cinemáticas locales simples y del comportamiento distribuido sin control central emerge la optimización global del enjambre."}, {"q": "Según el artículo 22 del RGPD y el Reglamento Europeo de IA (AI Act), ¿qué derecho asiste al usuario ante una decisión puramente automatizada?", "options": [{"text": "Ninguno, siempre que el modelo de Machine Learning tenga una precisión superior al 95%."}, {"text": "Derecho a ser informado del perfilado, a obtener intervención humana efectiva y a impugnar la decisión (derecho a la explicación)."}, {"text": "Obligación de aceptar el veredicto algorítmico al haber aceptado las cookies del sitio web."}, {"text": "Derecho exclusivo a exigir una compensación económica sin revisar la decisión."}], "correct": 1, "expl": "El RGPD (art. 22) prohíbe decisiones con efectos jurídicos basadas únicamente en tratamiento automatizado sin consentimiento explícito, garantizando el derecho a la intervención humana (Human-in-the-Loop), a expresar su punto de vista y a recibir una explicación de la lógica aplicada."}];
@@ -4380,7 +4614,7 @@ let currentExamCards = EXAM_CARDS_ALL;
     // =========================================================================
     function getSnippetForConcept(c, topic) {
       if (!c) return null;
-      if (c.codeSnippet) return c.codeSnippet;
+      if (c.codeSnippet) return (typeof c.codeSnippet === "string") ? c.codeSnippet.split(String.fromCharCode(92) + "n").join(String.fromCharCode(10)) : c.codeSnippet;
 
       const txt = ((c.name || '') + ' ' + (c.def || '') + ' ' + (c.example || '')).toLowerCase();
 
@@ -4745,7 +4979,8 @@ print('Forma conjunto entrenamiento:', X_tr.shape)`;
                           <div id="read-text-${c.id}-use" class="reading-text-target"><strong>3. Ejemplo de Uso Real y Código: </strong>${formatMathTypography(c.use || c.practicalExample || c.whyItMatters || 'Consulte el caso práctico y la implementación de referencia en el temario UNIR.')}</div>
                           <!-- Visor de Código Python Interactivo Oficial UNIR -->
                           ${(() => {
-                            const snippet = (typeof getSnippetForConcept === 'function') ? getSnippetForConcept(c, topic) : (c.codeSnippet || '');
+                            let rawSnippet = (typeof getSnippetForConcept === 'function') ? getSnippetForConcept(c, topic) : (c.codeSnippet || '');
+                            let snippet = (typeof rawSnippet === "string") ? rawSnippet.split(String.fromCharCode(92) + "n").join(String.fromCharCode(10)) : rawSnippet;
                             if (!snippet) return '';
                             return `
                             <div class="mt-2.5 rounded-xl border border-slate-700 bg-slate-950 p-3 text-xs font-mono shadow-inner">
